@@ -1,4 +1,4 @@
-package com.mne4.fromandto
+package com.mne4.fromandto.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
