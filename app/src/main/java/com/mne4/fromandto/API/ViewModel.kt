@@ -3,6 +3,7 @@ package com.mne4.fromandto.API
 import android.util.Log
 import com.google.gson.Gson
 import com.mne4.fromandto.Models.GetUserRoom
+import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,14 @@ class ViewModel{
         }
         return list
     }
+    fun GetTripsAll(): ArrayList<Trips>
+    {
+        var list: ArrayList<Trips> = arrayListOf()
+        CoroutineScope(Dispatchers.IO).launch {
+            list =  tripsApi.GetAll()
+        }
+        return list
+    }
 
     fun GetCurrentUser(guid:String):User?
     {
@@ -48,6 +57,41 @@ class ViewModel{
            user = usersApi.GetCurrentUser(guid)
         }
         return user
+    }
+
+    fun GetCurrenTrips(guid:String):Trips?
+    {
+        var trips: Trips? = null
+        CoroutineScope(Dispatchers.IO).launch {
+            trips = tripsApi.GetCurrentTrips(guid)
+        }
+        return trips
+    }
+    fun PostCreateTrips(guid:String, trips: Trips)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.PostCreateTrips(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Post","Response Trips")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Post","Failture")
+                }
+            })
+        }
+    }
+    fun PostCreateRequest(guid:String, trips: Trips)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.PostCreateRequest(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Post","Response Request")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Post","Failture")
+                }
+            })
+        }
     }
     fun PostNewUser(user:User):GetUserRoom?
     {
@@ -83,6 +127,44 @@ class ViewModel{
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("Put","Failture")
+                }
+            })
+        }
+    }
+    fun PutEditTrips(guid:String, trips: Trips)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.PutEditTrips(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Put","Response")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Put","Failture")
+                }
+            })
+        }
+    }
+    fun DeleteUser(guid: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            usersApi.DeleteUser(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Delete","Response")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Delete","Failture")
+                }
+            })
+        }
+    }
+
+    fun DeleteTrips(guid: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.DeleteTrips(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Delete","Response")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Delete","Failture")
                 }
             })
         }
