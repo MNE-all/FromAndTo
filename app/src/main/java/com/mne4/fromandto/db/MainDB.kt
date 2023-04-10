@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class MainDB: RoomDatabase() {
-    abstract fun getDao():Dao
+    abstract fun getDao():DaoUser
     companion object{
         fun getDB(context: Context):MainDB{
             return Room.databaseBuilder(
