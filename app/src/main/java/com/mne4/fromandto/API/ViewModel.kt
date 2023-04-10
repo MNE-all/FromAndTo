@@ -43,33 +43,27 @@ class ViewModel{
 
     fun GetCurrentUser(guid:String):User?
     {
-        var user = User("null","null","null","null","null","null",
-            "null","null",false,5.0,"null","null","null",)
+        var user: User? = null
         CoroutineScope(Dispatchers.IO).launch {
            user = usersApi.GetCurrentUser(guid)
         }
         return user
     }
-    fun PostNewUser(user:User):GetUserRoom
+    fun PostNewUser(user:User):GetUserRoom?
     {
-        var getUserRoom = GetUserRoom(
-           "null",
-           "null",
-            "null",
-            "null",
-            "null",
-            "null",
-        )
+        var getUserRoom: GetUserRoom? = null
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.PostNewUser(user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     var list = Gson().fromJson("""${response.body()!!.string()}""", GetUserRoom::class.java)
-                    getUserRoom.id_user = list.id_user
-                    getUserRoom.surname = list.surname
-                    getUserRoom.name = list.name
-                    getUserRoom.birthday = list.birthday
-                    getUserRoom.gender = list.gender
-                    getUserRoom.phone = list.phone
+                    getUserRoom = GetUserRoom(
+                       list.id_user,
+                       list.surname,
+                       list.name,
+                       list.birthday,
+                       list.gender,
+                       list.phone
+                    )
                     Log.d("Post","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
