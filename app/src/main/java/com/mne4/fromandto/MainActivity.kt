@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 binding.edMessage.append(text)
             }
         }
-
+serfse
         binding.button.setOnClickListener{
             var user = User(
                 null,
