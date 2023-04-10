@@ -41,14 +41,6 @@ class ViewModel{
         }
         return list
     }
-    fun GetTripsAll(): ArrayList<Trips>
-    {
-        var list: ArrayList<Trips> = arrayListOf()
-        CoroutineScope(Dispatchers.IO).launch {
-            list =  tripsApi.GetAll()
-        }
-        return list
-    }
 
     fun GetCurrentUser(guid:String):User?
     {
@@ -59,40 +51,6 @@ class ViewModel{
         return user
     }
 
-    fun GetCurrenTrips(guid:String):Trips?
-    {
-        var trips: Trips? = null
-        CoroutineScope(Dispatchers.IO).launch {
-            trips = tripsApi.GetCurrentTrips(guid)
-        }
-        return trips
-    }
-    fun PostCreateTrips(guid:String, trips: Trips)
-    {
-        CoroutineScope(Dispatchers.IO).launch {
-            tripsApi.PostCreateTrips(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    Log.d("Post","Response Trips")
-                }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d("Post","Failture")
-                }
-            })
-        }
-    }
-    fun PostCreateRequest(guid:String, trips: Trips)
-    {
-        CoroutineScope(Dispatchers.IO).launch {
-            tripsApi.PostCreateRequest(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    Log.d("Post","Response Request")
-                }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d("Post","Failture")
-                }
-            })
-        }
-    }
     fun PostNewUser(user:User):GetUserRoom?
     {
         var getUserRoom: GetUserRoom? = null
@@ -131,6 +89,65 @@ class ViewModel{
             })
         }
     }
+
+    fun DeleteUser(guid: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            usersApi.DeleteUser(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Delete","Response")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Delete","Failture")
+                }
+            })
+        }
+    }
+
+    fun GetTripsAll(): ArrayList<Trips>
+    {
+        var list: ArrayList<Trips> = arrayListOf()
+        CoroutineScope(Dispatchers.IO).launch {
+            list =  tripsApi.GetAll()
+        }
+        return list
+    }
+
+    fun GetCurrenTrips(guid:String):Trips?
+    {
+        var trips: Trips? = null
+        CoroutineScope(Dispatchers.IO).launch {
+            trips = tripsApi.GetCurrentTrips(guid)
+        }
+        return trips
+    }
+
+    fun PostCreateTrips(guid:String, trips: Trips)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.PostCreateTrips(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Post","Response Trips")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Post","Failture")
+                }
+            })
+        }
+    }
+    fun PostCreateRequest(guid:String, trips: Trips)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.PostCreateRequest(guid, trips).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("Post","Response Request")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Post","Failture")
+                }
+            })
+        }
+    }
+
     fun PutEditTrips(guid:String, trips: Trips)
     {
         CoroutineScope(Dispatchers.IO).launch {
@@ -140,18 +157,6 @@ class ViewModel{
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("Put","Failture")
-                }
-            })
-        }
-    }
-    fun DeleteUser(guid: String){
-        CoroutineScope(Dispatchers.IO).launch {
-            usersApi.DeleteUser(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    Log.d("Delete","Response")
-                }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d("Delete","Failture")
                 }
             })
         }
