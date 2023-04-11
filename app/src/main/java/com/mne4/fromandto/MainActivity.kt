@@ -3,6 +3,7 @@ package com.mne4.fromandto
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.app.ActivityCompat
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -29,8 +30,13 @@ class MainActivity : AppCompatActivity() {
         traffic.isTrafficVisible = true
 
         var userLocation = MapKitFactory.getInstance().createUserLocationLayer(mapView.mapWindow)
+
         userLocation.isVisible = true
-        var position = userLocation.cameraPosition()?.target
+        var position = userLocation.cameraPosition()?.target ?: Point(60.023686, 30.228692)
+        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
+            Animation(Animation.Type.SMOOTH, 3f), null
+        )
+
 
         var locationManager = MapKitFactory.getInstance().createLocationManager()
         locationManager!!.requestSingleUpdate(object : LocationListener {
@@ -38,22 +44,8 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onLocationUpdated(p0: Location) {
                 var position = p0?.position ?: Point(60.023686, 30.228692)
-                mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
-                    Animation(Animation.Type.SMOOTH, 3f), null
-                )
             }
         })
-
-        if (position != null) {
-            mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 3f), null
-            )
-        }
-        else {
-            mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 3f), null
-            )
-        }
 
 
 
@@ -86,6 +78,11 @@ class MainActivity : AppCompatActivity() {
         }
 */
 
+    }
+
+    fun onAddClick(view: View) {
+        var position = mapView.map.cameraPosition.target
+        mapView.map.mapObjects.addPlacemark(position)
     }
 
     override fun onStop() {
