@@ -44,7 +44,9 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
             android:fontFamily="sans-serif-black"
@@ -54,9 +56,11 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editTextPhoneLoginActivity"
+            android:id="@+id/editTextPhone"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="2"
             android:ems="1"
             android:hint="@string/entry_phone"
@@ -70,7 +74,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLoginLoginActivity"
+        app:layout_constraintBottom_toTopOf="@+id/butEnter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -78,7 +82,9 @@
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
             android:fontFamily="sans-serif-black"
@@ -88,9 +94,11 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editTextPasswordLoginActivity"
+            android:id="@+id/editTextPassword"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="2"
             android:ems="1"
             android:hint="@string/entry_password"
@@ -98,7 +106,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonLoginLoginActivity"
+        android:id="@+id/butEnter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -110,7 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <TextView
-        android:id="@+id/textViewLostPasswordLoginActivity"
+        android:id="@+id/txtPasswordForgotLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -126,15 +134,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLostPasswordLoginActivity"
+        app:layout_constraintBottom_toTopOf="@+id/txtPasswordForgotLink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLoginLoginActivity">
+        app:layout_constraintTop_toBottomOf="@+id/butEnter">
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
             android:fontFamily="sans-serif-black"
@@ -143,9 +153,11 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/textViewMakeRegisterLoginActivity"
+            android:id="@+id/txtRegLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
             android:fontFamily="sans-serif-black"
