@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -26,7 +27,7 @@ import com.yandex.runtime.Error
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
+class MainActivity : AppCompatActivity(), InertiaMoveListener {
     lateinit var mapView: MapView
     var requestPoints: ArrayList<RequestPoint> = ArrayList()
     private var ROUTE_START_POSITION = Point(
@@ -79,6 +80,10 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
             }
         })
 
+        mapView.map.setMapLoadedListener{
+
+        }
+
 
 
             /*var db = MainDB.getDB(this)
@@ -113,22 +118,19 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
         mapObjects = mapView.map.mapObjects.addCollection()
 
-        sumbitRequest()
+
     }
 
 
     fun onAddClick(view: View) {
         var position = mapView.map.cameraPosition.target
         mapView.map.mapObjects.addPlacemark(position)
-        ROUTE_START_POSITION = position
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(position.latitude,position.longitude,2)
 
         var Street2 =address?.get(0)?.getAddressLine(0)
 
         Log.d("pos","${Street2}")
-        sumbitRequest()
-
 
 
 
@@ -161,28 +163,18 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
     }
 
 
-    override fun onDrivingRoutes(p0: MutableList<DrivingRoute>) {
-        for(route in p0){
-            mapObjects!!.addPolyline(route.geometry)
-        }
+    @UiThread
+    override fun onStart(p0: Map, p1: CameraPosition) {
+        Log.d("pos","Start!!!!!!!!!!!!!!!!!!!!!!!!")
     }
 
-    override fun onDrivingRoutesError(p0: Error) {
-        var errorMessage = "Неизвестная ошибка"
-        Toast.makeText(this,errorMessage, Toast.LENGTH_SHORT)
+    @UiThread
+    override fun onCancel(p0: Map, p1: CameraPosition) {
+        Log.d("pos","Cansel!!!!!!!!!!!!!!!!!!!!!!!!")
     }
-
-    fun sumbitRequest(){
-
-        var drivingOption = DrivingOptions()
-        var vehicleOption = VehicleOptions()
-        if (requestPoints.size > 0){
-            requestPoints[1] = RequestPoint(ROUTE_START_POSITION, RequestPointType.WAYPOINT,null)
-        }else {
-            requestPoints.add(RequestPoint(ROUTE_START_POSITION, RequestPointType.WAYPOINT, null))
-            requestPoints.add(RequestPoint(ROUTE_END_POSITION, RequestPointType.WAYPOINT, null))
-        }
-        drivingSession = drivingRouter!!.requestRoutes(requestPoints,drivingOption,vehicleOption,this)
+    @UiThread
+    override fun onFinish(p0: Map, p1: CameraPosition) {
+        Log.d("pos","Finish!!!!!!!!!!!!!!!!!!!!!!!!")
     }
 
 
