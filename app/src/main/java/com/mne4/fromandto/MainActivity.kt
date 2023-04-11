@@ -1,8 +1,10 @@
 package com.mne4.fromandto
 
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import com.yandex.mapkit.Animation
@@ -13,6 +15,7 @@ import com.yandex.mapkit.location.LocationListener
 import com.yandex.mapkit.location.LocationStatus
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var mapView: MapView
@@ -32,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         var userLocation = MapKitFactory.getInstance().createUserLocationLayer(mapView.mapWindow)
 
         userLocation.isVisible = true
-        var position = userLocation.cameraPosition()?.target ?: Point(60.023686, 30.228692)
+        var position = userLocation.cameraPosition()?.target ?: Point(
+            60.023686,
+            30.228692
+        )
         mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 3f), null
         )
@@ -83,6 +89,17 @@ class MainActivity : AppCompatActivity() {
     fun onAddClick(view: View) {
         var position = mapView.map.cameraPosition.target
         mapView.map.mapObjects.addPlacemark(position)
+
+        val geoCoder = Geocoder(this, Locale.getDefault())
+        val address = geoCoder.getFromLocation(position.latitude,position.longitude,2)
+
+        var Street2 =address?.get(0)?.getAddressLine(0)
+
+        Log.d("pos","${Street2}")
+
+
+
+
     }
 
     override fun onStop() {
