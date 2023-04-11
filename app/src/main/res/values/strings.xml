@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">FromAndTo</string>
+    <string name="app_name">От и до</string>
     <string name="welcome">Добро пожаловать!</string>
     <string name="passenger_in">Войти как пассажир</string>
     <string name="driver_in">Войти как водитель</string>
     <string name="avatar">Аватар</string>
+    <string name="next">Далее</string>
+    <string name="first_welcome">Добро пожаловать в сервис совместных поездок</string>
+    
 
 </resources>
