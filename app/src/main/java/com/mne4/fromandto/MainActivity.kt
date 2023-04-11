@@ -6,19 +6,45 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.RequestPoint
+import com.yandex.mapkit.RequestPointType
+import com.yandex.mapkit.directions.DirectionsFactory
+import com.yandex.mapkit.directions.driving.*
+import com.yandex.mapkit.geometry.Direction
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
 import com.yandex.mapkit.location.LocationStatus
-import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.*
+import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
+import com.yandex.runtime.Error
 import java.util.*
+import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
     lateinit var mapView: MapView
+    var requestPoints: ArrayList<RequestPoint> = ArrayList()
+    private var ROUTE_START_POSITION = Point(
+        47.229410,
+        39.718281
+    )
+    private var ROUTE_END_POSITION = Point(
+        60.023686,
+        30.228692
+    )
+    private val SCREEN_CENTER = Point(
+        (ROUTE_START_POSITION.latitude+ROUTE_END_POSITION.latitude)/2,
+        (ROUTE_START_POSITION.longitude+ROUTE_END_POSITION.longitude)/2,
+    )
+
+    private var mapObjects: MapObjectCollection? = null
+    private var drivingRouter: DrivingRouter? = null
+    private var drivingSession: DrivingSession? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
@@ -30,11 +56,11 @@ class MainActivity : AppCompatActivity() {
         requestLocationPermission()
 
         var traffic = MapKitFactory.getInstance().createTrafficLayer(mapView.mapWindow)
-        traffic.isTrafficVisible = true
+        traffic.isTrafficVisible = false
 
         var userLocation = MapKitFactory.getInstance().createUserLocationLayer(mapView.mapWindow)
 
-        userLocation.isVisible = true
+        userLocation.isVisible = false
         var position = userLocation.cameraPosition()?.target ?: Point(
             60.023686,
             30.228692
@@ -84,18 +110,24 @@ class MainActivity : AppCompatActivity() {
         }
 */
 
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
+        mapObjects = mapView.map.mapObjects.addCollection()
+
+        sumbitRequest()
     }
+
 
     fun onAddClick(view: View) {
         var position = mapView.map.cameraPosition.target
         mapView.map.mapObjects.addPlacemark(position)
-
+        ROUTE_START_POSITION = position
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(position.latitude,position.longitude,2)
 
         var Street2 =address?.get(0)?.getAddressLine(0)
 
         Log.d("pos","${Street2}")
+        sumbitRequest()
 
 
 
@@ -129,6 +161,29 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onDrivingRoutes(p0: MutableList<DrivingRoute>) {
+        for(route in p0){
+            mapObjects!!.addPolyline(route.geometry)
+        }
+    }
+
+    override fun onDrivingRoutesError(p0: Error) {
+        var errorMessage = "Неизвестная ошибка"
+        Toast.makeText(this,errorMessage, Toast.LENGTH_SHORT)
+    }
+
+    fun sumbitRequest(){
+
+        var drivingOption = DrivingOptions()
+        var vehicleOption = VehicleOptions()
+        if (requestPoints.size > 0){
+            requestPoints[1] = RequestPoint(ROUTE_START_POSITION, RequestPointType.WAYPOINT,null)
+        }else {
+            requestPoints.add(RequestPoint(ROUTE_START_POSITION, RequestPointType.WAYPOINT, null))
+            requestPoints.add(RequestPoint(ROUTE_END_POSITION, RequestPointType.WAYPOINT, null))
+        }
+        drivingSession = drivingRouter!!.requestRoutes(requestPoints,drivingOption,vehicleOption,this)
+    }
 
 
 }
