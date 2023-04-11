@@ -24,23 +24,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:rotation="0"
-            android:text="Мы вам отправим по СМС"
+            android:text="Поздравляю, вы зарегистрировались!"
             android:textColor="#C0C1C5"
             android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/button14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вернуться обратно"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662" />
+        android:text="Далее"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="363dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
