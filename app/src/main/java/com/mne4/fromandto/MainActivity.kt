@@ -29,6 +29,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), InertiaMoveListener {
     lateinit var mapView: MapView
+    lateinit var cameraListener: CameraListener
     var requestPoints: ArrayList<RequestPoint> = ArrayList()
     private var ROUTE_START_POSITION = Point(
         47.229410,
@@ -80,9 +81,6 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
             }
         })
 
-        mapView.map.setMapLoadedListener{
-
-        }
 
 
 
