@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="60sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/buttonIntroFirstNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -56,7 +56,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonIntroFirstNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"

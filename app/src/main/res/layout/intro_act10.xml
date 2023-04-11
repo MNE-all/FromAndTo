@@ -5,22 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Назад"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="573dp" />
-
-    <Button
-        android:id="@+id/button16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Далее"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="573dp" />
-
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
@@ -28,8 +12,10 @@
         android:fontFamily="sans-serif-black"
         android:text="Введите свой логин"
         android:textSize="22sp"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="227dp" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView10" />
 
     <TextView
         android:id="@+id/textView25"
@@ -38,8 +24,10 @@
         android:fontFamily="sans-serif-black"
         android:text="Введите свой пароль"
         android:textSize="22sp"
-        tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="469dp" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <TextView
         android:id="@+id/textView26"
@@ -48,62 +36,23 @@
         android:fontFamily="sans-serif-black"
         android:text="Введите свой номер телефона"
         android:textSize="22sp"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="343dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="281dp" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="Логин:"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="291dp" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="Телефон:"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="414dp" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="Пароль:"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="529dp" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView10"
         android:layout_width="310dp"
         android:layout_height="92dp"
         android:rotation="0"
         android:scrollbarSize="5dp"
         app:cardBackgroundColor="#243E77"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.194">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView11"
@@ -117,22 +66,124 @@
 
     </androidx.cardview.widget.CardView>
 
-    <EditText
-        android:id="@+id/editTextPhone3"
-        android:layout_width="202dp"
-        android:layout_height="44dp"
-        android:ems="10"
-        android:inputType="phone"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="396dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="512dp" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="1"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Логин:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName7"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="1"
+            android:hint="@string/entry_login"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textView25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26">
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="1"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Телефон:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextPhone3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="1"
+            android:hint="@string/entry_phone"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="1"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/login_password"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="1"
+            android:hint="@string/entry_password"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+        <Button
+            android:id="@+id/button17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_weight="1"
+            android:text="Назад" />
+
+        <Button
+            android:id="@+id/button16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_weight="1"
+            android:text="Далее" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

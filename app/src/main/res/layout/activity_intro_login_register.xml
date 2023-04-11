@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".IntroActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView8"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:rotation="-26"
         android:scrollbarSize="5dp"
         app:cardBackgroundColor="#314267"
         app:cardCornerRadius="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -38,22 +38,30 @@
         android:text="Зарегистрироваться или войти?"
         android:textColor="#000000"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="401dp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonLoginLoginRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="310dp"
-        android:layout_height="42dp"
+        android:id="@+id/buttonRegisterLoginRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:text="Зарегистрироваться"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="519dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLoginLoginRegister" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="312dp"
-        android:layout_height="41dp"
+        android:id="@+id/buttonLoginLoginRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:text="Войти"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="447dp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegisterLoginRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
