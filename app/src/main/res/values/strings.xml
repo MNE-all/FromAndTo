@@ -3,5 +3,6 @@
     <string name="welcome">Добро пожаловать!</string>
     <string name="passenger_in">Войти как пассажир</string>
     <string name="driver_in">Войти как водитель</string>
+    <string name="avatar">Аватар</string>
 
 </resources>
