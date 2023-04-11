@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
 }
 
+
 android {
     namespace 'com.mne4.fromandto'
     compileSdk 33
@@ -36,12 +37,16 @@ android {
     }
 }
 
+
+
 dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+
+    implementation 'com.yandex.android:maps.mobile:4.1.0-full'
 
     implementation 'androidx.room:room-ktx:2.5.1'
     kapt 'androidx.room:room-compiler:2.5.1'
