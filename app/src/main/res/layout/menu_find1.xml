@@ -30,7 +30,7 @@
                 android:id="@+id/button18"
                 android:layout_width="78dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="300sp"
+                android:layout_marginLeft="310sp"
                 android:text="Button" />
         </LinearLayout>
 
