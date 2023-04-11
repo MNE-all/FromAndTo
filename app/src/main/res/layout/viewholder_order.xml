@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/view_order_backgroung">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btnViewOrder"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="100dp"
@@ -21,7 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
-            android:id="@+id/txtView"
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Посмотреть"
@@ -46,9 +44,7 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txtRating"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_star_24" />
@@ -57,10 +53,10 @@
             android:id="@+id/txtRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="4,0"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -76,47 +72,41 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutRaitng">
 
         <TextView
-            android:id="@+id/txtTripFrom"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="4"
-            android:ellipsize="marquee"
             android:ems="2"
-            android:fadingEdge="horizontal"
             android:foregroundGravity="center"
             android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
             android:text="Москва"
             android:textSize="19sp" />
 
         <ImageButton
-            android:id="@+id/imgLine"
+            android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/view_order_backgroung"
-            android:contentDescription="line"
+            android:background="#FFFFFF"
             android:foregroundGravity="center"
             app:srcCompat="@drawable/baseline_horizontal_rule_24" />
 
         <TextView
-            android:id="@+id/txtTripTo"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="4"
+            android:singleLine="true"
             android:ellipsize="marquee"
-            android:ems="2"
             android:fadingEdge="horizontal"
-            android:foregroundGravity="center"
-            android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
-            android:singleLine="true"
+            android:ems="2"
+            android:foregroundGravity="center"
+            android:gravity="center"
             android:text="Нижненовокутлумбетьево"
             android:textSize="19sp" />
 
@@ -127,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="10000 руб."
+        android:text="1000 руб."
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/txtPrice"
         app:layout_constraintStart_toStartOf="@+id/txtPrice"
@@ -159,42 +149,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtDate"
+        android:id="@+id/txtTimeE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="16dp"
-        android:text="01.01.2001"
+        android:text="01:00"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/txtTime"
-        app:layout_constraintStart_toStartOf="@+id/txtTime"
+        app:layout_constraintStart_toEndOf="@+id/txtTimeB"
         app:layout_constraintTop_toBottomOf="@+id/txtTime" />
 
     <TextView
         android:id="@+id/txtTimeB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="10dp"
         android:text="00:00"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/txtTimeE"
-        app:layout_constraintStart_toStartOf="@+id/txtDate"
-        app:layout_constraintTop_toBottomOf="@+id/txtDate" />
-
-    <TextView
-        android:id="@+id/txtTimeE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:text="01:00"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtDate"
-        app:layout_constraintStart_toEndOf="@+id/txtTimeB"
-        app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+        app:layout_constraintStart_toStartOf="@+id/txtTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtTime" />
 
     <ImageView
-        android:id="@+id/imgProf"
+        android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
@@ -212,8 +191,8 @@
         android:layout_marginTop="5dp"
         android:text="Александр"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/imgProf"
-        app:layout_constraintStart_toStartOf="@+id/imgProf"
-        app:layout_constraintTop_toBottomOf="@+id/imgProf" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
