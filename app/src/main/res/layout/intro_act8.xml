@@ -24,9 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
             android:rotation="0"
             android:text="Мы вам отправим по СМС"
-            android:textColor="#C0C1C5"
+            android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
@@ -35,6 +36,7 @@
         android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="Вернуться обратно"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
