@@ -44,7 +44,7 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutEmail"
+        android:id="@+id/textInputLayoutЗPhone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,10 +59,10 @@
         app:layout_constraintTop_toBottomOf="@+id/cardViewProrifle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailField"
+            android:id="@+id/phoneField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="Телефон"
             android:inputType="text"
             android:text=""
             android:textSize="18sp" />
@@ -83,7 +83,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnEntry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutЗPhone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passField"
