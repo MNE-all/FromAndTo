@@ -82,6 +82,7 @@ class ViewModel{
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
                     users = GetUserRoom(
                         list.id_user,
+                        list.password,
                         list.surname,
                         list.name,
                        list.birthday,
