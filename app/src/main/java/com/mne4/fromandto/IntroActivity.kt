@@ -9,6 +9,9 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.db.MainDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class IntroActivity : AppCompatActivity() {
     private var viewModel = ViewModel()
@@ -23,6 +26,7 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
         checkLocalDb()
     }
 
@@ -76,6 +80,10 @@ class IntroActivity : AppCompatActivity() {
 
     private fun checkLocalDb() {
         var db = MainDB.getDB(this)
+        // TODO удаление всех пользователей
+//        CoroutineScope(Dispatchers.IO).launch {
+//            db.getDao().deleteAllUser()
+//        }
         db.getDao().getAllUser().asLiveData().observe(this) {
             var isInAccount = false
             if (it.isEmpty()) {

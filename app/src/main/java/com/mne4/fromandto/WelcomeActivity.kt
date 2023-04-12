@@ -33,9 +33,9 @@ class WelcomeActivity : AppCompatActivity() {
                 for (user in it){
                     if (user.isInAcc) {
                         CoroutineScope(Dispatchers.IO).launch {
-                            db.getDao().updateUser(
-                                user.id, user.password, user.surname, user.name,
-                                user.gender, user.birthday, user.phone, false
+                            db.getDao().updateUserisAcc(
+                                "${user.id_user}",
+                               false
                             )
                         }
                         var intent = Intent(this, IntroActivity::class.java)

@@ -4,6 +4,7 @@ import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.Models.UserFull
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface UsersApi {
@@ -13,10 +14,10 @@ interface UsersApi {
     @GET("Users/Read/{guid}")
     suspend fun getCurrentUser(@Path("guid") guid:String): User
 
-    @GET("Users/AuthenticationAuto/{guid}/{hashPassword}")
-    suspend fun getAuthenticationAuto(@Path("guid") guid:String, @Path("hashPassword") hashPassword:String): Boolean
-    @GET("Users/Authentication/{phone}/{password}")
-    suspend fun getAuthentication(@Path("phone") phone:String, @Path("password") password:String): UserFull?
+    @POST("Users/AuthenticationAuto")
+    fun postAuthenticationAuto(@Query("guid") guid:String, @Query("hashPassword") hashPassword:String): Boolean
+    @POST("Users/AuthenticationPhone")
+    fun postAuthentication(@Query("phone") phone:String, @Query("password") password:String): Call<ResponseBody>
 
     @ExperimentalMultiplatform
     @POST("Users/Create")

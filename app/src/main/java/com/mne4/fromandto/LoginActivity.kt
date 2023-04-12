@@ -3,8 +3,10 @@ package com.mne4.fromandto
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.db.MainDB
@@ -31,27 +33,36 @@ class LoginActivity : AppCompatActivity() {
         var phone = phoneEditText.text
         var password = passwordEditText.text
 
-        viewModel.getAuthentication("$phone","$password")
-        viewModel.dataModelUsers.ApiGetAuthentication.observe(this) { userFull ->
+        viewModel.postAuthentication("$phone","$password")
+        viewModel.dataModelUsers.ApiPostAuthentication.observe(this) { userFull ->
             if (userFull != null) {
-                //                startActivity(Intent(this, WelcomeActivity::class.java))
                 var db = MainDB.getDB(this)
                 db.getDao().getAllUser().asLiveData().observe(this) {
                     if (it.isNotEmpty()) {
                         for (user in it){
                             if (user.id_user == userFull.id_user) {
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    db.getDao().updateUser(
-                                        user.id, userFull.password, userFull.surname, userFull.name,
-                                        userFull.gender, userFull.birthday, userFull.phone, true
+                                    db.getDao().updateUserisAcc(
+                                        "${user.id}",
+                                        true
                                     )
+                                    Log.d("col","$userFull")
+                                    return@launch
                                 }
-                                var intent = Intent(this, WelcomeActivity::class.java)
-                                startActivity(intent)
+                                runOnUiThread {
+                                    Toast.makeText(
+                                        this,
+                                        "Пользователь авторизирован!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    var intent = Intent(this, WelcomeActivity::class.java)
+                                    startActivity(intent)
+                                }
                             }
                         }
                     }
                     else {
+                        Log.d("colNull","$userFull")
                         CoroutineScope(Dispatchers.IO).launch {
                             val user = User(
                                 null, "${userFull.id_user}", "${userFull.password}", "${userFull.surname}", "${userFull.name}",
@@ -67,6 +78,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
 
+            }else{
+                Toast.makeText(this, "Пользователь не найден!",Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -16,8 +16,8 @@ open class DataModelUsers: ViewModel() {
         MutableLiveData<User>()
     }
 
-    val ApiGetAuthentication: MutableLiveData<UserFull> by lazy {
-        MutableLiveData<UserFull>()
+    val ApiPostAuthentication: MutableLiveData<UserFull?> by lazy {
+        MutableLiveData<UserFull?>()
     }
 
     val ApiPostNewUser: MutableLiveData<GetUserRoom> by lazy {
