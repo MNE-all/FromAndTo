@@ -1,6 +1,7 @@
 package com.mne4.fromandto.Models
 
-data class User(
+data class UserFull (
+    val id_user: String,
     val surname: String,
     val name: String,
     val gender: String?,
@@ -15,3 +16,4 @@ data class User(
     val passport: String?,
     val license : String?
 )
+

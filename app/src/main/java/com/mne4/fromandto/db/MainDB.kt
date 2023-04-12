@@ -27,7 +27,7 @@ abstract class MainDB: RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MainDB::class.java,
-                "UsersApi.db"
+                "UsersAPI.db"
             )
                 .build()
         }

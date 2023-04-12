@@ -17,11 +17,11 @@ data class User (
     @ColumnInfo("name")
     var name: String,
     @ColumnInfo("birthday")
-    var birthday: String,
+    var birthday: String?,
     @ColumnInfo("gender")
-    var gender: String,
+    var gender: String?,
     @ColumnInfo("phone")
     var phone: String,
     @ColumnInfo("isInAcc")
-    var isInAcc: Boolean
+    var isInAcc: Boolean = false
 )
