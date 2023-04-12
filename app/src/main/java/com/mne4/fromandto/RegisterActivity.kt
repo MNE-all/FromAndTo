@@ -12,9 +12,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.databinding.ActivityIntroLoginRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
+    lateinit var viewModel:viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro_act10)
+
+        viewModel=viewModel()
     }
 
    fun butReg(view: View){
@@ -44,11 +47,13 @@ class RegisterActivity : AppCompatActivity() {
        var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
        dialog.setTitle("Подтверждение номера")
        dialog.setMessage("Поддтвердите номер телефона. Введите пароль по смс!")
+       viewModel.
        var inflater: LayoutInflater = LayoutInflater.from(this)
        var reg_windom = inflater.inflate(R.layout.intro_act10,null)
        dialog.setView(reg_windom)
 
        dialog.setPositiveButton("Подтвердить",DialogInterface.OnClickListener{dialog: DialogInterface?, i->
+
 
 
        })
