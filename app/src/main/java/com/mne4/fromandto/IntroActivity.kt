@@ -43,9 +43,18 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro_first_page)
         var button = findViewById<Button>(R.id.buttonIntroFirstNext)
         button.setOnClickListener {
+            secondIntroPage()
+        }
+    }
+
+    private fun secondIntroPage() {
+        setContentView(R.layout.activity_intro_second_page)
+        var button = findViewById<Button>(R.id.buttonNextIntroSecondPage)
+        button.setOnClickListener {
             notificationPage()
         }
     }
+
 
     private fun notificationPage() {
         setContentView(R.layout.activity_intro_notification_page)

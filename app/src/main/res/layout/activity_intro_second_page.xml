@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".IntroActivity">
 
     <TextView
         android:id="@+id/textView50"
@@ -25,7 +27,7 @@
         android:scrollbarSize="5dp"
         app:cardBackgroundColor="#314267"
         app:cardCornerRadius="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/button23"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNextIntroSecondPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView50">
@@ -42,7 +44,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button23"
+        android:id="@+id/buttonNextIntroSecondPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Далее"

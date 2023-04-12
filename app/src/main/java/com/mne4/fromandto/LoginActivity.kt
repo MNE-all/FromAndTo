@@ -1,5 +1,6 @@
 package com.mne4.fromandto
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,5 +21,9 @@ class LoginActivity : AppCompatActivity() {
         var password = binding.editTextPassword.text
 
 
+    }
+
+    fun register (view: View) {
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 }

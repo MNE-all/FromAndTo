@@ -162,6 +162,7 @@
             android:ems="1"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
+            android:onClick="register"
             android:text="@string/login_make_register"
             android:textColor="#191CF3" />
     </LinearLayout>
