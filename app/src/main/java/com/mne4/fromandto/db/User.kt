@@ -10,6 +10,8 @@ data class User (
     var id: Int? = null,
     @ColumnInfo("id_user")
     var id_user: String,
+    @ColumnInfo("password")
+    var password: String,
     @ColumnInfo("surname")
     var surname: String,
     @ColumnInfo("name")

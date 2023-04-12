@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:gravity="center"
-        android:hint="0"
+        android:hint="0000"
         android:inputType="number"
         android:textColor="@color/black"
         android:textSize="40sp"

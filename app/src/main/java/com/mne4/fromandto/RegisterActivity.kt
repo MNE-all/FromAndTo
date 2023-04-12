@@ -72,10 +72,5 @@ class RegisterActivity : AppCompatActivity() {
 
        dialog.show()
 
-
-
-
-
-
     }
 }
