@@ -35,6 +35,8 @@ class IntroActivity : AppCompatActivity() {
 
 
 
+
+
     }
 
     private fun firstIntroPage() {
@@ -69,7 +71,7 @@ class IntroActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         buttonRegister.setOnClickListener {
-
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

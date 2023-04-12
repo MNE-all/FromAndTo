@@ -21,6 +21,7 @@
     <string name="txtName">Введите имя</string>
     <string name="txtPhone">Телефон</string>
     <string name="txtPassword">Пароль</string>
+    <string name="txtReg">Зарегистрироваться</string>
 
 
 </resources>
