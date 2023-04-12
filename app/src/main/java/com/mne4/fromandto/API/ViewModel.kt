@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Path
 
 @OptIn(ExperimentalMultiplatform::class)
 class ViewModel{
@@ -65,6 +66,8 @@ class ViewModel{
         }
     }
 
+    fun getAuthentication(@Path("guid") guid:String, @Path("hashPassword") hashPassword:String): Boolean
+
     fun postNewUser(user:User)
     {
         CoroutineScope(Dispatchers.IO).launch {
@@ -89,10 +92,10 @@ class ViewModel{
         }
     }
 
-    fun putEditUser(guid:String, user: User)
+    fun putEditUser(guid:String, hashPassword: String, user: User)
     {
         CoroutineScope(Dispatchers.IO).launch {
-            usersApi.putEditUser(guid, user).enqueue(object : retrofit2.Callback<ResponseBody>{
+            usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     Log.d("Put","Response")
                 }
@@ -103,9 +106,9 @@ class ViewModel{
         }
     }
 
-    fun deleteUser(guid: String){
+    fun deleteUser(guid: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
-            usersApi.deleteUser(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
+            usersApi.deleteUser(guid,password).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     Log.d("Delete","Response")
                 }

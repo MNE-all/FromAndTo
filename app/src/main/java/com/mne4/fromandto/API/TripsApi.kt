@@ -12,6 +12,10 @@ interface TripsApi {
     @GET("Trips/Read/{guid}")
     suspend fun getCurrentTrips(@Path("guid") guid:String): Trips
 
+    @GET("Trips/{date}/{start_point}/{end_point}")
+    suspend fun getTrips(@Path("date") date:String, @Path("start_point") start_point:String,
+                         @Path("end_point") end_point: String): ArrayList<Trips>
+
     @ExperimentalMultiplatform
         @POST("Trips/CreateTrip")
         fun postCreateTrips(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>
@@ -22,7 +26,7 @@ interface TripsApi {
 
     @ExperimentalMultiplatform
         @PUT("Trips/Update")
-        fun putEditTrips(@Query("guid") guid: String, @Body user: Trips): Call<ResponseBody>
+        fun putEditTrips(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>
 
     @DELETE("Trips/Delete")
     fun deleteTrips(@Query("guid") guid: String): Call<ResponseBody>
