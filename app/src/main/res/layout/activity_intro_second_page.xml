@@ -10,7 +10,7 @@
         android:id="@+id/textView50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/GOTHIC"
         android:text="Это приложение создано для ..."
         android:textColor="#000000"
         android:textSize="20sp"
@@ -45,6 +45,7 @@
 
     <Button
         android:id="@+id/buttonNextIntroSecondPage"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Далее"

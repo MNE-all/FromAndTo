@@ -49,7 +49,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:text="@string/login_phone_number"
             android:textColor="#000000"
@@ -57,6 +57,7 @@
 
         <EditText
             android:id="@+id/editTextPhone"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
@@ -87,7 +88,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:text="@string/login_password"
             android:textColor="#000000"
@@ -95,6 +96,7 @@
 
         <EditText
             android:id="@+id/editTextPassword"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
@@ -107,6 +109,7 @@
 
     <Button
         android:id="@+id/butEnter"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -121,7 +124,7 @@
         android:id="@+id/txtPasswordForgotLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/GOTHIC"
         android:text="@string/login_lost_password"
         android:textColor="#191CF3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -147,7 +150,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:text="@string/login_have_not_account"
             android:textColor="#000000" />
@@ -160,7 +163,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:onClick="register"
             android:text="@string/login_make_register"

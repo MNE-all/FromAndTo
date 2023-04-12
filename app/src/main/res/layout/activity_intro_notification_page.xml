@@ -34,7 +34,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/GOTHIC"
         android:text="Включить уведомление?"
         android:textColor="#000000"
         android:textColorHint="#000000"
@@ -61,7 +61,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Да" />
@@ -73,7 +73,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/GOTHIC"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Нет" />

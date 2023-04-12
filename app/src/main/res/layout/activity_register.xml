@@ -23,6 +23,7 @@
 
         <TextView
             android:id="@+id/textView11"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -62,6 +63,7 @@
             <com.google.android.material.textfield.TextInputEditText
 
                 android:id="@+id/surnameField"
+                android:fontFamily="@font/GOTHIC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtSurname"
@@ -89,6 +91,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameField"
+                android:fontFamily="@font/GOTHIC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtName"
@@ -116,6 +119,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneField"
+                android:fontFamily="@font/GOTHIC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPhone"
@@ -142,6 +146,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordField"
+                android:fontFamily="@font/GOTHIC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPassword"
@@ -153,6 +158,7 @@
 
     <Button
         android:id="@+id/butReg"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

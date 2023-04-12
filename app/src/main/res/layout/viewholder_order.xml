@@ -20,6 +20,7 @@
 
         <TextView
             android:id="@+id/txtCancel"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Посмотреть"
@@ -51,6 +52,7 @@
 
         <TextView
             android:id="@+id/txtRating"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -73,6 +75,7 @@
 
         <TextView
             android:id="@+id/textView"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -91,10 +94,12 @@
             android:layout_weight="1"
             android:background="#FFFFFF"
             android:foregroundGravity="center"
-            app:srcCompat="@drawable/baseline_horizontal_rule_24" />
+            app:srcCompat="@drawable/baseline_horizontal_rule_24"
+            android:contentDescription="@font/GOTHIC"/>
 
         <TextView
             android:id="@+id/textView2"
+            android:fontFamily="@font/GOTHIC"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -114,6 +119,7 @@
 
     <TextView
         android:id="@+id/txtTimeE2"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -125,6 +131,7 @@
 
     <TextView
         android:id="@+id/txtPrice"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -138,6 +145,7 @@
 
     <TextView
         android:id="@+id/txtTime"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -150,6 +158,7 @@
 
     <TextView
         android:id="@+id/txtTimeE"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -162,6 +171,7 @@
 
     <TextView
         android:id="@+id/txtTimeB"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -186,6 +196,7 @@
 
     <TextView
         android:id="@+id/txtName"
+        android:fontFamily="@font/GOTHIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

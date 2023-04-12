@@ -28,7 +28,7 @@
         android:layout_marginStart="135dp"
         android:layout_marginTop="61dp"
         android:layout_marginEnd="129dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/GOTHIC"
         android:text="Помощь"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="50sp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:gravity="center"
                 android:text="Перейти" />
         </LinearLayout>
@@ -75,7 +75,7 @@
                 android:id="@+id/textView49"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:gravity="center"
                 android:text="Обратная связь"
                 android:textColor="#FFFFFF"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="90sp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="------------------"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60sp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="Вопрос 4."
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -137,7 +137,7 @@
                 android:id="@+id/textView46"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="------------------"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -151,7 +151,7 @@
                 android:id="@+id/textView45"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="Вопрос 3."
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="90sp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="------------------"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -196,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60sp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="Вопрос 2."
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -211,7 +211,7 @@
                 android:id="@+id/textView42"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="------------------"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -225,7 +225,7 @@
                 android:id="@+id/textView41"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/GOTHIC"
                 android:text="Вопрос 1."
                 android:textColor="#FFFFFF" />
         </LinearLayout>
