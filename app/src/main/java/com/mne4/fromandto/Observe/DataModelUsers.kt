@@ -15,17 +15,15 @@ open class DataModelUsers: ViewModel() {
         MutableLiveData<User>()
     }
 
+    val ApiGetAuthentication: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
     val ApiReturnUser: MutableLiveData<GetUserRoom> by lazy {
         MutableLiveData<GetUserRoom>()
     }
 
 
-    val ApiReturnGetAuthentication: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-    val ApiReturnGetTripsByDate: MutableLiveData<ArrayList<Trips>> by lazy {
-        MutableLiveData<ArrayList<Trips>>()
-    }
 
 
 }

@@ -61,12 +61,11 @@ class ViewModel{
         }
     }
 
-    fun getAuthentication(guid:String, hashPassword:String):Boolean{
-        var truth:Boolean = false
+    fun getAuthentication(guid:String, hashPassword:String){
         CoroutineScope(Dispatchers.IO).launch {
-            truth = usersApi.getAuthentication(guid,hashPassword)
+           var truth = usersApi.getAuthentication(guid,hashPassword)
+            dataModelUsers.ApiGetAuthentication.value = truth
         }
-        return truth
     }
 
     fun postNewUser(user:User)
@@ -99,6 +98,17 @@ class ViewModel{
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
+                    users = GetUserRoom(
+                        list.id_user,
+                        list.password,
+                        list.surname,
+                        list.name,
+                        list.birthday,
+                        list.gender,
+                        list.phone
+                    )
+                    dataModelUsers.ApiReturnUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

@@ -22,10 +22,7 @@ class IntroActivity : AppCompatActivity() {
 
 
         checkLocalDb()
-        var user = viewModel.getUserAll()
-        viewModel.dataModelUsers.ApiGetUserAll.observe(this,{
-            Log.d("user","$it")
-        })
+
 
 
 
