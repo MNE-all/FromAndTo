@@ -19,16 +19,6 @@ open class DataModelTrips: ViewModel() {
         MutableLiveData<ArrayList<Trips>>()
     }
 
-    val ApiGetAuthentication: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-
-    val ApiPostNewUser: MutableLiveData<GetUserRoom> by lazy {
-        MutableLiveData<GetUserRoom>()
-    }
-    val ApiPutEditUser: MutableLiveData<GetUserRoom> by lazy {
-        MutableLiveData<GetUserRoom>()
-    }
 
 
 
