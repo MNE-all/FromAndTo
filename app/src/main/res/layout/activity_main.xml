@@ -43,21 +43,23 @@
 <!--            app:endIconMode="clear_text"-->
 <!--            app:startIconDrawable="@drawable/ic_search">-->
 
-<EditText
-    android:id="@+id/EditSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="fill_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="Поиск"
-                android:gravity="start"
-                android:padding="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"><
-</EditText>>
+        <EditText
+            android:id="@+id/EditSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="start"
+            android:hint="Поиск"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:text="кафе"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></EditText>>
     </androidx.cardview.widget.CardView>>
     <ImageView
         android:id="@+id/imgPin"

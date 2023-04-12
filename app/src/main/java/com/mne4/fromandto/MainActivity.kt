@@ -1,5 +1,6 @@
 package com.mne4.fromandto
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.PointF
@@ -11,6 +12,7 @@ import android.se.omapi.Session
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
@@ -64,12 +66,8 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
     var START_POSITION:Point=Point( 0.0,0.0 )
     var END_POSITION:Point=Point(0.0,0.0 )
 
-
-
-
-
     lateinit var locationMapKit:UserLocationLayer
-    lateinit var searchEdit:TextInputEditText
+    lateinit var searchEdit:EditText
     lateinit var searchManager:SearchManager
     lateinit var searchSession:com.yandex.mapkit.search.Session
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,31 +84,34 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
         imgPin = findViewById(R.id.imgPin)
 
         mapView = findViewById<MapView>(R.id.mapview)
+        mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
+        Animation(Animation.Type.SMOOTH, 3f), null
+        )
+
+        var mapKit = MapKitFactory.getInstance()
         requestLocationPermission()
 
-        var traffic = MapKitFactory.getInstance().createTrafficLayer(mapView.mapWindow)
+        var traffic = mapKit.createTrafficLayer(mapView.mapWindow)
         traffic.isTrafficVisible = false
 
-        var userLocation = MapKitFactory.getInstance().createUserLocationLayer(mapView.mapWindow)
-        var position = userLocation.cameraPosition()?.target ?: Point(
-            60.023686,
-            30.228692
-        )
-        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 3f), null
-        )
+
+//        var position = userLocation.cameraPosition()?.target ?: Point(
+//            60.023686,
+//            30.228692
+//        )
 
 
-        var locationManager = MapKitFactory.getInstance().createLocationManager()
-        locationManager!!.requestSingleUpdate(object : LocationListener {
-            override fun onLocationStatusUpdated(p0: LocationStatus) {
-            }
-            override fun onLocationUpdated(p0: Location) {
-                var position = p0?.position ?: Point(60.023686, 30.228692)
-            }
-        })
+//        var locationManager = MapKitFactory.getInstance().createLocationManager()
+//        locationManager!!.requestSingleUpdate(object : LocationListener {
+//            override fun onLocationStatusUpdated(p0: LocationStatus) {
+//            }
+//            override fun onLocationUpdated(p0: Location) {
+//                var position = p0?.position ?: Point(60.023686, 30.228692)
+//            }
+//        })
 
-        locationMapKit = userLocation
+        locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
+        locationMapKit.isVisible = false
         locationMapKit.setObjectListener(this)
         SearchFactory.initialize(this)
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 sumbitQuery(searchEdit.text.toString())
             }
-            false
+            true
         }
 
     }
@@ -183,8 +184,6 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
             }
         }
 */
-
-
 
 
     fun onAddClick(view: View) {
@@ -254,17 +253,25 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
             PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
             PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
         )
+        userLocation.arrow.setIcon(ImageProvider.fromResource(this,R.drawable.baseline_directions_car_24))
+        var picIcon = userLocation.pin.useCompositeIcon()
+        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
+            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
+
+        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
+        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
         userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onObjectUpdated(p0: UserLocationView, p1: ObjectEvent) {
-        TODO("Not yet implemented")
+
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onSearchResponse(response: Response) {
      val mapObjects:MapObjectCollection = mapView.map.mapObjects
         mapObjects.clear()
@@ -293,7 +300,6 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
         cameraUpdate: CameraUpdateReason,
         finish: Boolean
     ) {
-
         if(finish){
             sumbitQuery(searchEdit.text.toString())
         }
