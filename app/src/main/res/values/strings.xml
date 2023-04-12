@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">FromAndTo</string>
+    <string name="app_name">От и до</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="passenger_in">Войти как пассажир</string>
+    <string name="driver_in">Войти как водитель</string>
+    <string name="avatar">Аватар</string>
+    <string name="next">Далее</string>
+    <string name="first_welcome">Добро пожаловать в сервис совместных поездок</string>
+    <string name="login_phone_number">Номер телефона:</string>
+    <string name="login_password">Пароль:</string>
+    <string name="enter">Войти</string>
+    <string name="login_lost_password">Я забыл пароль</string>
+    <string name="login_have_not_account">Нет аккаунта?</string>
+    <string name="login_make_register">Зарегистрируетесь</string>
+    <string name="entry_password">Введите пароль</string>
+    <string name="entry_phone">Введите номер телефона</string>
+    <string name="entry_login">Введите логин</string>
+    <string name="name">Имя</string>
+    <string name="entry_name">Введите имя</string>
+
+
+    <string name="txtSurname">Введите фамилию</string>
+    <string name="txtName">Введите имя</string>
+    <string name="txtPhone">Телефон</string>
+    <string name="txtPassword">Пароль</string>
+    <string name="txtReg">Зарегистрироваться</string>
+
+
 </resources>

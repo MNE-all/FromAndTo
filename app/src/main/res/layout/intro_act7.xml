@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextPhone2"
+        android:layout_width="210dp"
+        android:layout_height="22dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-black"
+        android:inputType="phone"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="314dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Номер телефона:"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="309dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="304dp"
+        android:layout_height="57dp"
+        android:rotation="0"
+        android:scrollbarSize="5dp"
+        app:cardBackgroundColor="#243E77"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:rotation="0"
+            android:text="Введите свой номер"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="226dp"
+        android:layout_height="43dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Продолжить"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="404dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="226dp"
+        android:layout_height="43dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Отменить"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="476dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

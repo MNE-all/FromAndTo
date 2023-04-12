@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
+import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.databinding.ActivityMainBinding
 
 
@@ -18,4 +20,6 @@ class MainActivity : AppCompatActivity() {
 //        binding.textView.setSelected(true)
 
     }
+
+
 }
