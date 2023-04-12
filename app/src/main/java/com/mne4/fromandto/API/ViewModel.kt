@@ -1,13 +1,11 @@
 package com.mne4.fromandto.API
 
 import android.util.Log
-import android.view.View
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.gson.Gson
 import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
-import com.mne4.fromandto.Observe.DataModel
+import com.mne4.fromandto.Observe.DataModelUsers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +16,6 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Path
 
 @OptIn(ExperimentalMultiplatform::class)
 class ViewModel{
@@ -27,7 +24,7 @@ class ViewModel{
     private lateinit var usersApi: UsersApi
     private lateinit var tripsApi: TripsApi
     private lateinit var registr_sms: SmsApi
-    val dataModel = DataModel()
+    val dataModelUsers = DataModelUsers()
     private val api_sms_key = "92ECBB50-F17D-BC2B-0205-63A4B6210D31"
 
     constructor(){
@@ -48,25 +45,28 @@ class ViewModel{
 
         registr_sms = retrofit_sms.create(SmsApi::class.java)
     }
-    fun getUserAll(): ArrayList<User>
+    fun getUserAll()
     {
-        var list: ArrayList<User> = arrayListOf()
-        CoroutineScope(Dispatchers.IO).launch {
-           list =  usersApi.getAll()
-
+        CoroutineScope(Dispatchers.Main).launch {
+           var users = usersApi.getAll()
+            dataModelUsers.ApiGetUserAll.value = users
         }
-        return list
     }
 
     fun getCurrentUser(guid:String)
     {
         CoroutineScope(Dispatchers.Main).launch {
            var user = usersApi.getCurrentUser(guid)
-            dataModel.ApiReturnCurrentUser.value = user
+            dataModelUsers.ApiGetCurrentUser.value = user
         }
     }
 
-
+    fun getAuthentication(guid:String, hashPassword:String){
+        CoroutineScope(Dispatchers.IO).launch {
+           var truth = usersApi.getAuthentication(guid,hashPassword)
+            dataModelUsers.ApiGetAuthentication.value = truth
+        }
+    }
 
     fun postNewUser(user:User)
     {
@@ -76,13 +76,14 @@ class ViewModel{
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
                     users = GetUserRoom(
                         list.id_user,
+                        list.password,
                         list.surname,
                         list.name,
                        list.birthday,
                         list.gender,
                         list.phone
                     )
-                    dataModel.ApiReturnUser.value = users
+                    dataModelUsers.ApiReturnUser.value = users
                     Log.d("Post","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -97,6 +98,17 @@ class ViewModel{
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
+                    users = GetUserRoom(
+                        list.id_user,
+                        list.password,
+                        list.surname,
+                        list.name,
+                        list.birthday,
+                        list.gender,
+                        list.phone
+                    )
+                    dataModelUsers.ApiReturnUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -135,6 +147,14 @@ class ViewModel{
             trips = tripsApi.getCurrentTrips(guid)
         }
         return trips
+    }
+
+    fun getTripsByDate(date:String, start_point:String, end_point: String): ArrayList<Trips>{
+        var list: ArrayList<Trips> = arrayListOf()
+        CoroutineScope(Dispatchers.IO).launch {
+            list =  tripsApi.getTrips(date,start_point,end_point)
+        }
+        return list
     }
 
     fun postCreateTrips(guid:String, trips: Trips)

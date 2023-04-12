@@ -11,15 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.Models.GetUserRoom
-import com.mne4.fromandto.Models.User
-import com.mne4.fromandto.Observe.DataModel
 import com.mne4.fromandto.db.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +53,8 @@ class IntroActivity : AppCompatActivity() {
 
 
         checkLocalDb()
+
+
 
 
 
