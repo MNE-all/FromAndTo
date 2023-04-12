@@ -55,9 +55,6 @@ class RegisterActivity : AppCompatActivity() {
        var inflater: LayoutInflater = LayoutInflater.from(this)
        var reg_windom = inflater.inflate(R.layout.activity_sms_send_dialog,null)
        var number:EditText = reg_windom.findViewById(R.id.editTextNumber)
-       var number2:EditText = reg_windom.findViewById(R.id.editTextNumber2)
-       var number3:EditText = reg_windom.findViewById(R.id.editTextNumber3)
-       var number4:EditText = reg_windom.findViewById(R.id.editTextNumber4)
        dialog.setView(reg_windom)
 
 
@@ -65,7 +62,7 @@ class RegisterActivity : AppCompatActivity() {
        dialog.setPositiveButton("Подтвердить",DialogInterface.OnClickListener{dialog: DialogInterface?, i->
 
            var text:String
-           text = number.text.toString() + number2.text.toString() + number3.text.toString() + number4.text.toString()
+           text = number.text.toString()
 
            if(text == passwordGenereted.toString()) {
                Toast.makeText(this, "Номер подтвержден!", Toast.LENGTH_SHORT).show()
@@ -73,6 +70,8 @@ class RegisterActivity : AppCompatActivity() {
                Toast.makeText(this, "Неправильно введенный пароль!", Toast.LENGTH_SHORT).show()
            }
        })
+
+       dialog.show()
 
 
 
