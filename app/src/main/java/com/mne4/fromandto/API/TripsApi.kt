@@ -9,6 +9,8 @@ interface TripsApi {
     @GET("Trips/Read")
     suspend fun getAll(): ArrayList<Trips>
 
+
+
     @GET("Trips/Read/{guid}")
     suspend fun getCurrentTrips(@Path("guid") guid:String): Trips
 
