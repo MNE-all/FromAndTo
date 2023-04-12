@@ -4,21 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.mne4.fromandto.databinding.ActivityLoginBinding
+import android.widget.Button
+import android.widget.EditText
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityLoginBinding
+    private var phoneEditText = findViewById<EditText>(R.id.editTextPhone)
+    private var passwordEditText = findViewById<EditText>(R.id.editTextPassword)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_login)
 
 
     }
 
     fun butEnter(view: View){
-        var phone = binding.editTextPhone.text
-        var password = binding.editTextPassword.text
+        var phone = phoneEditText.text
+        var password = passwordEditText.text
 
 
     }
