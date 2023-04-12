@@ -66,11 +66,12 @@ class ViewModel{
         }
     }
 
-    fun getAuthentication(guid:String, hashPassword:String): Boolean{
-        CoroutineScope(Dispatchers.Main).launch {
-            var user = usersApi.getAuthentication(guid,hashPassword)
-            dataModel.ApiReturnCurrentUser.value = user
+    fun getAuthentication(guid:String, hashPassword:String):Boolean{
+        var truth:Boolean = false
+        CoroutineScope(Dispatchers.IO).launch {
+            truth = usersApi.getAuthentication(guid,hashPassword)
         }
+        return truth
     }
 
     fun postNewUser(user:User)
@@ -140,6 +141,14 @@ class ViewModel{
             trips = tripsApi.getCurrentTrips(guid)
         }
         return trips
+    }
+
+    fun getTripsByDate(date:String, start_point:String, end_point: String): ArrayList<Trips>{
+        var list: ArrayList<Trips> = arrayListOf()
+        CoroutineScope(Dispatchers.IO).launch {
+            list =  tripsApi.getTrips(date,start_point,end_point)
+        }
+        return list
     }
 
     fun postCreateTrips(guid:String, trips: Trips)
