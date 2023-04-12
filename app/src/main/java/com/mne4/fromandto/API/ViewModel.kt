@@ -66,7 +66,7 @@ class ViewModel{
         }
     }
 
-    fun getAuthentication(@Path("guid") guid:String, @Path("hashPassword") hashPassword:String): Boolean
+
 
     fun postNewUser(user:User)
     {
