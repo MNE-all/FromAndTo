@@ -49,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
 
        var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
        dialog.setTitle("Подтверждение номера")
-       dialog.setMessage("Поддтвердите номер телефона. Введите пароль по смс!")
+       dialog.setMessage("Подтвердите номер телефона. Введите пароль по смс!")
        var passwordGenereted = viewModel.postSMS(Phone)
        var inflater: LayoutInflater = LayoutInflater.from(this)
        var reg_windom = inflater.inflate(R.layout.activity_sms_send_dialog,null)
@@ -60,8 +60,7 @@ class RegisterActivity : AppCompatActivity() {
 
        dialog.setPositiveButton("Подтвердить",DialogInterface.OnClickListener{dialog: DialogInterface?, i->
 
-           var text:String
-           text = number.text.toString()
+           var text = number.text.toString()
 
            if(text == passwordGenereted.toString()) {
                Toast.makeText(this, "Номер подтвержден!", Toast.LENGTH_SHORT).show()

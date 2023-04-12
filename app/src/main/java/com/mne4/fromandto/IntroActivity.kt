@@ -1,5 +1,9 @@
 package com.mne4.fromandto
 
+import android.app.Notification.PRIORITY_HIGH
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +12,12 @@ import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.Observe.DataModel
-import com.mne4.fromandto.databinding.ActivityIntroLoadScreenBinding
 import com.mne4.fromandto.db.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,14 +25,14 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class IntroActivity : AppCompatActivity() {
-    lateinit var binding: ActivityIntroLoadScreenBinding
     private var viewModel = ViewModel()
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntroLoadScreenBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_intro_load_screen)
+
 
         checkLocalDb()
 
@@ -63,6 +67,7 @@ class IntroActivity : AppCompatActivity() {
         var buttonNo = findViewById<Button>(R.id.buttonNotificationOff)
         buttonYes.setOnClickListener {
             // TODO Пользователь разрешает уведомления
+
             loginOrRegister()
         }
         buttonNo.setOnClickListener {
