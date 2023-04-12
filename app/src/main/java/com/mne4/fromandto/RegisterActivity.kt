@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -18,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var viewModel:ViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.intro_act10)
+        setContentView(R.layout.activity_register)
 
         viewModel= ViewModel()
     }
