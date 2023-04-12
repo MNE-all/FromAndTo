@@ -12,4 +12,7 @@ open class DataModel: ViewModel() {
     val ApiReturnCurrentUser: MutableLiveData<User> by lazy {
         MutableLiveData<User>()
     }
+    val ApiReturnUsers: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 }

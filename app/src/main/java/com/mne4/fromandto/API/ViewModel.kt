@@ -66,7 +66,12 @@ class ViewModel{
         }
     }
 
-    fun getAuthentication(@Path("guid") guid:String, @Path("hashPassword") hashPassword:String): Boolean
+    fun getAuthentication(guid:String, hashPassword:String): Boolean{
+        CoroutineScope(Dispatchers.Main).launch {
+            var user = usersApi.getAuthentication(guid,hashPassword)
+            dataModel.ApiReturnCurrentUser.value = user
+        }
+    }
 
     fun postNewUser(user:User)
     {
