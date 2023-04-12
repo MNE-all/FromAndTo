@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
@@ -33,26 +34,19 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(), InertiaMoveListener {
     lateinit var mapView: MapView
     lateinit var cameraListener: CameraListener
-    var requestPoints: ArrayList<RequestPoint> = ArrayList()
-    private var ROUTE_START_POSITION = Point(
-        47.229410,
-        39.718281
-    )
-    private var ROUTE_END_POSITION = Point(
-        60.023686,
-        30.228692
-    )
-    private val SCREEN_CENTER = Point(
-        (ROUTE_START_POSITION.latitude+ROUTE_END_POSITION.latitude)/2,
-        (ROUTE_START_POSITION.longitude+ROUTE_END_POSITION.longitude)/2,
-    )
 
-    private var mapObjects: MapObjectCollection? = null
-    private var drivingRouter: DrivingRouter? = null
-    private var drivingSession: DrivingSession? = null
-    var radioFrom = findViewById<RadioButton>(R.id.radioTo)
-    var radioTo = findViewById<RadioButton>(R.id.radioTo)
-    var imgPin = findViewById<ImageView>(R.id.imgPin)
+    lateinit var radioFrom:RadioButton
+    lateinit var radioTo: RadioButton
+    lateinit var txtFrom:TextView
+    lateinit var txtTo:TextView
+    lateinit var imgPin:ImageView
+
+    var START_POSITION:Point=Point(
+        0.0,0.0
+    )
+    var END_POSITION:Point=Point(
+        0.0,0.0
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +54,12 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
         MapKitFactory.initialize(this)
 
         setContentView(R.layout.activity_main)
+
+        radioFrom = findViewById(R.id.radioFrom)
+        radioTo = findViewById(R.id.radioTo)
+        txtFrom = findViewById(R.id.txtFrom)
+        txtTo = findViewById(R.id.txtTo)
+        imgPin = findViewById(R.id.imgPin)
 
         mapView = findViewById<MapView>(R.id.mapview)
         requestLocationPermission()
@@ -88,27 +88,36 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
             }
         })
 
-        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
-        mapObjects = mapView.map.mapObjects.addCollection()
-        radioTo.isChecked = false
-
-
     }
+
 
     fun radioFrom(view: View){
         radioTo.isChecked = false
+        radioFrom.isChecked = true
         var imgId = resources.getIdentifier("baseline_location_on_24","drawable",this.packageName)
         imgPin.setImageResource(imgId)
+        if(txtTo.text != "Откуда"){
+            PositionCamera(START_POSITION)
+        }
 
 
     }
     fun radioTo(view: View){
-        findViewById<RadioButton>(R.id.radioFrom).isChecked = false
+        radioFrom.isChecked = false
+        radioTo.isChecked = true
         var imgId = resources.getIdentifier("baseline_location_off_24","drawable",this.packageName)
         imgPin.setImageResource(imgId)
+        if(txtTo.text != "Куда"){
+            PositionCamera(END_POSITION)
+        }
+
 
     }
-
+    fun PositionCamera(position: Point){
+        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
+            Animation(Animation.Type.SMOOTH, 1f), null
+        )
+    }
 
             /*var db = MainDB.getDB(this)
 
@@ -144,15 +153,18 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
 
     fun onAddClick(view: View) {
         var position = mapView.map.cameraPosition.target
-        mapView.map.mapObjects.addPlacemark(position)
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(position.latitude,position.longitude,2)
 
-        var Street2 =address?.get(0)?.getAddressLine(0)
+        var nameAdress =address?.get(0)?.getAddressLine(0)
 
-        Log.d("pos","${Street2}")
-
-
+        if(radioFrom.isChecked){
+            txtFrom.text = nameAdress
+            START_POSITION = position
+        }else{
+            txtTo.text = nameAdress
+            END_POSITION = position
+        }
 
     }
 

@@ -41,6 +41,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#40C4FF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/mapview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +51,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="radioFrom"
             android:orientation="horizontal">
 
             <RadioButton
@@ -57,6 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:buttonTint="@color/black"
+                android:checked="true"
                 android:gravity="center"
                 android:onClick="radioFrom" />
 
@@ -72,8 +76,10 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="radioTo"
             android:orientation="horizontal">
 
             <RadioButton
@@ -81,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:buttonTint="@color/black"
                 android:gravity="center"
                 android:onClick="radioTo" />
 
