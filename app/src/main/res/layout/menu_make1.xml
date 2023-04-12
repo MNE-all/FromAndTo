@@ -3,28 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#DC8787">
 
     <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="490dp"
+        android:fontFamily="sans-serif-black"
         android:text="Создать запрос"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="86dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="Назад"
+        android:textColor="#FFFFFF"
         tools:layout_editor_absoluteX="21dp"
         tools:layout_editor_absoluteY="36dp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="415dp"
         android:layout_height="440dp"
-        app:cardBackgroundColor="#C81515"
+        app:cardBackgroundColor="#0E80E4"
         app:cardCornerRadius="12dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="146dp">
@@ -33,13 +42,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="360sp"
-            app:cardBackgroundColor="#B30606">
+            app:cardBackgroundColor="#0E80E4">
 
             <Button
                 android:id="@+id/button20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="sans-serif-black"
                 android:text="Создать запрос" />
         </androidx.cardview.widget.CardView>
 
@@ -47,27 +57,30 @@
             android:layout_width="match_parent"
             android:layout_height="91dp"
             android:layout_marginTop="260sp"
-            app:cardBackgroundColor="#B30606">
+            app:cardBackgroundColor="#0F449F">
 
             <TextView
                 android:id="@+id/textView39"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Описание" />
+                android:fontFamily="sans-serif-black"
+                android:text="Описание"
+                android:textColor="#FFFFFF" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="140sp"
-            app:cardBackgroundColor="#C81515">
+            app:cardBackgroundColor="#0E80E4">
 
             <Button
                 android:id="@+id/button19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="sans-serif-black"
                 android:text="Карта" />
         </androidx.cardview.widget.CardView>
 
@@ -83,7 +96,9 @@
                 android:layout_marginLeft="100sp"
                 android:layout_marginTop="30sp"
                 android:ems="10"
-                android:inputType="date" />
+                android:fontFamily="sans-serif-black"
+                android:inputType="date"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,14 +112,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
                 android:layout_marginTop="50sp"
-                android:text="Куда:" />
+                android:fontFamily="sans-serif-black"
+                android:text="Куда:"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="200sp"
-            app:cardBackgroundColor="#B30606">
+            app:cardBackgroundColor="#0F449F">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,7 +133,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="200sp"
-                    android:text="Ценник" />
+                    android:fontFamily="sans-serif-black"
+                    android:text="Ценник"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
             <LinearLayout
@@ -128,7 +147,9 @@
                     android:id="@+id/textView36"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Стоимость поездки" />
+                    android:fontFamily="sans-serif-black"
+                    android:text="Стоимость поездки"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -144,7 +165,9 @@
                 android:layout_marginLeft="115sp"
                 android:layout_marginTop="90sp"
                 android:ems="10"
-                android:inputType="textPostalAddress" />
+                android:fontFamily="sans-serif-black"
+                android:inputType="textPostalAddress"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -157,7 +180,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="110sp"
-                android:text="Конец поездки:" />
+                android:fontFamily="sans-serif-black"
+                android:text="Конец поездки:"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -172,7 +197,9 @@
                 android:layout_marginLeft="115sp"
                 android:layout_marginTop="60sp"
                 android:ems="10"
-                android:inputType="textPostalAddress" />
+                android:fontFamily="sans-serif-black"
+                android:inputType="textPostalAddress"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -185,7 +212,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80sp"
-                android:text="Начало поездки:" />
+                android:fontFamily="sans-serif-black"
+                android:text="Начало поездки:"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -200,7 +229,9 @@
                 android:layout_marginLeft="100sp"
                 android:layout_marginTop="0sp"
                 android:ems="10"
-                android:inputType="date" />
+                android:fontFamily="sans-serif-black"
+                android:inputType="date"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -214,7 +245,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
                 android:layout_marginTop="20sp"
-                android:text="Откуда:" />
+                android:fontFamily="sans-serif-black"
+                android:text="Откуда:"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

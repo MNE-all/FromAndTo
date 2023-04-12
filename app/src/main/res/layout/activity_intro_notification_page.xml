@@ -61,6 +61,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:ems="1"
+            android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Да" />
@@ -72,6 +73,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:ems="1"
+            android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Нет" />
