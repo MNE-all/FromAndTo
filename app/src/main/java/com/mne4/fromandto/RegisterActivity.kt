@@ -1,9 +1,12 @@
 package com.mne4.fromandto
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.databinding.ActivityIntroLoginRegisterBinding
@@ -37,6 +40,20 @@ class RegisterActivity : AppCompatActivity() {
            Toast.makeText(this, "Неправильно введен пароль!", Toast.LENGTH_SHORT).show()
            return
        }
+
+       var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
+       dialog.setTitle("Подтверждение номера")
+       dialog.setMessage("Поддтвердите номер телефона. Введите пароль по смс!")
+       var inflater: LayoutInflater = LayoutInflater.from(this)
+       var reg_windom = inflater.inflate(R.layout.intro_act10,null)
+       dialog.setView(reg_windom)
+
+       dialog.setPositiveButton("Подтвердить",DialogInterface.OnClickListener{dialog: DialogInterface?, i->
+
+
+       })
+
+
 
 
 
