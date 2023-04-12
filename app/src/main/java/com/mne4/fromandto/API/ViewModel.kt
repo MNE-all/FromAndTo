@@ -27,7 +27,7 @@ class ViewModel{
     private lateinit var registr_sms: SmsApi
     val dataModelUsers = DataModelUsers()
     val dataModelTrips = DataModelTrips()
-    private val api_sms_key = "92ECBB50-F17D-BC2B-0205-63A4B6210D31"
+    private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
 
     constructor(){
         val interceptor = HttpLoggingInterceptor()
@@ -63,9 +63,9 @@ class ViewModel{
         }
     }
 
-    fun getAuthentication(guid:String, hashPassword:String){
+    fun getAuthentication(phone:String, password:String){
         CoroutineScope(Dispatchers.Main).launch {
-           var truth = usersApi.getAuthentication(guid,hashPassword)
+           var truth = usersApi.getAuthentication(phone, password)
             dataModelUsers.ApiGetAuthentication.value = truth
         }
     }

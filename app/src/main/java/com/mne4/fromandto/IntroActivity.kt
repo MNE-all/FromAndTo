@@ -1,10 +1,4 @@
 package com.mne4.fromandto
-
-import android.app.Notification.PRIORITY_HIGH
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.db.MainDB
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.internal.notify
-import java.time.LocalDate
 
 class IntroActivity : AppCompatActivity() {
     private var viewModel = ViewModel()
@@ -32,7 +19,10 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro_load_screen)
+    }
 
+    override fun onStart() {
+        super.onStart()
         checkLocalDb()
     }
 
@@ -106,6 +96,7 @@ class IntroActivity : AppCompatActivity() {
                 }
                 else {
                     // TODO в alertDialog предлагать использовать один из аккаунтов из локальной базы данных + авторизовать пользователя
+                    loginOrRegister()
                 }
             }
         }

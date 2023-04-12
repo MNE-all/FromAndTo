@@ -12,8 +12,8 @@ interface DaoUser {
     @Insert
     fun insertUser(user: User)
 
-//    @Query("UPDATE Users SET password= :password, surname = :surname, name= :name, gender= :gender, birthday= :birthday, phone= :phone WHERE id = :id")
-//    fun updateUser(password: String,surname: String, name: String, gender: String, birthday: String, phone:String)
+    @Query("UPDATE Users SET password= :password, surname = :surname, name= :name, gender= :gender, birthday= :birthday, phone= :phone, isInAcc= :isInAcc WHERE id = :id")
+    fun updateUser(id: Int?, password: String,surname: String, name: String, gender: String?, birthday: String?, phone:String, isInAcc: Boolean)
 
     @Query("SELECT * FROM Users")
     fun getAllUser(): Flow<List<User>>

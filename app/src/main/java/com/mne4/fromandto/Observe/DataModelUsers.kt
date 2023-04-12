@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
+import com.mne4.fromandto.Models.UserFull
 
 open class DataModelUsers: ViewModel() {
 
@@ -15,8 +16,8 @@ open class DataModelUsers: ViewModel() {
         MutableLiveData<User>()
     }
 
-    val ApiGetAuthentication: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
+    val ApiGetAuthentication: MutableLiveData<UserFull> by lazy {
+        MutableLiveData<UserFull>()
     }
 
     val ApiPostNewUser: MutableLiveData<GetUserRoom> by lazy {
