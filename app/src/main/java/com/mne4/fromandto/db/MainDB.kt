@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
     entities = [
         User::class
     ],
-    version = 1
+    version = 2
 )
 abstract class MainDB: RoomDatabase() {
     abstract fun getDao():DaoUser
