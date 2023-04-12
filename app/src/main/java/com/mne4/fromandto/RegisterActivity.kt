@@ -2,6 +2,7 @@ package com.mne4.fromandto
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +12,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.API.ViewModel
+import com.mne4.fromandto.db.MainDB
+import com.mne4.fromandto.db.User
 
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var viewModel:ViewModel
+    private val surname = findViewById<TextInputEditText>(R.id.surnameField)
+    private val name = findViewById<TextInputEditText>(R.id.nameField)
+    private val phone = findViewById<TextInputEditText>(R.id.phoneField)
+    private val password = findViewById<TextInputEditText>(R.id.passwordField)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -22,27 +29,38 @@ class RegisterActivity : AppCompatActivity() {
         viewModel= ViewModel()
     }
 
+    private fun addUser() {
+        val user = com.mne4.fromandto.Models.User(surname.text.toString(), name.text.toString(),null, null, null, null, password.text.toString(), phone.text.toString(), false, null, null, null, null )
+        viewModel.postNewUser(user)
+        var db = MainDB.getDB(this)
+        viewModel.dataModelUsers.ApiPostNewUser.observe(this) {
+            val user = User(
+                null, it.id_user, it.password, it.surname, it.name,
+                null, null, it.phone, true
+            )
+            db.getDao().insertUser(user)
+            var intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
    @SuppressLint("MissingInflatedId")
    fun butReg(view: View){
+        var phone_num = "7${phone.text}"
 
-        var Surname = findViewById<TextInputEditText>(R.id.surnameField).text
-        var Name = findViewById<TextInputEditText>(R.id.nameField).text
-        var Phone = "7"+findViewById<TextInputEditText>(R.id.phoneField).text
-        var Password = findViewById<TextInputEditText>(R.id.passwordField).text
-
-       if(Surname!!.isEmpty()){
+       if(surname.text.isNullOrEmpty()){
          Toast.makeText(this, "Неправильно введена фамилия!", Toast.LENGTH_SHORT).show()
            return
        }
-       if(Name!!.isEmpty()){
+       if(name.text.isNullOrEmpty()){
            Toast.makeText(this, "Неправильно введено имя!", Toast.LENGTH_SHORT).show()
            return
        }
-       if(Phone.isEmpty()){
+       if(phone.text.isNullOrEmpty()){
            Toast.makeText(this, "Неправильно введен телефон!", Toast.LENGTH_SHORT).show()
            return
        }
-       if(Password!!.isEmpty()){
+       if(password.text.isNullOrEmpty()){
            Toast.makeText(this, "Неправильно введен пароль!", Toast.LENGTH_SHORT).show()
            return
        }
@@ -50,11 +68,11 @@ class RegisterActivity : AppCompatActivity() {
        var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
        dialog.setTitle("Подтверждение номера")
        dialog.setMessage("Подтвердите номер телефона. Введите пароль по смс!")
-       var passwordGenereted = viewModel.postSMS(Phone)
+       var passwordGenereted = viewModel.postSMS(phone_num)
        var inflater: LayoutInflater = LayoutInflater.from(this)
-       var reg_windom = inflater.inflate(R.layout.activity_sms_send_dialog,null)
-       var number:EditText = reg_windom.findViewById(R.id.editTextNumber)
-       dialog.setView(reg_windom)
+       var reg_window = inflater.inflate(R.layout.activity_sms_send_dialog,null)
+       var number:EditText = reg_window.findViewById(R.id.editTextNumber)
+       dialog.setView(reg_window)
 
 
 
@@ -64,7 +82,10 @@ class RegisterActivity : AppCompatActivity() {
 
            if(text == passwordGenereted.toString()) {
                Toast.makeText(this, "Номер подтвержден!", Toast.LENGTH_SHORT).show()
-           }else{
+               addUser()
+           }
+           else
+           {
                Toast.makeText(this, "Неправильно введенный пароль!", Toast.LENGTH_SHORT).show()
            }
        })

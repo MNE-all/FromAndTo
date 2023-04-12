@@ -8,7 +8,7 @@ data class GetUserRoom (
     var password:String,
     var surname: String,
     var name: String,
-    var birthday: String,
-    var gender: String,
+    var birthday: String?,
+    var gender: String?,
     var phone: String,
 )
