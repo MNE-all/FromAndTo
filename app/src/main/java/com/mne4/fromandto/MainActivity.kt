@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener, UserLocationObjec
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 sumbitQuery(searchEdit.text.toString())
             }
-            true
+            false
         }
 
     }
