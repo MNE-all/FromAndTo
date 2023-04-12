@@ -6,13 +6,17 @@ import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
 
-open class DataModelUsers: ViewModel() {
+open class DataModelTrips: ViewModel() {
 
-    val ApiGetUserAll: MutableLiveData<ArrayList<User>> by lazy {
-        MutableLiveData<ArrayList<User>>()
+    val ApiGetTripsAll: MutableLiveData<ArrayList<Trips>> by lazy {
+        MutableLiveData<ArrayList<Trips>>()
     }
-    val ApiGetCurrentUser: MutableLiveData<User> by lazy {
-        MutableLiveData<User>()
+    val ApiGetCurrenTrips: MutableLiveData<Trips> by lazy {
+        MutableLiveData<Trips>()
+    }
+
+    val ApiGetTripsByDate: MutableLiveData<ArrayList<Trips>> by lazy {
+        MutableLiveData<ArrayList<Trips>>()
     }
 
     val ApiGetAuthentication: MutableLiveData<Boolean> by lazy {

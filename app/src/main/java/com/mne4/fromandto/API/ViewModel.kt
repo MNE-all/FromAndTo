@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
+import com.mne4.fromandto.Observe.DataModelTrips
 import com.mne4.fromandto.Observe.DataModelUsers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ class ViewModel{
     private lateinit var tripsApi: TripsApi
     private lateinit var registr_sms: SmsApi
     val dataModelUsers = DataModelUsers()
+    val dataModelTrips = DataModelTrips()
     private val api_sms_key = "92ECBB50-F17D-BC2B-0205-63A4B6210D31"
 
     constructor(){
@@ -62,7 +64,7 @@ class ViewModel{
     }
 
     fun getAuthentication(guid:String, hashPassword:String){
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
            var truth = usersApi.getAuthentication(guid,hashPassword)
             dataModelUsers.ApiGetAuthentication.value = truth
         }
@@ -83,7 +85,7 @@ class ViewModel{
                         list.gender,
                         list.phone
                     )
-                    dataModelUsers.ApiReturnUser.value = users
+                    dataModelUsers.ApiPostNewUser.value = users
                     Log.d("Post","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -108,7 +110,7 @@ class ViewModel{
                         list.gender,
                         list.phone
                     )
-                    dataModelUsers.ApiReturnUser.value = users
+                    dataModelUsers.ApiPutEditUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -131,30 +133,29 @@ class ViewModel{
         }
     }
 
-    fun getTripsAll(): ArrayList<Trips>
+    fun getTripsAll()
     {
-        var list: ArrayList<Trips> = arrayListOf()
-        CoroutineScope(Dispatchers.IO).launch {
-            list =  tripsApi.getAll()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var list =  tripsApi.getAll()
+            dataModelTrips.ApiGetTripsAll.value = list
         }
-        return list
     }
 
-    fun getCurrenTrips(guid:String):Trips?
+    fun getCurrenTrips(guid:String)
     {
-        var trips: Trips? = null
-        CoroutineScope(Dispatchers.IO).launch {
-            trips = tripsApi.getCurrentTrips(guid)
+        CoroutineScope(Dispatchers.Main).launch {
+            var trips = tripsApi.getCurrentTrips(guid)
+            dataModelTrips.ApiGetCurrenTrips.value = trips
         }
-        return trips
     }
 
-    fun getTripsByDate(date:String, start_point:String, end_point: String): ArrayList<Trips>{
-        var list: ArrayList<Trips> = arrayListOf()
-        CoroutineScope(Dispatchers.IO).launch {
-            list =  tripsApi.getTrips(date,start_point,end_point)
+    fun getTripsByDate(date:String, start_point:String, end_point: String){
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var list =  tripsApi.getTrips(date,start_point,end_point)
+            dataModelTrips.ApiGetTripsByDate.value = list
         }
-        return list
     }
 
     fun postCreateTrips(guid:String, trips: Trips)
