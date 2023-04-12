@@ -9,6 +9,7 @@
         android:id="@+id/button17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="Назад"
         tools:layout_editor_absoluteX="284dp"
         tools:layout_editor_absoluteY="573dp" />
@@ -17,6 +18,7 @@
         android:id="@+id/button16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="Далее"
         tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="573dp" />
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Введите свой логин"
+        android:textColor="#000000"
         android:textSize="22sp"
         tools:layout_editor_absoluteX="107dp"
         tools:layout_editor_absoluteY="227dp" />
@@ -37,6 +40,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Введите свой пароль"
+        android:textColor="#000000"
         android:textSize="22sp"
         tools:layout_editor_absoluteX="94dp"
         tools:layout_editor_absoluteY="469dp" />
@@ -47,6 +51,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Введите свой номер телефона"
+        android:textColor="#000000"
         android:textSize="22sp"
         tools:layout_editor_absoluteX="50dp"
         tools:layout_editor_absoluteY="343dp" />
@@ -56,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:fontFamily="sans-serif-black"
         android:inputType="textPersonName"
         android:text="Name"
         tools:layout_editor_absoluteX="161dp"
@@ -67,6 +73,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Логин:"
+        android:textColor="#000000"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="47dp"
         tools:layout_editor_absoluteY="291dp" />
@@ -77,6 +84,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Телефон:"
+        android:textColor="#000000"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="47dp"
         tools:layout_editor_absoluteY="414dp" />
@@ -87,6 +95,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Пароль:"
+        android:textColor="#000000"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="50dp"
         tools:layout_editor_absoluteY="529dp" />
@@ -110,9 +119,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
             android:rotation="0"
             android:text="Регистрация"
-            android:textColor="#C0C1C5"
+            android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
@@ -122,6 +132,7 @@
         android:layout_width="202dp"
         android:layout_height="44dp"
         android:ems="10"
+        android:fontFamily="sans-serif-black"
         android:inputType="phone"
         tools:layout_editor_absoluteX="169dp"
         tools:layout_editor_absoluteY="396dp" />
@@ -131,6 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:fontFamily="sans-serif-black"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="512dp" />

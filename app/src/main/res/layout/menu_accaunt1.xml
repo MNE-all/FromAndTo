@@ -27,7 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="500dp"
+        android:fontFamily="sans-serif-black"
         android:text="Профиль"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/cardView4"
         app:layout_constraintHorizontal_bias="0.491"
@@ -86,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="120sp"
+                android:fontFamily="sans-serif-black"
                 android:text="Изменить статус" />
         </LinearLayout>
 
@@ -100,6 +104,7 @@
                 android:layout_width="312dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="sans-serif-black"
                 android:text="Изменить ФИО" />
         </LinearLayout>
 
@@ -112,9 +117,12 @@
                 android:id="@+id/textView34"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="180sp"
+                android:layout_marginLeft="165sp"
                 android:layout_marginTop="20sp"
-                android:text="Имя профиля" />
+                android:fontFamily="sans-serif-black"
+                android:text="Имя профиля"
+                android:textColor="#000000"
+                android:textSize="20sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
