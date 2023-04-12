@@ -10,9 +10,9 @@
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-20dp"
+        android:layout_marginBottom="-10dp"
         android:onClick="onAddClick"
-        android:text="Button"
+        android:text="Выбрать место"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imgPin"
         android:layout_width="47dp"
         android:layout_height="48dp"
         android:scaleType="centerCrop"
@@ -40,35 +40,59 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/mapview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/From"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#FF6E40"
-            android:hint="Откуда"
-            android:textColor="@color/white">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <RadioButton
+                android:id="@+id/radioFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:onClick="radioFrom" />
 
-        <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/txtFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="fill_vertical"
+                android:paddingLeft="10dp"
+                android:text="Откуда" />
 
-            android:id="@+id/To"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#FF6E40"
-            android:hint="Куда"
-            android:textColor="@color/white">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <RadioButton
+                android:id="@+id/radioTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:onClick="radioTo" />
+
+            <TextView
+                android:id="@+id/txtTo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="fill_vertical"
+                android:paddingLeft="10dp"
+                android:text="Куда" />
+        </LinearLayout>
     </LinearLayout>
 
 

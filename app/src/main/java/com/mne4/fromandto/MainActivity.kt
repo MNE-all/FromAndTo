@@ -4,8 +4,11 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
@@ -47,6 +50,10 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
     private var mapObjects: MapObjectCollection? = null
     private var drivingRouter: DrivingRouter? = null
     private var drivingSession: DrivingSession? = null
+    var radioFrom = findViewById<RadioButton>(R.id.radioTo)
+    var radioTo = findViewById<RadioButton>(R.id.radioTo)
+    var imgPin = findViewById<ImageView>(R.id.imgPin)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
@@ -81,7 +88,26 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
             }
         })
 
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
+        mapObjects = mapView.map.mapObjects.addCollection()
+        radioTo.isChecked = false
 
+
+    }
+
+    fun radioFrom(view: View){
+        radioTo.isChecked = false
+        var imgId = resources.getIdentifier("baseline_location_on_24","drawable",this.packageName)
+        imgPin.setImageResource(imgId)
+
+
+    }
+    fun radioTo(view: View){
+        findViewById<RadioButton>(R.id.radioFrom).isChecked = false
+        var imgId = resources.getIdentifier("baseline_location_off_24","drawable",this.packageName)
+        imgPin.setImageResource(imgId)
+
+    }
 
 
             /*var db = MainDB.getDB(this)
@@ -113,11 +139,7 @@ class MainActivity : AppCompatActivity(), InertiaMoveListener {
         }
 */
 
-        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
-        mapObjects = mapView.map.mapObjects.addCollection()
 
-
-    }
 
 
     fun onAddClick(view: View) {
