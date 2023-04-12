@@ -36,31 +36,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="fill_vertical"
-            android:hint="Поиск"
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="fill_vertical"-->
+<!--            app:endIconMode="clear_text"-->
+<!--            app:startIconDrawable="@drawable/ic_search">-->
 
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/ic_search">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditSearch"
+<EditText
+    android:id="@+id/EditSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-
+                android:hint="Поиск"
                 android:gravity="start"
                 android:padding="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
+                app:layout_constraintTop_toTopOf="parent"><
+</EditText>>
     </androidx.cardview.widget.CardView>>
     <ImageView
         android:id="@+id/imgPin"
