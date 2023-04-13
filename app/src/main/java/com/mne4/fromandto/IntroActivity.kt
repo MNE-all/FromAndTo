@@ -14,7 +14,7 @@ class IntroActivity : AppCompatActivity() {
         MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
         MapKitFactory.initialize(this)
 
-        var intent = Intent(this, MainActivity::class.java)
+        var intent = Intent(this, CreateRequestActivity::class.java)
         startActivity(intent)
     }
 }

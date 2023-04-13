@@ -18,8 +18,11 @@
         <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
+
+
+
         <activity
-            android:name=".MainActivity"
+            android:name=".CreateRequestActivity"
             android:exported="false" />
         <activity
             android:name=".IntroActivity"

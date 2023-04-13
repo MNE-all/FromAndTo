@@ -1,12 +1,9 @@
 package com.mne4.fromandto
 
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.PointF
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,40 +22,45 @@ import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
-import kotlinx.coroutines.delay
 import java.util.*
 
-class MainActivity : AppCompatActivity(), UserLocationObjectListener,
+class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     com.yandex.mapkit.search.Session.SearchListener, CameraListener {
     lateinit var mapView: MapView
     lateinit var cameraListener: CameraListener
 
-    lateinit var radioFrom:RadioButton
+    lateinit var radioFrom: RadioButton
     lateinit var radioTo: RadioButton
-    lateinit var txtFrom:TextView
-    lateinit var txtTo:TextView
-    lateinit var imgPin:ImageView
+    lateinit var txtFrom: TextView
+    lateinit var txtTo: TextView
+    lateinit var imgPin: ImageView
+    lateinit var imgMyLocation: ImageView
 
-    var START_POSITION:Point=Point( 0.0,0.0 )
-    var END_POSITION:Point=Point(0.0,0.0 )
+    var START_POSITION: Point = Point(0.0, 0.0)
+    var END_POSITION: Point = Point(0.0, 0.0)
 
-    lateinit var locationMapKit:UserLocationLayer
-    lateinit var searchEdit:EditText
-    lateinit var searchManager:SearchManager
-    lateinit var searchSession:com.yandex.mapkit.search.Session
+    lateinit var locationMapKit: UserLocationLayer
+    lateinit var searchEdit: EditText
+    lateinit var searchManager: SearchManager
+    lateinit var searchSession: com.yandex.mapkit.search.Session
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_create_request)
 
+        // Инициализация элементов управления
         radioFrom = findViewById(R.id.radioFrom)
         radioTo = findViewById(R.id.radioTo)
         txtFrom = findViewById(R.id.txtFrom)
         txtTo = findViewById(R.id.txtTo)
         imgPin = findViewById(R.id.imgPin)
+        imgMyLocation = findViewById(R.id.imageViewMyLocation)
+        mapView = findViewById(R.id.mapview)
+        searchEdit = findViewById(R.id.EditSearch)
 
-        mapView = findViewById<MapView>(R.id.mapview)
+
+        // Перемещение карты на колледж
         mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
-        Animation(Animation.Type.SMOOTH, 3f), null
+                Animation(Animation.Type.SMOOTH, 3f), null
         )
 
         var mapKit = MapKitFactory.getInstance()
@@ -67,69 +69,59 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
         var traffic = mapKit.createTrafficLayer(mapView.mapWindow)
         traffic.isTrafficVisible = false
 
-
-//        var position = userLocation.cameraPosition()?.target ?: Point(
-//            60.023686,
-//            30.228692
-//        )
-
-
-//        var locationManager = MapKitFactory.getInstance().createLocationManager()
-//        locationManager!!.requestSingleUpdate(object : LocationListener {
-//            override fun onLocationStatusUpdated(p0: LocationStatus) {
-//            }
-//            override fun onLocationUpdated(p0: Location) {
-//                var position = p0?.position ?: Point(60.023686, 30.228692)
-//            }
-//        })
-
         locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
-        locationMapKit.isVisible = false
+        locationMapKit.isVisible = true
         locationMapKit.setObjectListener(this)
+
+
+
         SearchFactory.initialize(this)
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
         mapView.map.addCameraListener(this)
-        searchEdit = findViewById(R.id.EditSearch)
+
         searchEdit.setOnEditorActionListener { textView, i, keyEvent ->
             submitQuery(searchEdit!!.text.toString())
             false
         }
         mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
             mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 1f), null
+                    Animation(Animation.Type.SMOOTH, 1f), null
             )
             false
         }
-
     }
 
+    fun moveToMyLocation(view: View) {
+        var position = locationMapKit.cameraPosition()?.target ?: Point(60.023686, 30.228692)
+        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 0f), null
+        )
+    }
 
-    fun radioFrom(view: View){
+    fun radioFrom(view: View) {
         radioTo.isChecked = false
         radioFrom.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_on_24","drawable",this.packageName)
+        var imgId = resources.getIdentifier("baseline_location_on_24", "drawable", this.packageName)
         imgPin.setImageResource(imgId)
-        if(txtTo.text != "Откуда"){
-            cameraPosition(START_POSITION)
+        if (txtTo.text != "Откуда") {
+            mapView.map.move(CameraPosition(START_POSITION, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+            )
         }
 
 
     }
-    fun radioTo(view: View){
+
+    fun radioTo(view: View) {
         radioFrom.isChecked = false
         radioTo.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_off_24","drawable",this.packageName)
+        var imgId = resources.getIdentifier("baseline_location_off_24", "drawable", this.packageName)
         imgPin.setImageResource(imgId)
-        if(txtTo.text != "Куда"){
-            cameraPosition(END_POSITION)
+        if (txtTo.text != "Куда") {
+            mapView.map.move(CameraPosition(END_POSITION, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+            )
         }
-
-
-    }
-    fun cameraPosition(position: Point){
-        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 1f), null
-        )
     }
 
 
@@ -152,11 +144,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
             val resultLocation = searchResult.obj!!.geometry[0].point
             if (resultLocation != null) {
                 mapObjects.addPlacemark(
-                    resultLocation,
-                    ImageProvider.fromResource(this, R.drawable.search_result)
+                        resultLocation,
+                        ImageProvider.fromResource(this, R.drawable.search_result)
                 )
                 mapView.map.move(CameraPosition(resultLocation, 17.0f, 0.0f, 0.0f),
-                    Animation(Animation.Type.SMOOTH, 1f), null
+                        Animation(Animation.Type.SMOOTH, 1f), null
                 )
 
             }
@@ -174,24 +166,26 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
     }
 
     override fun onCameraPositionChanged(
-        map: Map,
-        cameraPosition: CameraPosition,
-        cameraUpdateReason: CameraUpdateReason,
-        finished: Boolean
+            map: Map,
+            cameraPosition: CameraPosition,
+            cameraUpdateReason: CameraUpdateReason,
+            finished: Boolean
     ) {
-        val geoCoder = Geocoder(this, Locale.getDefault())
-        val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude,2)
+        if(finished) {
+            val geoCoder = Geocoder(applicationContext, Locale.getDefault())
+            val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
 
-        var nameAdress =address?.get(0)?.getAddressLine(0)
-
-        if(radioFrom.isChecked){
-            txtFrom.text = nameAdress
-            START_POSITION = cameraPosition.target
-        }else{
-            txtTo.text = nameAdress
-            END_POSITION = cameraPosition.target
+            var nameAdress = address?.get(0)?.getAddressLine(0)
+            if (radioFrom.isChecked) {
+                txtFrom.text = nameAdress
+                START_POSITION = cameraPosition.target
+            } else {
+                txtTo.text = nameAdress
+                END_POSITION = cameraPosition.target
+            }
         }
     }
+
 
     private fun requestLocationPermission() {
         if (ActivityCompat.checkSelfPermission(this,

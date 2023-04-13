@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CreateRequestActivity">
 
 
     <com.yandex.mapkit.mapview.MapView
@@ -55,6 +55,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_location_on_24" />
 
+    <ImageView
+        android:id="@+id/imageViewMyLocation"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="MyLocation"
+        android:onClick="moveToMyLocation"
+        app:layout_constraintBottom_toTopOf="@+id/cardView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_my_location_24" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"
@@ -73,7 +85,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:background="#70003FFE"
                 android:onClick="radioFrom"
                 android:orientation="horizontal">
@@ -102,7 +114,7 @@
             <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:background="#704CAF50"
                 android:onClick="radioTo"
                 android:orientation="horizontal">
