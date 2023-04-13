@@ -25,6 +25,7 @@ import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
+import kotlinx.coroutines.delay
 import java.util.*
 
 class MainActivity : AppCompatActivity(), UserLocationObjectListener,
@@ -89,11 +90,14 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
         mapView.map.addCameraListener(this)
         searchEdit = findViewById(R.id.EditSearch)
-        searchEdit.setOnEditorActionListener{
-            v, actionId, event ->
-            if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                submitQuery(searchEdit.text.toString())
-            }
+        searchEdit.setOnEditorActionListener { textView, i, keyEvent ->
+            submitQuery(searchEdit!!.text.toString())
+            false
+        }
+        mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
+            mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 1f), null
+            )
             false
         }
 
@@ -151,6 +155,10 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
                     resultLocation,
                     ImageProvider.fromResource(this, R.drawable.search_result)
                 )
+                mapView.map.move(CameraPosition(resultLocation, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+                )
+
             }
         }
     }
@@ -171,28 +179,18 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
         cameraUpdateReason: CameraUpdateReason,
         finished: Boolean
     ) {
-        if (finished) {
-            submitQuery(searchEdit!!.text.toString())
-        }
-    }
-
-
-
-    fun onAddClick(view: View) {
-        var position = mapView.map.cameraPosition.target
         val geoCoder = Geocoder(this, Locale.getDefault())
-        val address = geoCoder.getFromLocation(position.latitude,position.longitude,2)
+        val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude,2)
 
         var nameAdress =address?.get(0)?.getAddressLine(0)
 
         if(radioFrom.isChecked){
             txtFrom.text = nameAdress
-            START_POSITION = position
+            START_POSITION = cameraPosition.target
         }else{
             txtTo.text = nameAdress
-            END_POSITION = position
+            END_POSITION = cameraPosition.target
         }
-
     }
 
     private fun requestLocationPermission() {
@@ -219,18 +217,22 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener,
         )
     }
     override fun onObjectAdded(userLocation: UserLocationView) {
-        locationMapKit.setAnchor(
-            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
-            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
-        )
-        userLocation.arrow.setIcon(ImageProvider.fromResource(this,R.drawable.baseline_directions_car_24))
-        var picIcon = userLocation.pin.useCompositeIcon()
-        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
-            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
-
-        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
-        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
-        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
+//        locationMapKit.setAnchor(
+//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
+//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
+//        )
+//        userLocation.arrow.setIcon(ImageProvider.fromResource(this,R.drawable.baseline_directions_car_24))
+//        var picIcon = userLocation.pin.useCompositeIcon()
+//        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
+//            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
+//
+//        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
+//        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
+//        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
+//
+//        mapView.map.move(CameraPosition(Point(0.5,0.5), 17.0f, 0.0f, 0.0f),
+//            Animation(Animation.Type.SMOOTH, 1f), null
+//        )
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
