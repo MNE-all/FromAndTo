@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.mne4.fromandto.databinding.ActivityProfileBinding
@@ -16,10 +17,16 @@ import kotlin.time.Duration.Companion.days
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var maxDate:LocalDate
+    private lateinit var minDate:LocalDate
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        maxDate = LocalDate.now()
+        minDate = maxDate.minusYears(100)
 
 
         var calendarBox = Calendar.getInstance()
@@ -33,7 +40,8 @@ class ProfileActivity : AppCompatActivity() {
         }
         var datePicker: DatePickerDialog = DatePickerDialog(this,dateBox,2023,4,12)
 
-         datePicker.datePicker.maxDate
+         datePicker.datePicker.maxDate = (maxDate.year).toLong()
+        datePicker.datePicker.minDate = (minDate.year).toLong()
 
 
         binding.txtCalendar.setOnClickListener {
@@ -49,9 +57,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun updateText(calendar: Calendar){
 
+
         val dateFormat = "dd-MM-yyyy"
         var simple = SimpleDateFormat(dateFormat,Locale.UK)
-        if()
         binding.txtCalendar.text = simple.format(calendar.time)
 
 
