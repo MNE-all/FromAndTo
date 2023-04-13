@@ -47,6 +47,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewProrifle"
+app:counterEnabled="true"
+        app:counterMaxLength="10"
         app:prefixText="+7">
 
 
@@ -55,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Телефон"
+            android:maxLength="10"
             android:inputType="text"
             android:text=""
             android:textSize="18sp" />
