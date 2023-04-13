@@ -40,14 +40,13 @@ class LoginActivity : AppCompatActivity() {
                 db.getDao().getAllUser().asLiveData().observe(this) {
                     if (it.isNotEmpty()) {
                         for (user in it){
-                            if (user.id_user == userFull.id_user) {
+                            if (user.id_user == userFull.id_user && !user.isInAcc) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     db.getDao().updateUserisAcc(
-                                        "${user.id}",
+                                        "${user.id_user}",
                                         true
                                     )
-                                    Log.d("col","$userFull")
-                                    return@launch
+
                                 }
                                 runOnUiThread {
                                     Toast.makeText(
