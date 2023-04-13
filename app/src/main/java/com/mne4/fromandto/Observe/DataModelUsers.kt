@@ -19,6 +19,9 @@ open class DataModelUsers: ViewModel() {
     val ApiPostAuthentication: MutableLiveData<UserFull?> by lazy {
         MutableLiveData<UserFull?>()
     }
+    val ApiPostIsPhoneUnique: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
     val ApiPostNewUser: MutableLiveData<GetUserRoom> by lazy {
         MutableLiveData<GetUserRoom>()

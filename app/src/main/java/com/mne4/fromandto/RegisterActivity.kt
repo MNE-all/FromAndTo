@@ -81,8 +81,15 @@ class RegisterActivity : AppCompatActivity() {
            return
        }
 
+       viewModel.dataModelUsers.ApiPostIsPhoneUnique.observe(this){
+           if(!it){
+               addUser()
+           }else{
+               Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
+           }
+       }
 
-       addUser()
+
 
 //       var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
 //       dialog.setTitle("Подтверждение номера")

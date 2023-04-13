@@ -64,6 +64,13 @@ class ViewModel{
             dataModelUsers.ApiGetCurrentUser.value = user
         }
     }
+    fun postIsPhoneUnique(phone:String)
+    {
+        CoroutineScope(Dispatchers.Main).launch {
+           var phonesBool = usersApi.postIsPhoneUnique(phone)
+            dataModelUsers.ApiPostIsPhoneUnique.value = phonesBool
+        }
+    }
 
     fun postAuthentication(phone:String, password:String){
         CoroutineScope(Dispatchers.Main).launch {
