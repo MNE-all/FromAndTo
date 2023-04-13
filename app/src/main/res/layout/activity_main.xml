@@ -10,7 +10,6 @@
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-10dp"
         android:onClick="onAddClick"
         android:text="Выбрать место"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -36,31 +35,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="fill_vertical"-->
-<!--            app:endIconMode="clear_text"-->
-<!--            app:startIconDrawable="@drawable/ic_search">-->
-
-        <EditText
-            android:id="@+id/EditSearch"
-            android:layout_width="fill_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="start"
-            android:hint="Поиск"
-            android:imeOptions="actionSearch"
-            android:maxLines="1"
-            android:padding="3dp"
-            android:text="кафе"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></EditText>>
-    </androidx.cardview.widget.CardView>>
+            android:gravity="fill_vertical"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_search">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditSearch"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="start"
+                android:hint="Поиск"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:padding="3dp"
+                android:text="кафе"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.cardview.widget.CardView>
     <ImageView
         android:id="@+id/imgPin"
         android:layout_width="47dp"
