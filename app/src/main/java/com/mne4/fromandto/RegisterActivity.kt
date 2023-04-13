@@ -43,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun addUser() {
-        var intent = Intent(this, WelcomeActivity::class.java)
+        var intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
 
         val user = com.mne4.fromandto.Models.User("${surname.text}", "${name.text}","Мужской", null, null, null, "${password.text}", "${phone.text}", false, null, null, null, null )
@@ -57,12 +57,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 db.getDao().insertUser(user)
             }
-
-
-
         }
-
-
     }
 
    @SuppressLint("MissingInflatedId")
