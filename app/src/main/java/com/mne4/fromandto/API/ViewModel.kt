@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -67,8 +68,14 @@ class ViewModel{
     fun postIsPhoneUnique(phone:String)
     {
         CoroutineScope(Dispatchers.Main).launch {
-           var phonesBool = usersApi.postIsPhoneUnique(phone)
-            dataModelUsers.ApiPostIsPhoneUnique.value = phonesBool
+           usersApi.postIsPhoneUnique(phone).enqueue(object :Callback<Boolean>{
+               override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                   dataModelUsers.ApiPostIsPhoneUnique.value = response.body()
+               }
+               override fun onFailure(call: Call<Boolean>, t: Throwable) {
+               }
+           })
+
         }
     }
 

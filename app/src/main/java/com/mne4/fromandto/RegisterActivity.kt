@@ -80,12 +80,13 @@ class RegisterActivity : AppCompatActivity() {
            Toast.makeText(this, "Неправильно введен пароль!", Toast.LENGTH_SHORT).show()
            return
        }
-
+       viewModel.postIsPhoneUnique(phone.text.toString())
        viewModel.dataModelUsers.ApiPostIsPhoneUnique.observe(this){
-           if(!it){
+           if(it){
                addUser()
            }else{
                Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
+
            }
        }
 
