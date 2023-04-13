@@ -30,7 +30,11 @@
     <string name="Female">женский</string>
     <string name="txtReg">Зарегистрироваться</string>
 
-    <string name="mainInfo">Основная</string>d
+    <string name="mainInfo">Основа</string>
+    <string name="securityInfo">Безопасность</string>
+    <string name="butSave">Сохранить</string>
+
+    <string name="switchChange">Изменения</string>
 
 
 </resources>

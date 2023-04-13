@@ -69,7 +69,7 @@ class IntroActivity : AppCompatActivity() {
         var buttonRegister = findViewById<Button>(R.id.buttonRegisterLoginRegister)
 
         buttonLogin.setOnClickListener {
-            var intent = Intent(this, LoginActivity::class.java)
+            var intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
         buttonRegister.setOnClickListener {

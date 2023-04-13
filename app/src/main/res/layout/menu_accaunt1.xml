@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="20sp"
-    android:background="#DC8787">
+    android:background="#DC8787"
+   >
 
     <TextView
         android:id="@+id/textView32"
@@ -69,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/activity_sms_send_dialog" />
+            tools:listitem="@layout/activity_item_profile" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
