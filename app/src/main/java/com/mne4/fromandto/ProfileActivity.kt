@@ -26,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        ChipActive()
         SpinnerGender()
         DateDialog()
     }
@@ -36,6 +37,17 @@ class ProfileActivity : AppCompatActivity() {
         binding.txtCalendar.text = simple.format(calendar.time)
     }
 
+    private fun ChipActive(){
+        binding.chip.setOnClickListener {
+            if (binding.chip.isChecked) {
+                Toast.makeText(applicationContext, "Безопасность включена", Toast.LENGTH_SHORT)
+                    .show()
+            }else{
+                Toast.makeText(applicationContext, "Безопасность выключена", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
     private fun SpinnerGender(){
 
         var genderList = arrayOf("Мужской","Женский")
@@ -52,7 +64,6 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
         }

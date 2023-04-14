@@ -78,7 +78,6 @@ class ViewModel{
                            list.gender,
                            list.birthday,
                            list.email,
-                           list.login,
                            list.password,
                            list.phone,
                            list.isDriver,
