@@ -26,7 +26,11 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init()
+        Init(false)
+        binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
+            Init(isChecked)
+        }
+
 
         ChipActive()
         SpinnerGender()
@@ -98,7 +102,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun init(truth:Boolean){
+    private fun Init(truth:Boolean){
         binding.chip.isChecked = false
         binding.surnameField.isEnabled = truth
         binding.nameField.isEnabled = truth
@@ -108,6 +112,10 @@ class ProfileActivity : AppCompatActivity() {
         binding.passwordField.isEnabled = truth
         binding.passwordFieldStill.isEnabled = truth
 
+        binding.passportField.isEnabled = truth
+        binding.licenseField.isEnabled = truth
 
+        binding.spinnerGender.isEnabled = truth
+        binding.txtCalendar.isEnabled = truth
     }
 }
