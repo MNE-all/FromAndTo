@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
         var intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
 
-        val user = com.mne4.fromandto.Models.User("${surname.text}", "${name.text}","Мужской", null, null, null, "${password.text}", "${phone.text}", false, null, null, null, null )
+        val user = com.mne4.fromandto.Models.User("${surname.text}", "${name.text}","Мужской", null, null, "${password.text}", "${phone.text}", false, null, null, null, null )
         var db = MainDB.getDB(this)
         viewModel.postNewUser(user)
         viewModel.dataModelUsers.ApiPostNewUser.observe(this) {

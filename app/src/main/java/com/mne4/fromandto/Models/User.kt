@@ -6,7 +6,6 @@ data class User(
     val gender: String?,
     val birthday: String?,
     val email: String?,
-    val login: String?,
     val password: String,
     val phone: String,
     val isDriver: Boolean = false,
