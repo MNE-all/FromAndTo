@@ -8,16 +8,6 @@
     tools:context=".ProfileActivity">
 
     <ImageView
-        android:id="@+id/imageUser"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/image_profile"
-        app:layout_constraintBottom_toBottomOf="@+id/imageBackground"
-        app:layout_constraintEnd_toEndOf="@+id/imageBackground"
-        app:layout_constraintStart_toStartOf="@+id/imageBackground"
-        app:layout_constraintTop_toTopOf="@+id/imageBackground" />
-
-    <ImageView
         android:id="@+id/imageBackground"
         android:layout_width="148dp"
         android:layout_height="147dp"
@@ -28,16 +18,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/baseline_account_circle_24"
+        app:layout_constraintBottom_toBottomOf="@+id/imageBackground"
+        app:layout_constraintEnd_toEndOf="@+id/imageBackground"
+        app:layout_constraintStart_toStartOf="@+id/imageBackground"
+        app:layout_constraintTop_toTopOf="@+id/imageBackground" />
+
 
     <ScrollView
 
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="370dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_scrollview_profile"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageBackground">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
