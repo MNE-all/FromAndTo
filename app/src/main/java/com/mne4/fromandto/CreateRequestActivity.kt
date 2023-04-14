@@ -198,6 +198,13 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                 txtTo.text = nameAdress
                 END_POSITION = cameraPosition.target
             }
+
+            mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
+                mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+                )
+                false
+            }
         }
     }
 
