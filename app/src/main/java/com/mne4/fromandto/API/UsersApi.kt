@@ -16,6 +16,10 @@ interface UsersApi {
 
     @POST("Users/AuthenticationAuto")
     fun postAuthenticationAuto(@Query("guid") guid:String, @Query("hashPassword") hashPassword:String): Boolean
+
+    @POST("Users/IsPhoneUnique")
+    fun postIsPhoneUnique(@Query("phone") phone:String): Call<Boolean>
+
     @POST("Users/AuthenticationPhone")
     fun postAuthentication(@Query("phone") phone:String, @Query("password") password:String): Call<ResponseBody>
 

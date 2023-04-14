@@ -15,7 +15,7 @@ interface DaoUser {
     @Query("UPDATE Users SET password= :password, surname = :surname, name= :name, gender= :gender, birthday= :birthday, phone= :phone, isInAcc= :isInAcc WHERE id_user = :id_user")
     fun updateUser(id_user: String, password: String,surname: String, name: String, gender: String?, birthday: String?, phone:String, isInAcc: Boolean)
 
-    @Query("UPDATE Users SET isInAcc= :isInAcc WHERE id_user = :id_user")
+    @Query("UPDATE Users SET isInAcc = :isInAcc WHERE id_user = :id_user")
     fun updateUserisAcc(id_user: String, isInAcc: Boolean)
 
     @Query("SELECT * FROM Users")

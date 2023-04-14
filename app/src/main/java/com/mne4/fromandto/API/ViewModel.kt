@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -62,6 +63,19 @@ class ViewModel{
         CoroutineScope(Dispatchers.Main).launch {
            var user = usersApi.getCurrentUser(guid)
             dataModelUsers.ApiGetCurrentUser.value = user
+        }
+    }
+    fun postIsPhoneUnique(phone:String)
+    {
+        CoroutineScope(Dispatchers.Main).launch {
+           usersApi.postIsPhoneUnique(phone).enqueue(object :Callback<Boolean>{
+               override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                   dataModelUsers.ApiPostIsPhoneUnique.value = response.body()
+               }
+               override fun onFailure(call: Call<Boolean>, t: Throwable) {
+               }
+           })
+
         }
     }
 
