@@ -88,12 +88,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             submitQuery(searchEdit!!.text.toString())
             false
         }
-        mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
-            mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 1f), null
-            )
-            false
-        }
+
     }
 
     fun moveToMyLocation(view: View) {
