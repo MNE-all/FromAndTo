@@ -26,6 +26,8 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        init()
+
         ChipActive()
         SpinnerGender()
         DateDialog()
@@ -93,5 +95,19 @@ class ProfileActivity : AppCompatActivity() {
                 calendarBox.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
+    }
+
+
+    private fun init(truth:Boolean){
+        binding.chip.isChecked = false
+        binding.surnameField.isEnabled = truth
+        binding.nameField.isEnabled = truth
+        binding.emailField.isEnabled = truth
+
+        binding.phoneField.isEnabled = truth
+        binding.passwordField.isEnabled = truth
+        binding.passwordFieldStill.isEnabled = truth
+
+
     }
 }

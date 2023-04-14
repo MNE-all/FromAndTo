@@ -47,7 +47,7 @@
             android:padding="20dp">
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/switchChange"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
