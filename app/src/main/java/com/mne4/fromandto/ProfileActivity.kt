@@ -26,12 +26,7 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Init(false)
-        binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
-            Init(isChecked)
-        }
-
-
+        Change()
         ChipActive()
         SpinnerGender()
         DateDialog()
@@ -101,6 +96,12 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun Change(){
+        Init(false)
+        binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
+            Init(isChecked)
+        }
+    }
 
     private fun Init(truth:Boolean){
         binding.chip.isChecked = false
@@ -117,5 +118,8 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.spinnerGender.isEnabled = truth
         binding.txtCalendar.isEnabled = truth
+        binding.chip.isEnabled = truth
+
+        binding.butSave.isEnabled = truth
     }
 }
