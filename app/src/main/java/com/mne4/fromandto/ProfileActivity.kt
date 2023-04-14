@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.databinding.ActivityProfileBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -19,6 +20,7 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private var viewModel = ViewModel()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
