@@ -93,10 +93,14 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
     fun moveToMyLocation(view: View) {
         try {
-            var position = locationMapKit.cameraPosition()!!.target
-            mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
+            var position = locationMapKit.cameraPosition()?.target
+            if (position == null) {
+                Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
+            }
+            mapView.map.move(CameraPosition(position!!, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null
             )
+
         }
         catch (ex: Exception) {
             Log.d("moveToMyLocation","${ex.message}")
