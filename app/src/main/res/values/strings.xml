@@ -20,10 +20,22 @@
 
 
     <string name="txtSurname">Введите фамилию</string>
-    <string name="txtName">Введите имя</string>
+    <string name="Surname">Фамилия</string>
     <string name="txtPhone">Телефон</string>
     <string name="txtPassword">Пароль</string>
+    <string name="txtPasswordTwo">Подтвердите пароль</string>
     <string name="txtReg">Зарегистрироваться</string>
+
+    <string name="mainInfo">Основа</string>
+    <string name="securityInfo">Безопасность</string>
+    <string name="securityValidate">Пройти безопасность</string>
+    <string name="butSave">Сохранить</string>
+
+    <string name="switchChange">Изменения</string>
+    <string name="driverInfo">Для водителей</string>
+    <string name="passport">Паспорт</string>
+    <string name="license">Лицензия</string>
+    <string name="email">Почта</string>
 
 
 </resources>

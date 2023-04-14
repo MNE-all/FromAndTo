@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.mne4.fromandto.Models.GetUserRoom
 import com.mne4.fromandto.Models.Trips
 import com.mne4.fromandto.Models.User
+import com.mne4.fromandto.Models.UserFull
 import com.mne4.fromandto.Observe.DataModelTrips
 import com.mne4.fromandto.Observe.DataModelUsers
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,12 +24,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ViewModel{
 
     private lateinit var users: GetUserRoom
+    private var usersFull: UserFull? = null
     private lateinit var usersApi: UsersApi
     private lateinit var tripsApi: TripsApi
     private lateinit var registr_sms: SmsApi
     val dataModelUsers = DataModelUsers()
     val dataModelTrips = DataModelTrips()
-    private val api_sms_key = "92ECBB50-F17D-BC2B-0205-63A4B6210D31"
+    private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
 
     constructor(){
         val interceptor = HttpLoggingInterceptor()
@@ -62,11 +65,63 @@ class ViewModel{
             dataModelUsers.ApiGetCurrentUser.value = user
         }
     }
-
-    fun getAuthentication(guid:String, hashPassword:String){
+    fun postIsPhoneUnique(phone:String)
+    {
         CoroutineScope(Dispatchers.Main).launch {
-           var truth = usersApi.getAuthentication(guid,hashPassword)
-            dataModelUsers.ApiGetAuthentication.value = truth
+           usersApi.postIsPhoneUnique(phone).enqueue(object :Callback<Boolean>{
+               override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                   dataModelUsers.ApiPostIsPhoneUnique.value = response.body()
+               }
+               override fun onFailure(call: Call<Boolean>, t: Throwable) {
+               }
+           })
+
+        }
+    }
+    fun postAuthenticationAuto(guid:String, hashPassword:String){
+        CoroutineScope(Dispatchers.Main).launch {
+            usersApi.postAuthenticationAuto(guid, hashPassword).enqueue(object :Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    dataModelUsers.ApiPostAuthenticationAuto.value = response.body()
+                }
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                }
+            })
+        }
+    }
+
+    fun postAuthentication(phone:String, password:String){
+        CoroutineScope(Dispatchers.Main).launch {
+            usersApi.postAuthentication(phone, password).enqueue(object : retrofit2.Callback<ResponseBody>{
+               override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                   var list = Gson().fromJson("""${response.body()?.string()}""", UserFull::class.java)
+                   if(list!=null) {
+                       usersFull = UserFull(
+                           list.id_user,
+                           list.surname,
+                           list.name,
+                           list.gender,
+                           list.birthday,
+                           list.email,
+                           list.password,
+                           list.phone,
+                           list.isDriver,
+                           list.raiting,
+                           list.image_url,
+                           list.passport,
+                           list.license
+                       )
+                   }
+                       dataModelUsers.ApiPostAuthentication.value = usersFull
+
+                   Log.d("Post","Response")
+               }
+               override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                   Log.d("Post","Failture")
+               }
+           })
+
+
         }
     }
 
@@ -78,12 +133,7 @@ class ViewModel{
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
                     users = GetUserRoom(
                         list.id_user,
-                        list.password,
-                        list.surname,
-                        list.name,
-                       list.birthday,
-                        list.gender,
-                        list.phone
+                        list.password
                     )
                     dataModelUsers.ApiPostNewUser.value = users
                     Log.d("Post","Response")
@@ -101,16 +151,11 @@ class ViewModel{
             usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
-                    users = GetUserRoom(
-                        list.id_user,
-                        list.password,
-                        list.surname,
-                        list.name,
-                        list.birthday,
-                        list.gender,
-                        list.phone
-                    )
-                    dataModelUsers.ApiPutEditUser.value = users
+                        users = GetUserRoom(
+                            list.id_user,
+                            list.password
+                        )
+                        dataModelUsers.ApiPutEditUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
