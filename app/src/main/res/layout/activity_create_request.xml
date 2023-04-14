@@ -70,7 +70,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,13 +79,14 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#70003FFE"
                 android:onClick="radioFrom"
                 android:orientation="horizontal">
@@ -114,7 +115,8 @@
             <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#704CAF50"
                 android:onClick="radioTo"
                 android:orientation="horizontal">

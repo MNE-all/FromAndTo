@@ -15,10 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:fabCradleRoundedCornerRadius="50dp"
-            app:fabCradleVerticalOffset="6dp"
+            android:backgroundTint="@color/purple_700"
             app:fabCradleMargin="8dp"
-            android:backgroundTint="@color/purple_700">
+            app:fabCradleRoundedCornerRadius="50dp"
+            app:fabCradleVerticalOffset="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
