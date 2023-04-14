@@ -67,8 +67,7 @@ class LoginActivity : AppCompatActivity() {
                         if (!isInLocalDb) {
                             CoroutineScope(Dispatchers.IO).launch {
                                 val user = User(
-                                    null, "${userFull.id_user}", "${userFull.password}", "${userFull.surname}", "${userFull.name}",
-                                    "${userFull.birthday}", "${userFull.gender}", "${userFull.phone}", true
+                                    null, "${userFull.id_user}", "${userFull.password}", true
                                 )
                                 db.getDao().insertUser(user)
                             }
@@ -87,8 +86,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("colNull","$userFull")
                         CoroutineScope(Dispatchers.IO).launch {
                             val user = User(
-                                null, "${userFull.id_user}", "${userFull.password}", "${userFull.surname}", "${userFull.name}",
-                                "${userFull.birthday}", "${userFull.gender}", "${userFull.phone}", false
+                                null, "${userFull.id_user}", "${userFull.password}", false
                             )
                             db.getDao().insertUser(user)
 

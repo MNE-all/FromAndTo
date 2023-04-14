@@ -12,16 +12,6 @@ data class User (
     var id_user: String,
     @ColumnInfo("password")
     var password: String,
-    @ColumnInfo("surname")
-    var surname: String,
-    @ColumnInfo("name")
-    var name: String,
-    @ColumnInfo("birthday")
-    var birthday: String?,
-    @ColumnInfo("gender")
-    var gender: String?,
-    @ColumnInfo("phone")
-    var phone: String,
     @ColumnInfo("isInAcc")
     var isInAcc: Boolean = false
 )

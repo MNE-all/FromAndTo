@@ -133,12 +133,7 @@ class ViewModel{
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
                     users = GetUserRoom(
                         list.id_user,
-                        list.password,
-                        list.surname,
-                        list.name,
-                       list.birthday,
-                        list.gender,
-                        list.phone
+                        list.password
                     )
                     dataModelUsers.ApiPostNewUser.value = users
                     Log.d("Post","Response")
@@ -158,12 +153,7 @@ class ViewModel{
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
                         users = GetUserRoom(
                             list.id_user,
-                            list.password,
-                            list.surname,
-                            list.name,
-                            list.birthday,
-                            list.gender,
-                            list.phone
+                            list.password
                         )
                         dataModelUsers.ApiPutEditUser.value = users
                     Log.d("Put","Response")

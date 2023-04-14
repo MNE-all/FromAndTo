@@ -52,8 +52,7 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.dataModelUsers.ApiPostNewUser.observe(this) {
             CoroutineScope(Dispatchers.IO).launch {
                 val user = User(
-                    null, "${it.id_user}", "${it.password}", "${it.surname}", "${it.name}",
-                    "${it.birthday}", "${it.gender}", "${it.phone}", false
+                    null, "${it.id_user}", "${it.password}", false
                 )
                 db.getDao().insertUser(user)
             }
