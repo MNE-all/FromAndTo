@@ -41,11 +41,10 @@ class ProfileActivity : AppCompatActivity() {
     private fun ChipActive(){
         binding.chip.setOnClickListener {
             if (binding.chip.isChecked) {
-                Toast.makeText(applicationContext, "Безопасность включена", Toast.LENGTH_SHORT)
-                    .show()
+
+              binding.chip.text = "Безопасность подтверждена"
             }else{
-                Toast.makeText(applicationContext, "Безопасность выключена", Toast.LENGTH_SHORT)
-                    .show()
+                binding.chip.text = "Пройти безопасность"
             }
         }
     }
@@ -101,6 +100,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
             Init(isChecked)
         }
+
     }
 
     private fun Init(truth:Boolean){
