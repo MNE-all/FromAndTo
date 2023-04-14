@@ -78,6 +78,17 @@ class ViewModel{
 
         }
     }
+    fun postAuthenticationAuto(guid:String, hashPassword:String){
+        CoroutineScope(Dispatchers.Main).launch {
+            usersApi.postAuthenticationAuto(guid, hashPassword).enqueue(object :Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    dataModelUsers.ApiPostAuthenticationAuto.value = response.body()
+                }
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                }
+            })
+        }
+    }
 
     fun postAuthentication(phone:String, password:String){
         CoroutineScope(Dispatchers.Main).launch {

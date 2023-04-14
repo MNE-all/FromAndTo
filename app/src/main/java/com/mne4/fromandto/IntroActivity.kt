@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.asLiveData
 import com.mne4.fromandto.API.ViewModel
@@ -59,7 +60,6 @@ class IntroActivity : AppCompatActivity() {
         var buttonNo = findViewById<Button>(R.id.buttonNotificationOff)
         buttonYes.setOnClickListener {
             // TODO Пользователь разрешает уведомления
-
             loginOrRegister()
         }
         buttonNo.setOnClickListener {
@@ -86,16 +86,15 @@ class IntroActivity : AppCompatActivity() {
     private fun checkLocalDb() {
         var db = MainDB.getDB(this)
         // TODO удаление всех пользователей
-            /*
+/*
         CoroutineScope(Dispatchers.IO).launch {
             db.getDao().deleteAllUser()
         }
-        */
+*/
 
         db.getDao().getAllUser().asLiveData().observe(this) {
             var isInAccount = false
             if (it.isEmpty()) {
-                Log.d("isUserEmpty", "true")
                 firstIntroPage()
             }
             else
@@ -103,16 +102,23 @@ class IntroActivity : AppCompatActivity() {
                 for (user in it) {
                     if (user.isInAcc) {
                         isInAccount = true
+                        viewModel.postAuthenticationAuto(user.id_user, user.password)
+                        viewModel.dataModelUsers.ApiPostAuthenticationAuto.observe(this) {
+                            if (it) {
+                                var intent = Intent(this, WelcomeActivity::class.java)
+                                startActivity(intent)
+                                Toast.makeText(applicationContext,"Быстрый вход!",Toast.LENGTH_SHORT).show()
+                            } else {
+                                loginOrRegister()
+                                Toast.makeText(applicationContext,"Аккаунт не найден!",Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
-                Log.d("isUserEmpty", "false")
-                if (isInAccount) {
-                    var intent = Intent(this, WelcomeActivity::class.java)
-                    startActivity(intent)
-                }
-                else {
+                if (!isInAccount) {
                     // TODO в alertDialog предлагать использовать один из аккаунтов из локальной базы данных + авторизовать пользователя
                     loginOrRegister()
+                    Toast.makeText(applicationContext,"Зарегистрируйтесь или войдите!",Toast.LENGTH_SHORT).show()
                 }
             }
         }

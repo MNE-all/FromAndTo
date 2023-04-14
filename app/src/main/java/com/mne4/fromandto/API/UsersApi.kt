@@ -15,7 +15,7 @@ interface UsersApi {
     suspend fun getCurrentUser(@Path("guid") guid:String): User
 
     @POST("Users/AuthenticationAuto")
-    fun postAuthenticationAuto(@Query("guid") guid:String, @Query("hashPassword") hashPassword:String): Boolean
+    fun postAuthenticationAuto(@Query("guid") guid:String, @Query("hashPassword") hashPassword:String): Call<Boolean>
 
     @POST("Users/IsPhoneUnique")
     fun postIsPhoneUnique(@Query("phone") phone:String): Call<Boolean>
