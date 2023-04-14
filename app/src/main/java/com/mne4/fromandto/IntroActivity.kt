@@ -17,15 +17,24 @@ import kotlinx.coroutines.launch
 
 class IntroActivity : AppCompatActivity() {
     private var viewModel = ViewModel()
+    private var key = true
 
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        try {
+            if (MapKitFactory.getInstance() != null) {
+
+            }
+        }catch (ex:java.lang.UnsatisfiedLinkError){
+            MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
+            MapKitFactory.initialize(applicationContext)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro_load_screen)
-        MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
-        MapKitFactory.initialize(this)
+
 
     }
 
