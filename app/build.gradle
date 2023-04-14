@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
 
+    implementation 'com.yandex.android:maps.mobile:4.1.0-full'
+
     implementation 'androidx.room:room-ktx:2.5.1'
     kapt 'androidx.room:room-compiler:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'

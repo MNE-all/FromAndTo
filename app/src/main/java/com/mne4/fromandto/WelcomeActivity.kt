@@ -20,10 +20,12 @@ class WelcomeActivity : AppCompatActivity() {
 
     fun onDriverClick(view: View) {
 
+        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
     }
 
     fun onPassengerClick(view: View) {
 
+        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
     }
 
     fun onExit(view: View) {
