@@ -39,8 +39,10 @@ class LoginActivity : AppCompatActivity() {
                 var db = MainDB.getDB(this)
                 db.getDao().getAllUser().asLiveData().observe(this) {
                     if (it.isNotEmpty()) {
+                        var isInLocalDb = false
                         for (user in it){
                             if (user.id_user == userFull.id_user && !user.isInAcc) {
+                                isInLocalDb = true
                                 CoroutineScope(Dispatchers.IO).launch {
                                     db.getDao().updateUserisAcc(
                                         "${user.id_user}",
@@ -57,6 +59,27 @@ class LoginActivity : AppCompatActivity() {
                                     var intent = Intent(this, WelcomeActivity::class.java)
                                     startActivity(intent)
                                 }
+                            }
+                            else if (user.id_user == userFull.id_user) {
+                                isInLocalDb = true
+                            }
+                        }
+                        if (!isInLocalDb) {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val user = User(
+                                    null, "${userFull.id_user}", "${userFull.password}", "${userFull.surname}", "${userFull.name}",
+                                    "${userFull.birthday}", "${userFull.gender}", "${userFull.phone}", true
+                                )
+                                db.getDao().insertUser(user)
+                            }
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this,
+                                    "Пользователь авторизирован!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                var intent = Intent(this, WelcomeActivity::class.java)
+                                startActivity(intent)
                             }
                         }
                     }

@@ -5,6 +5,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +29,7 @@ import com.yandex.runtime.network.RemoteError
 import java.util.*
 
 class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
-    com.yandex.mapkit.search.Session.SearchListener, CameraListener {
+    Session.SearchListener, CameraListener {
     lateinit var mapView: MapView
     lateinit var cameraListener: CameraListener
     lateinit var mapKit: MapKit
@@ -46,7 +47,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     lateinit var locationMapKit: UserLocationLayer
     lateinit var searchEdit: EditText
     lateinit var searchManager: SearchManager
-    lateinit var searchSession: com.yandex.mapkit.search.Session
+    lateinit var searchSession: Session
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_request)
@@ -69,15 +70,15 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
         mapKit = MapKitFactory.getInstance()
 
-        var traffic = mapKit.createTrafficLayer(mapView.mapWindow)
-        traffic.isTrafficVisible = false
-
-        requestLocationPermission()
         locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
         locationMapKit.isVisible = true
         locationMapKit.setObjectListener(this)
 
 
+        var traffic = mapKit.createTrafficLayer(mapView.mapWindow)
+        traffic.isTrafficVisible = false
+
+        requestLocationPermission()
 
         SearchFactory.initialize(this)
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
@@ -96,10 +97,15 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     }
 
     fun moveToMyLocation(view: View) {
-        var position = locationMapKit.cameraPosition()?.target ?: Point(60.023686, 30.228692)
-        mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 1f), null
-        )
+        try {
+            var position = locationMapKit.cameraPosition()!!.target
+            mapView.map.move(CameraPosition(position, 17.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 1f), null
+            )
+        }
+        catch (ex: Exception) {
+            Log.d("moveToMyLocation","${ex.message}")
+        }
     }
 
     fun radioFrom(view: View) {
@@ -156,6 +162,12 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                 )
 
             }
+        }
+        mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
+            mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 1f), null
+            )
+            false
         }
     }
 
