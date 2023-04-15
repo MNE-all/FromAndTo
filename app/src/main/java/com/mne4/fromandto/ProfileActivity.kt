@@ -25,6 +25,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private var viewModel = ViewModel()
     var gender:String = "Мужской"
+    private lateinit var USER: User
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,26 +33,42 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        InitUser()
+
         Change()
         ChipActive()
         SpinnerGender()
         DateDialog()
     }
 
+    fun InitUser(){
+
+        var db = MainDB.getDB(this)
+        db.getDao().getAllUser().asLiveData().observe(this) {
+            for (user in it) {
+                if (user.isInAcc) {
+                    viewModel.getCurrentUser(user.id_user)
+                    return@observe
+                }
+            }
+        }
+
+        viewModel.dataModelUsers.ApiGetCurrentUser.observe(this){
+            USER = it
+            binding.surnameField.setText(it.surname)
+            binding.nameField.setText(it.name)
+            binding.txtCalendar.setText(it.birthday)
+            binding.emailField.setText(it.email)
+            binding.passportField.setText(it.passport)
+            binding.licenseField.setText(it.license)
+        }
+    }
     fun butSave(view:View){
         var db = MainDB.getDB(this)
         db.getDao().getAllUser().asLiveData().observe(this){
             for(user in it){
                 if(user.isInAcc){
-//                    var person = User{
-//                        binding.surnameField.text,
-//                        binding.nameField.text,
-//                        gender,
-//                        binding.txtCalendar.text,
-//
-//
-//                    }
-                    viewModel.putEditUser(user.id_user, user.password, )
+   //                 viewModel.putEditUser(user.id_user, user.password, USER)
                 }
             }
 

@@ -19,6 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onDriverClick(view: View) {
+        startActivity(Intent(this, ProfileActivity::class.java))
 
     }
 
