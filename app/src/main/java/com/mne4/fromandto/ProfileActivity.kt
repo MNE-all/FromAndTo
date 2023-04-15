@@ -10,9 +10,12 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.mne4.fromandto.API.ViewModel
+import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
+import com.mne4.fromandto.db.MainDB
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -21,6 +24,7 @@ import java.util.*
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private var viewModel = ViewModel()
+    var gender:String = "Мужской"
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +36,28 @@ class ProfileActivity : AppCompatActivity() {
         ChipActive()
         SpinnerGender()
         DateDialog()
+    }
+
+    fun butSave(view:View){
+        var db = MainDB.getDB(this)
+        db.getDao().getAllUser().asLiveData().observe(this){
+            for(user in it){
+                if(user.isInAcc){
+//                    var person = User{
+//                        binding.surnameField.text,
+//                        binding.nameField.text,
+//                        gender,
+//                        binding.txtCalendar.text,
+//
+//
+//                    }
+                    viewModel.putEditUser(user.id_user, user.password, )
+                }
+            }
+
+        }
+
+
     }
 
     private fun updateText(calendar: Calendar){
@@ -63,6 +89,7 @@ class ProfileActivity : AppCompatActivity() {
                 id: Long
             ) {
                 Snackbar.make(view!!,"Вы выбрали пол: ${genderList[position]}",Snackbar.LENGTH_SHORT).show()
+                gender = genderList[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
