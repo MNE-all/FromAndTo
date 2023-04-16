@@ -115,6 +115,8 @@ class ProfileActivity : AppCompatActivity() {
                                      viewModel.dataModelUsers.ApiPutEditUser.observe(this) {
                                          CoroutineScope(Dispatchers.IO).launch {
                                              db.getDao().updateUser(it.id_user, it.password, true)
+                                             binding.switchChange.isChecked = false
+                                             isVisibleSecurity(false)
                                              return@launch
                                          }
                                      }
@@ -127,6 +129,8 @@ class ProfileActivity : AppCompatActivity() {
                          }
                      }else {
                          viewModel.putEditUser(user.id_user, user.password, USER)
+                         binding.switchChange.isChecked = false
+                         isVisibleSecurity(false)
                      }
                 }
             }
@@ -160,7 +164,6 @@ class ProfileActivity : AppCompatActivity() {
                     viewModel.dataModelUsers.ApiPostAuthentication.observe(this) {
                         if (it != null) {
                             if (USER.password == it.password && USER.phone == it.phone) {
-                                binding.chipSecurity.text = "Безопасность подтверждена"
                                 isVisibleSecurity(true)
                                 binding.phoneField.setText(phone)
                                 binding.passwordField.setText(password)
@@ -169,13 +172,11 @@ class ProfileActivity : AppCompatActivity() {
                             }
                         }
                         Toast.makeText(applicationContext, "Неправильно введенные данные!",Toast.LENGTH_SHORT).show()
-                        binding.chipSecurity.text = "Пройти безопасность"
                         isVisibleSecurity(false)
                     }
                 })
                 dialog.show()
             }else{
-                binding.chipSecurity.text = "Пройти безопасность"
                 isVisibleSecurity(false)
             }
         }
@@ -187,6 +188,11 @@ class ProfileActivity : AppCompatActivity() {
         binding.passwordFieldLayoutStill.isVisible = truth
 
         binding.chipSecurity.isChecked = truth
+        if(!truth) {
+            binding.chipSecurity.text = "Пройти безопасность"
+        }else{
+            binding.chipSecurity.text = "Безопасность подтверждена"
+        }
     }
     private fun SpinnerGender(){
 
@@ -232,6 +238,7 @@ class ProfileActivity : AppCompatActivity() {
         Init(false)
         binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
             Init(isChecked)
+            InitUser()
         }
 
     }
