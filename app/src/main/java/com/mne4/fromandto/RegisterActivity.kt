@@ -85,7 +85,6 @@ class RegisterActivity : AppCompatActivity() {
                addUser()
            }else{
                Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
-
            }
        }
 

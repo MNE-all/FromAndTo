@@ -30,7 +30,7 @@ class ViewModel{
     private lateinit var registr_sms: SmsApi
     val dataModelUsers = DataModelUsers()
     val dataModelTrips = DataModelTrips()
-    private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
+    private val api_sms_key = "92ECBB50-F17D-BC2B-0205-63A4B6210D31"
 
     constructor(){
         val interceptor = HttpLoggingInterceptor()
@@ -148,14 +148,20 @@ class ViewModel{
     fun putEditUser(guid:String, hashPassword: String, user: User)
     {
         CoroutineScope(Dispatchers.IO).launch {
-            usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
+            usersApi.putEditUser(guid, hashPassword, user)
+        }
+    }
+    fun putEditUserSecure(guid:String, hashPassword: String, user: User)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            usersApi.putEditUserSecure(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
-                        users = GetUserRoom(
-                            list.id_user,
-                            list.password
-                        )
-                        dataModelUsers.ApiPutEditUser.value = users
+                    users = GetUserRoom(
+                        list.id_user,
+                        list.password
+                    )
+                    dataModelUsers.ApiPutEditUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
