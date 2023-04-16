@@ -1,6 +1,5 @@
 package com.mne4.fromandto
 
-import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -18,7 +16,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
-import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -29,8 +26,8 @@ import com.mne4.fromandto.db.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
@@ -71,7 +68,12 @@ class ProfileActivity : AppCompatActivity() {
             USER = it
             binding.surnameField.setText(it.surname)
             binding.nameField.setText(it.name)
-            binding.txtCalendar.setText(it.birthday)
+            val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+
+            val date: Date = inputFormat.parse(it.birthday.toString()) as Date
+            val outputText: String = outputFormat.format(date)
+            binding.txtCalendar.setText(outputText)
             binding.emailField.setText(it.email)
             binding.passportField.setText(it.passport)
             binding.licenseField.setText(it.license)
@@ -86,7 +88,11 @@ class ProfileActivity : AppCompatActivity() {
                     var surname = binding.surnameField.text.toString()
                     var name = binding.nameField.text.toString()
                     var email = binding.emailField.text.toString()
-                    var birthday:String? = binding.txtCalendar.text.toString()
+                    val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+                    val date: Date = inputFormat.parse(binding.txtCalendar.text.toString()) as Date
+                    val outputText: String = outputFormat.format(date)
+                    var birthday:String? = outputText
                     if(binding.txtCalendar.text.toString() == "") {
                         birthday = null
                     }
@@ -99,7 +105,7 @@ class ProfileActivity : AppCompatActivity() {
                      USER.surname = surname
                      USER.name = name
                      USER.email = email
-                     USER.birthday = gender
+                     USER.gender = gender
                      USER.birthday = birthday
                      USER.passport = passport
                      USER.license = license
@@ -229,7 +235,7 @@ class ProfileActivity : AppCompatActivity() {
 
         date.show(supportFragmentManager, "DATE_PICKER")
         date.addOnPositiveButtonClickListener {
-            binding.txtCalendar.text = SimpleDateFormat("yyyy-MM-dd").format(it)
+            binding.txtCalendar.text = SimpleDateFormat("dd-MM-yyyy",Locale.ROOT).format(it)
         }
 
     }
