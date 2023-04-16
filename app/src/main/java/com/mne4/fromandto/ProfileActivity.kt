@@ -88,8 +88,9 @@ class ProfileActivity : AppCompatActivity() {
                     var surname = binding.surnameField.text.toString()
                     var name = binding.nameField.text.toString()
                     var email = binding.emailField.text.toString()
-                    val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
-                    val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+
+                    val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
                     val date: Date = inputFormat.parse(binding.txtCalendar.text.toString()) as Date
                     val outputText: String = outputFormat.format(date)
                     var birthday:String? = outputText
