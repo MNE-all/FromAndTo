@@ -94,11 +94,12 @@
                 app:startIconDrawable="@drawable/baseline_event_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+
                     android:id="@+id/TextInputEditTextWhere"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Когда"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:maxLength="15"
                     android:text="" />
             </com.google.android.material.textfield.TextInputLayout>

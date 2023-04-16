@@ -98,7 +98,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             if (position == null) {
                 Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
                 finish()
-                startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
+                var intent = Intent(applicationContext, CreateRequestActivity::class.java)
             }
             mapView.map.move(CameraPosition(position!!, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null

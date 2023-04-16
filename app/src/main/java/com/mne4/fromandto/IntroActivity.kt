@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 
 class IntroActivity : AppCompatActivity() {
     private var viewModel = ViewModel()
-    private var key = true
 
 
 
@@ -27,7 +26,7 @@ class IntroActivity : AppCompatActivity() {
             if (MapKitFactory.getInstance() != null) {
 
             }
-        }catch (ex:java.lang.UnsatisfiedLinkError){
+        }catch (ex: UnsatisfiedLinkError){
             MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
             MapKitFactory.initialize(applicationContext)
         }
