@@ -10,8 +10,12 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
 import com.google.android.material.snackbar.Snackbar
+import com.mne4.fromandto.API.ViewModel
+import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
+import com.mne4.fromandto.db.MainDB
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -19,6 +23,9 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private var viewModel = ViewModel()
+    var gender:String = "Мужской"
+    private lateinit var USER: User
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +33,48 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        InitUser()
+
+        Change()
         ChipActive()
         SpinnerGender()
         DateDialog()
+    }
+
+    fun InitUser(){
+
+        var db = MainDB.getDB(this)
+        db.getDao().getAllUser().asLiveData().observe(this) {
+            for (user in it) {
+                if (user.isInAcc) {
+                    viewModel.getCurrentUser(user.id_user)
+                    return@observe
+                }
+            }
+        }
+
+        viewModel.dataModelUsers.ApiGetCurrentUser.observe(this){
+            USER = it
+            binding.surnameField.setText(it.surname)
+            binding.nameField.setText(it.name)
+            binding.txtCalendar.setText(it.birthday)
+            binding.emailField.setText(it.email)
+            binding.passportField.setText(it.passport)
+            binding.licenseField.setText(it.license)
+        }
+    }
+    fun butSave(view:View){
+        var db = MainDB.getDB(this)
+        db.getDao().getAllUser().asLiveData().observe(this){
+            for(user in it){
+                if(user.isInAcc){
+   //                 viewModel.putEditUser(user.id_user, user.password, USER)//
+                }
+            }
+
+        }
+
+
     }
 
     private fun updateText(calendar: Calendar){
@@ -40,11 +86,10 @@ class ProfileActivity : AppCompatActivity() {
     private fun ChipActive(){
         binding.chip.setOnClickListener {
             if (binding.chip.isChecked) {
-                Toast.makeText(applicationContext, "Безопасность включена", Toast.LENGTH_SHORT)
-                    .show()
+
+              binding.chip.text = "Безопасность подтверждена"
             }else{
-                Toast.makeText(applicationContext, "Безопасность выключена", Toast.LENGTH_SHORT)
-                    .show()
+                binding.chip.text = "Пройти безопасность"
             }
         }
     }
@@ -61,6 +106,7 @@ class ProfileActivity : AppCompatActivity() {
                 id: Long
             ) {
                 Snackbar.make(view!!,"Вы выбрали пол: ${genderList[position]}",Snackbar.LENGTH_SHORT).show()
+                gender = genderList[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -93,5 +139,33 @@ class ProfileActivity : AppCompatActivity() {
                 calendarBox.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
+    }
+
+    private fun Change(){
+        Init(false)
+        binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
+            Init(isChecked)
+        }
+
+    }
+
+    private fun Init(truth:Boolean){
+        binding.chip.isChecked = false
+        binding.surnameField.isEnabled = truth
+        binding.nameField.isEnabled = truth
+        binding.emailField.isEnabled = truth
+
+        binding.phoneField.isEnabled = truth
+        binding.passwordField.isEnabled = truth
+        binding.passwordFieldStill.isEnabled = truth
+
+        binding.passportField.isEnabled = truth
+        binding.licenseField.isEnabled = truth
+
+        binding.spinnerGender.isEnabled = truth
+        binding.txtCalendar.isEnabled = truth
+        binding.chip.isEnabled = truth
+
+        binding.butSave.isEnabled = truth
     }
 }

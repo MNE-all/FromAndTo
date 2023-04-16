@@ -4,18 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_profile"
     tools:context=".ProfileActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <ImageView
+        android:id="@+id/imageBackground"
+        android:layout_width="148dp"
+        android:layout_height="147dp"
+        android:layout_marginBottom="30dp"
+
+        android:background="@drawable/bg_image_profile"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageUser"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
+        android:layout_height="0dp"
+        android:background="@drawable/baseline_account_circle_24"
+        app:layout_constraintBottom_toBottomOf="@+id/imageBackground"
+        app:layout_constraintEnd_toEndOf="@+id/imageBackground"
+        app:layout_constraintStart_toStartOf="@+id/imageBackground"
+        app:layout_constraintTop_toTopOf="@+id/imageBackground" />
+
+
+    <ScrollView
+
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        android:background="@drawable/bg_scrollview_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -25,7 +47,7 @@
             android:padding="20dp">
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/switchChange"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -39,14 +61,13 @@
                 android:id="@+id/txtMainInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/values"
                 android:gravity="center"
                 android:text="@string/mainInfo"
                 android:textColor="@color/black"
-                android:textSize="28sp"
-                android:layout_marginBottom="20dp"
-                />
+                android:textSize="28sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameFieldLayout"
@@ -122,24 +143,24 @@
                     android:id="@+id/spinnerGender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:contentDescription="Пол"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:contentDescription="Пол" />
 
-                    <TextView
-                        android:id="@+id/txtCalendar"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:hint="dd/MM/yyyy"
-                        android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/txtCalendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="dd/MM/yyyy"
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/values"
                 android:gravity="center"
@@ -148,13 +169,13 @@
                 android:textSize="28sp" />
 
             <com.google.android.material.chip.Chip
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
                 android:id="@+id/chip"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="@string/securityValidate"
                 android:textAlignment="center" />
@@ -230,10 +251,10 @@
 
 
             <TextView
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/values"
                 android:gravity="center"
@@ -289,13 +310,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/butSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="butSave"
                 android:text="@string/butSave" />
         </LinearLayout>
     </ScrollView>
