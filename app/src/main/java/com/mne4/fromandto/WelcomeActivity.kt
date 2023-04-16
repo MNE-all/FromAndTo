@@ -26,7 +26,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     fun onPassengerClick(view: View) {
 
-        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
+        startActivity(Intent(applicationContext, ProfileActivity::class.java))
     }
 
     fun onExit(view: View) {

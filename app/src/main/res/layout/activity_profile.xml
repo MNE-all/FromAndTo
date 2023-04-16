@@ -153,6 +153,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:hint="dd/MM/yyyy"
+                    android:onClick="DateDialog"
                     android:textSize="24sp" />
 
             </LinearLayout>

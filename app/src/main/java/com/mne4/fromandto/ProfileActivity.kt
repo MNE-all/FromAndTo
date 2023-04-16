@@ -11,6 +11,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.mne4.fromandto.API.ViewModel
 import com.mne4.fromandto.Models.User
@@ -38,7 +42,6 @@ class ProfileActivity : AppCompatActivity() {
         Change()
         ChipActive()
         SpinnerGender()
-        DateDialog()
     }
 
     fun InitUser(){
@@ -115,30 +118,18 @@ class ProfileActivity : AppCompatActivity() {
         }
 
     }
-    private fun DateDialog(){
-        //TODO Календарь доработать
-        var calendarBox = Calendar.getInstance()
+    fun DateDialog(view: View){
 
-        var dateBox = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 
-            calendarBox.set(Calendar.YEAR, year)
-            calendarBox.set(Calendar.MONTH, month)
-            calendarBox.set(Calendar.DAY_OF_MONTH, day)
+        val constraintsBuilder = CalendarConstraints.Builder()
+            .setValidator(DateValidatorPointForward.now())
+        var date = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Дата выезда")
+            .setCalendarConstraints(constraintsBuilder.build())
+            .build()
 
-            updateText(calendarBox)
-        }
-        val dialog = DatePickerDialog(this, dateBox,    calendarBox.get(Calendar.YEAR),   calendarBox.get(Calendar.MONTH), calendarBox.get(Calendar.DAY_OF_MONTH))
-        dialog.datePicker.maxDate = Date().time
+        date.show(supportFragmentManager, "DATE_PICKER")
 
-        binding.txtCalendar.setOnClickListener {
-            DatePickerDialog(
-                this,
-                dateBox,
-                calendarBox.get(Calendar.YEAR),
-                calendarBox.get(Calendar.MONTH),
-                calendarBox.get(Calendar.DAY_OF_MONTH)
-            ).show()
-        }
     }
 
     private fun Change(){
