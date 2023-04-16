@@ -29,7 +29,7 @@ interface UsersApi {
 
     @ExperimentalMultiplatform
     @PUT("Users/Update")
-    fun putEditUser(@Query("guid") guid: String,  @Query("hashPassword") hashPassword: String,  @Body user: User)
+    fun putEditUser(@Query("guid") guid: String,  @Query("hashPassword") hashPassword: String,  @Body user: User):Call<Boolean>
 
     @ExperimentalMultiplatform
     @PUT("Users/UpdateSecure")

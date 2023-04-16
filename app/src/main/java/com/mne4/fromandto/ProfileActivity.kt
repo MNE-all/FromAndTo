@@ -105,15 +105,18 @@ class ProfileActivity : AppCompatActivity() {
                      USER.license = license
 
                      if(phone!="" && password != ""){
-                         if(binding.passwordField.text == binding.passwordFieldStill.text) {
-                             viewModel.postIsPhoneUnique(phone)
+                         if(binding.passwordField.text.toString() == binding.passwordFieldStill.text.toString()) {
+                             viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
                              viewModel.dataModelUsers.ApiPostIsPhoneUnique.observe(this){
                                  if(it){
-                                    USER.phone = phone
-                                    USER.password = password
+                                    USER.phone = binding.phoneField.text.toString()
+                                    USER.password = binding.passwordField.text.toString()
                                      viewModel.putEditUserSecure(user.id_user, user.password, USER)
-                                     CoroutineScope(Dispatchers.IO).launch {
-                                         db.getDao().updateUser(user.id_user, USER.password, true)
+                                     viewModel.dataModelUsers.ApiPutEditUser.observe(this) {
+                                         CoroutineScope(Dispatchers.IO).launch {
+                                             db.getDao().updateUser(it.id_user, it.password, true)
+                                             return@launch
+                                         }
                                      }
                                  }else{
                                      Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()

@@ -148,7 +148,12 @@ class ViewModel{
     fun putEditUser(guid:String, hashPassword: String, user: User)
     {
         CoroutineScope(Dispatchers.IO).launch {
-            usersApi.putEditUser(guid, hashPassword, user)
+            usersApi.putEditUser(guid, hashPassword, user).enqueue(object :Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                }
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                }
+            })
         }
     }
     fun putEditUserSecure(guid:String, hashPassword: String, user: User)
