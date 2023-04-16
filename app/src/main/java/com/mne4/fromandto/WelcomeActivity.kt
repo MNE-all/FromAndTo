@@ -19,13 +19,14 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onDriverClick(view: View) {
+        startActivity(Intent(this, ProfileActivity::class.java))
 
         startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
     }
 
     fun onPassengerClick(view: View) {
 
-        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
+        startActivity(Intent(applicationContext, ProfileActivity::class.java))
     }
 
     fun onExit(view: View) {
