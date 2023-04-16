@@ -68,7 +68,7 @@ class ProfileActivity : AppCompatActivity() {
         db.getDao().getAllUser().asLiveData().observe(this){
             for(user in it){
                 if(user.isInAcc){
-   //                 viewModel.putEditUser(user.id_user, user.password, USER)
+   //                 viewModel.putEditUser(user.id_user, user.password, USER)//
                 }
             }
 
