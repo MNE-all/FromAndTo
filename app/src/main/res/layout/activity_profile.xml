@@ -22,6 +22,7 @@
         android:id="@+id/imageUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/name"
         android:background="@drawable/baseline_account_circle_24"
         android:onClick="ImgClick"
         app:layout_constraintBottom_toBottomOf="@+id/imageBackground"

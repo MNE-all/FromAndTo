@@ -2,6 +2,7 @@ package com.mne4.fromandto
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -22,13 +23,14 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.Models.DownloadImageTask
 import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
 import com.mne4.fromandto.db.MainDB
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.http.Url
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,7 +43,8 @@ class ProfileActivity : AppCompatActivity() {
     var phone:String = ""
     var password:String = ""
     private lateinit var USER: User
-    lateinit var downoaldImg:DownloadImageTask;
+    lateinit var imageUser:ImageView
+    var GalleryPick:Int =1
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +58,28 @@ class ProfileActivity : AppCompatActivity() {
         SpinnerGender()
     }
     fun ImgClick(view: View) {
-        downoaldImg = DownloadImageTask(findViewById(R.id.imageUser))
-            .execute("http://java.sogeti.nl/JavaBlog/wp-content/uploads/2009/04/android_icon_256.png") as DownloadImageTask
+        imageUser = findViewById(R.id.imageUser)
+
+        var galleryIntent = Intent()
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT)
+        galleryIntent.setType("image/*")
+        @Suppress("DEPRECATION")
+        startActivityForResult(galleryIntent,GalleryPick)
+
+
+//        Picasso.get()
+//            .load( "http://vsegda-pomnim.com/uploads/posts/2022-04/1649121458_29-vsegda-pomnim-com-p-samie-krasivie-mesta-prirodi-foto-29.jpg")
+//            .into(imageUser)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==GalleryPick && resultCode== RESULT_OK && data!=null){
+            var imageUrl: Uri? = data.data
+            var crop:CropImage = CropImage
+        }
+
     }
 
     fun InitUser(){
@@ -94,6 +117,7 @@ class ProfileActivity : AppCompatActivity() {
         dialog.setMessage("Вы подтверждаете удаление аккаунта!!!\nВведите пароль!")
         var entry_delete_user = LayoutInflater.from(this).inflate(R.layout.entry_delete_user,null)
         var password = entry_delete_user.findViewById<TextInputEditText>(R.id.passwordFieldDelete)
+        dialog.setView(entry_delete_user)
         dialog.setNegativeButton("Отменить",DialogInterface.OnClickListener{dialog:DialogInterface?,i->
             dialog?.dismiss()
         })
@@ -111,6 +135,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         })
+        dialog.show()
     }
     fun butSave(view:View){
         var db = MainDB.getDB(this)
@@ -305,3 +330,4 @@ class ProfileActivity : AppCompatActivity() {
         binding.butSave.isEnabled = truth
     }
 }
+
