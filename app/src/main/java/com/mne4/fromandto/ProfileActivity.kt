@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -27,15 +28,15 @@ import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
 import com.mne4.fromandto.db.MainDB
 import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.http.Url
+import java.io.InputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -78,17 +79,21 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
+        var imageUri:Uri?
         if(requestCode==GalleryPick && resultCode== RESULT_OK && data!=null){
-            var imageUri: Uri? = data.data
+            imageUri = data.data
+
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1,1)
                 .start(this);
         }
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            var result: CropImage.ActivityResult    = CropImage.getActivityResult(data)
+            var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
             if(resultCode == RESULT_OK){
                 var resultUri: Uri? = result.uri
+
+                Log.d("img","")
                 Picasso.get().load(resultUri).into(imageUser)
             }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 var error:Exception = result.error
@@ -284,7 +289,7 @@ class ProfileActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 Snackbar.make(view!!,"Вы выбрали пол: ${genderList[position]}",Snackbar.LENGTH_SHORT).show()
                 gender = genderList[position]
