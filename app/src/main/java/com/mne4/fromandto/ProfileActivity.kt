@@ -1,6 +1,7 @@
 package com.mne4.fromandto
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +22,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.API.ViewModel
+import com.mne4.fromandto.Models.DownloadImageTask
 import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
 import com.mne4.fromandto.db.MainDB
@@ -38,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
     var phone:String = ""
     var password:String = ""
     private lateinit var USER: User
-
+    lateinit var downoaldImg:DownloadImageTask;
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,10 @@ class ProfileActivity : AppCompatActivity() {
         Change()
         ChipActive()
         SpinnerGender()
+    }
+    fun ImgClick(view: View) {
+        downoaldImg = DownloadImageTask(findViewById(R.id.imageUser))
+            .execute("http://java.sogeti.nl/JavaBlog/wp-content/uploads/2009/04/android_icon_256.png") as DownloadImageTask
     }
 
     fun InitUser(){
@@ -79,6 +86,31 @@ class ProfileActivity : AppCompatActivity() {
             binding.licenseField.setText(it.license)
 
         }
+    }
+
+    fun butDeleteAcc(view: View){
+        var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
+        dialog.setTitle("Подтверждение на удаление!")
+        dialog.setMessage("Вы подтверждаете удаление аккаунта!!!\nВведите пароль!")
+        var entry_delete_user = LayoutInflater.from(this).inflate(R.layout.entry_delete_user,null)
+        var password = entry_delete_user.findViewById<TextInputEditText>(R.id.passwordFieldDelete)
+        dialog.setNegativeButton("Отменить",DialogInterface.OnClickListener{dialog:DialogInterface?,i->
+            dialog?.dismiss()
+        })
+        dialog.setPositiveButton("Подтверждаю",DialogInterface.OnClickListener{dialog:DialogInterface?,i->
+            var db = MainDB.getDB(this);
+            db.getDao().getAllUser().asLiveData().observe(this) {
+                for (user in it) {
+                    if (user.isInAcc) {
+                        viewModel.deleteUser(user.id_user, password.text.toString())
+                        Toast.makeText(applicationContext,"Аккаунт успешно удален!",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, IntroActivity::class.java))
+                        finish()
+                    }
+                }
+            }
+
+        })
     }
     fun butSave(view:View){
         var db = MainDB.getDB(this)
