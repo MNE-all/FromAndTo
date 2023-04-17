@@ -34,17 +34,20 @@ import retrofit2.http.Url
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private var viewModel = ViewModel()
-    var gender:String = ""
-    var phone:String = ""
-    var password:String = ""
+    private var gender:String = ""
+    private var phone:String = ""
+    private var password:String = ""
     private lateinit var USER: User
-    lateinit var imageUser:ImageView
-    var GalleryPick:Int =1
+    private lateinit var imageUser:ImageView
+    private var GalleryPick:Int =1
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +79,22 @@ class ProfileActivity : AppCompatActivity() {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==GalleryPick && resultCode== RESULT_OK && data!=null){
-            var imageUrl: Uri? = data.data
-            var crop:CropImage = CropImage
+            var imageUri: Uri? = data.data
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(1,1)
+                .start(this);
         }
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            var result: CropImage.ActivityResult    = CropImage.getActivityResult(data)
+            if(resultCode == RESULT_OK){
+                var resultUri: Uri? = result.uri
+                Picasso.get().load(resultUri).into(imageUser)
+            }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                var error:Exception = result.error
+            }
+        }
+
 
     }
 
