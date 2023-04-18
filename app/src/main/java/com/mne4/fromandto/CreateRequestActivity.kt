@@ -31,9 +31,8 @@ import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 import java.util.*
 
-class CreateRequestActivity : AppCompatActivity() {
-    //, UserLocationObjectListener,
-//    Session.SearchListener, CameraListener
+class CreateRequestActivity : AppCompatActivity(){ //, UserLocationObjectListener,
+//    Session.SearchListener, CameraListener{
 //    lateinit var mapView: MapView
 //    lateinit var cameraListener: CameraListener
 //    lateinit var mapKit: MapKit
@@ -247,23 +246,23 @@ class CreateRequestActivity : AppCompatActivity() {
 //            SearchOptions(),
 //            this
 //        )
-//    }
+////    }
 //    override fun onObjectAdded(userLocation: UserLocationView) {
-////        locationMapKit.setAnchor(
-////            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
-////            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
-////        )
-////        var picIcon = userLocation.pin.useCompositeIcon()
-////        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
-////            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
-////
-////        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
-////        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
-////        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
-////
-////        mapView.map.move(CameraPosition(Point(0.5,0.5), 17.0f, 0.0f, 0.0f),
-////            Animation(Animation.Type.SMOOTH, 1f), null
-////        )
+//        locationMapKit.setAnchor(
+//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
+//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
+//        )
+//        var picIcon = userLocation.pin.useCompositeIcon()
+//        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
+//            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
+//
+//        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
+//        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
+//        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
+//
+//        mapView.map.move(CameraPosition(Point(0.5,0.5), 17.0f, 0.0f, 0.0f),
+//            Animation(Animation.Type.SMOOTH, 1f), null
+//        )
 //    }
 //
 //    override fun onObjectRemoved(p0: UserLocationView) {
