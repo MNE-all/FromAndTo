@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mne4.fromandto.R
-import com.mne4.fromandto.databinding.ActivityMainBinding
+import com.mne4.fromandto.databinding.FragmentMapBinding
 
 class MapFragment : Fragment() {
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: FragmentMapBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = FragmentMapBinding.inflate(inflater)
         return binding.root
     }
 

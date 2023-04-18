@@ -31,7 +31,8 @@ import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 import java.util.*
 
-class CreateRequestActivity : AppCompatActivity(){//, UserLocationObjectListener,
+class CreateRequestActivity : AppCompatActivity() {
+    //, UserLocationObjectListener,
 //    Session.SearchListener, CameraListener
 //    lateinit var mapView: MapView
 //    lateinit var cameraListener: CameraListener
@@ -55,14 +56,16 @@ class CreateRequestActivity : AppCompatActivity(){//, UserLocationObjectListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_request)
         fragmentInstance(MapFragment.newInstance(), R.id.creteRequestFragment)
-}
+    }
 
-    private fun fragmentInstance(f: Fragment, idHolder:Int){
+    fun fragmentInstance(f: Fragment, idHolder: Int) {
         supportFragmentManager
             .beginTransaction()
             .replace(idHolder, f)
             .commit()
     }
+
+}
 
 //        // Инициализация элементов управления
 //        radioFrom = findViewById(R.id.radioFrom)
@@ -270,6 +273,3 @@ class CreateRequestActivity : AppCompatActivity(){//, UserLocationObjectListener
 //    override fun onObjectUpdated(p0: UserLocationView, p1: ObjectEvent) {
 //
 //    }
-
-
-}

@@ -19,8 +19,6 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onDriverClick(view: View) {
-        startActivity(Intent(this, ProfileActivity::class.java))
-
         startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
     }
 
