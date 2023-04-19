@@ -24,4 +24,8 @@ interface DaoUser {
     @Query("DELETE FROM Users")
     fun deleteAllUser()
 
+
+    @DELETE
+    fun deleteUser(user: User)
+
 }

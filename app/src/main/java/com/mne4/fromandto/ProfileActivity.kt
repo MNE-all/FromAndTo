@@ -148,6 +148,13 @@ class ProfileActivity : AppCompatActivity() {
                 for (user in it) {
                     if (user.isInAcc) {
                         viewModel.deleteUser(user.id_user, password.text.toString())
+                        var usersDB = com.mne4.fromandto.db.User(
+                            null,
+                            user.id_user,
+                            user.password,
+                            false
+                        )
+                        db.getDao().deleteUser(usersDB)
                         Toast.makeText(applicationContext,"Аккаунт успешно удален!",Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, IntroActivity::class.java))
                         finish()
