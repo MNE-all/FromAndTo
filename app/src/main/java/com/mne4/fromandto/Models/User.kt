@@ -1,16 +1,16 @@
 package com.mne4.fromandto.Models
 
 data class User(
-    val surname: String,
-    val name: String,
-    val gender: String?,
-    val birthday: String?,
-    val email: String?,
-    val password: String,
-    val phone: String,
-    val isDriver: Boolean = false,
-    val raiting: Double?,
-    val image_url: String?,
-    val passport: String?,
-    val license : String?
+    var surname: String,
+    var name: String,
+    var gender: String?,
+    var birthday: String?,
+    var email: String?,
+    var password: String,
+    var phone: String,
+    var isDriver: Boolean = false,
+    var raiting: Double?,
+    var image_url: String?,
+    var passport: String?,
+    var license : String?
 )
