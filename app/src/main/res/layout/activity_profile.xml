@@ -331,7 +331,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:onClick="butDeleteAcc"
-        android:text="Удалить"
+        android:text="@string/txtDelete"
         android:textColor="@color/red"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
