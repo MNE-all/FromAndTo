@@ -4,118 +4,197 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_create"
     tools:context=".Fragment.DataRequestFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:text="Заполните данные"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Создание запроса/поездки"
-            android:textColor="@color/black"
-
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dataPickLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            app:endIconMode="clear_text"
-            app:helperTextTextColor="@color/red"
+            android:background="@drawable/view_order_backgroung"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCreate"
-            app:startIconDrawable="@drawable/baseline_event_24">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dataPickField"
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="Заполните данные"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/txtCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Создание запроса/поездки"
+
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dataPickLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Когда едете?"
-                android:inputType="textPassword"
-                android:maxLength="15"
-                android:text="" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="10dp"
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/countCarLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/red"
+                app:startIconDrawable="@drawable/baseline_event_24">
 
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:endIconMode="clear_text"
-            app:helperTextTextColor="@color/red"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dataPickLayout"
-            app:startIconDrawable="@drawable/baseline_directions_car_24">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/countCar"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dataPickField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Когда едете?"
+                    android:inputType="textPassword"
+                    android:maxLength="15"
+                    android:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/countCarLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Сколько мест?"
-                android:inputType="numberSigned"
-                android:maxLength="1"
-                android:text="" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="10dp"
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/priceOnePersonLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/red"
+                app:startIconDrawable="@drawable/baseline_directions_car_24">
 
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:endIconMode="clear_text"
-            app:helperTextTextColor="@color/red"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countCarLayout"
-            app:startIconDrawable="@drawable/ic_money">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/countCar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Сколько мест?"
+                    android:inputType="numberSigned"
+                    android:maxLength="1"
+                    android:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/priceOnePerson"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priceOnePersonLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Стоимость для одного пассажира?"
-                android:inputType="numberSigned"
-                android:maxLength="1"
-                android:text="" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="10dp"
 
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/red"
+                app:startIconDrawable="@drawable/ic_money">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/priceOnePerson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Стоимость для одного пассажира?"
+                    android:inputType="numberSigned"
+                    android:maxLength="1"
+                    android:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtCreate2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Минимальный рейтинг"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/allReating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_button_style"
+                    android:gravity="center"
+                    android:text="Все"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/twoReating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_styleNoactive"
+                    android:gravity="center"
+                    android:text="2.0" />
+
+                <TextView
+                    android:id="@+id/threeReating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_styleNoactive"
+                    android:gravity="center"
+                    android:text="3.0" />
+
+                <TextView
+                    android:id="@+id/thourReating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_styleNoactive"
+                    android:gravity="center"
+                    android:text="4.0" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="#61B8F1"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+            <Button
+                android:id="@+id/butCreate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Создать" />
+
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
