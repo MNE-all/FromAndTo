@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Когда едете?"
-                    android:inputType="textPassword"
+                    android:inputType="date"
                     android:maxLength="15"
                     android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -152,7 +152,7 @@
                     android:id="@+id/twoReating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button_styleNoactive"
+                    android:background="@drawable/custom_button_style_noactive"
                     android:gravity="center"
                     android:text="2.0" />
 
@@ -160,7 +160,7 @@
                     android:id="@+id/threeReating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button_styleNoactive"
+                    android:background="@drawable/custom_button_style_noactive"
                     android:gravity="center"
                     android:text="3.0" />
 
@@ -168,7 +168,7 @@
                     android:id="@+id/thourReating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button_styleNoactive"
+                    android:background="@drawable/custom_button_style_noactive"
                     android:gravity="center"
                     android:text="4.0" />
             </LinearLayout>

@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/mapTab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Карта"
@@ -25,6 +26,7 @@
         </com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/dataTab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Данные"
