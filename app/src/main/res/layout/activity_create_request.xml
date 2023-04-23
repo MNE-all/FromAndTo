@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:background="#8FE642"
+                android:background="@drawable/custom_button_style2"
                 android:contentDescription="@string/app_name"
                 android:text="Карта">
 
@@ -51,7 +51,7 @@
                 android:id="@+id/dataTabItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#4DFFE4"
+                android:background="@drawable/custom_button_style"
                 android:contentDescription="@string/app_name"
                 android:text="Данные"
                 android:textAlignment="center">
@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+
                 android:text="Данные"
                 android:textColor="@color/black"
                 android:textSize="28sp">
