@@ -15,7 +15,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0000"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:textColor="@color/black"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
