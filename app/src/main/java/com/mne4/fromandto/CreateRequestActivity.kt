@@ -9,14 +9,18 @@ import com.mne4.fromandto.Fragment.DataRequestFragment
 import com.mne4.fromandto.Fragment.MapFragment
 
 class CreateRequestActivity : AppCompatActivity(){
-    lateinit var mapTabItem: Button
-    lateinit var dataTabItem: Button
+    lateinit var mapTabItem: TabItem
+    lateinit var dataTabItem: TabItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_request)
         mapTabItem = findViewById(R.id.mapTabItem)
         dataTabItem = findViewById(R.id.dataTabItem)
 
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.creteRequestFragment, MapFragment.newInstance())
+            .commit()
         mapTabItem.setOnClickListener {
             fragmentInstance(MapFragment.newInstance(), R.id.creteRequestFragment)
         }
