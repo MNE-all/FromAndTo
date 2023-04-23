@@ -95,11 +95,11 @@ class IntroActivity : AppCompatActivity() {
     private fun checkLocalDb() {
         var db = MainDB.getDB(this)
         // TODO удаление всех пользователей
-/*
+
         CoroutineScope(Dispatchers.IO).launch {
             db.getDao().deleteAllUser()
         }
-*/
+
 
         db.getDao().getAllUser().asLiveData().observe(this) {
             var isInAccount = false

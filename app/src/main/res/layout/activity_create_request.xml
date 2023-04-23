@@ -9,30 +9,26 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/mapTab"
+            android:id="@+id/mapTabItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Карта"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:contentDescription="@string/app_name">
 
         </com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/dataTab"
+            android:id="@+id/dataTabItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Данные"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:contentDescription="@string/app_name">
 
         </com.google.android.material.tabs.TabItem>
 
