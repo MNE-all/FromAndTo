@@ -211,7 +211,6 @@ class ProfileActivity : AppCompatActivity() {
                              viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
                              viewModel.ApiPostIsPhoneUnique.observe(this){ it ->
                                  if(it){
-                                     replay = true
                                     USER.phone = binding.phoneField.text.toString()
                                     USER.password = binding.passwordField.text.toString()
                                      viewModel.putEditUserSecure(user.id_user, user.password, USER)
@@ -224,7 +223,6 @@ class ProfileActivity : AppCompatActivity() {
                                              binding.switchChange.isChecked = false
                                              isVisibleSecurity(false)
                                          }
-
                                      }
                                  }else{
                                      Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
@@ -235,10 +233,10 @@ class ProfileActivity : AppCompatActivity() {
                          }
                      }else {
                          viewModel.putEditUser(user.id_user, user.password, USER)
-                         replay = true
                          binding.switchChange.isChecked = false
                          isVisibleSecurity(false)
                      }
+                    replay = true
                 }
             }
 
