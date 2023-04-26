@@ -22,6 +22,6 @@ interface DaoUser {
     fun getAllUser(): Flow<List<User>>
 
     @Delete
-    fun deleteAllUser(user: User)
+    fun deleteUser(user: User)
 
 }

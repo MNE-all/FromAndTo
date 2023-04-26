@@ -31,4 +31,8 @@ interface UsersApi {
 
     @DELETE("Users/Delete")
     fun deleteUser(@Query("guid") guid: String, @Query("password") password: String): Call<ResponseBody>
+
+    @ExperimentalMultiplatform
+    @PUT("Users/UpdateSecure")
+    fun putEditUserSecure(@Query("guid") guid: String,  @Query("hashPassword") hashPassword: String,  @Body user: User): Call<ResponseBody>
 }

@@ -11,27 +11,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
-
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointForward
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
-import com.mne4.fromandto.Data.DataModel
-import com.mne4.fromandto.Data.Retrofit2.Models.User
-import com.mne4.fromandto.databinding.ActivityProfileBinding
-import com.mne4.fromandto.Data.Room.MainDB
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Retrofit2.Models.User
+import com.mne4.fromandto.Data.Room.MainDB
 import com.mne4.fromandto.databinding.ActivityProfileBinding
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -39,7 +34,6 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.InputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,13 +42,12 @@ import java.util.*
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     val viewModel: DataModel by viewModels()
-    var gender:String = "Мужской"
-    private var gender:String = ""
-    private var phone:String = ""
-    private var password:String = ""
+    private var gender: String = ""
+    private var phone: String = ""
+    private var password: String = ""
     private lateinit var USER: User
     private lateinit var imageUser:ImageView
-    private var GalleryPick:Int =1
+    private var GalleryPick: Int =1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,9 +122,15 @@ class ProfileActivity : AppCompatActivity() {
             val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
             val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
 
-            val date: Date = inputFormat.parse(it.birthday.toString()) as Date
-            val outputText: String = outputFormat.format(date)
-            binding.txtCalendar.setText(outputText)
+            val date: Date?
+            if (!it.birthday.isNullOrEmpty()) {
+                date = inputFormat.parse(it.birthday.toString()) as Date
+                val outputText: String = outputFormat.format(date)
+                binding.txtCalendar.setText(outputText)
+            }
+
+
+
             binding.emailField.setText(it.email)
             binding.passportField.setText(it.passport)
             binding.licenseField.setText(it.license)
@@ -155,7 +154,7 @@ class ProfileActivity : AppCompatActivity() {
                 for (user in it) {
                     if (user.isInAcc) {
                         viewModel.deleteUser(user.id_user, password.text.toString())
-                        var usersDB = com.mne4.fromandto.db.User(
+                        var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
                             null,
                             user.id_user,
                             user.password,
@@ -183,12 +182,15 @@ class ProfileActivity : AppCompatActivity() {
 
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-                    val date: Date = inputFormat.parse(binding.txtCalendar.text.toString()) as Date
-                    val outputText: String = outputFormat.format(date)
-                    var birthday:String? = outputText
-                    if(binding.txtCalendar.text.toString() == "") {
-                        birthday = null
+                    val date: Date?
+                    if (!binding.txtCalendar.text.isNullOrEmpty()) {
+                        date = inputFormat.parse(binding.txtCalendar.text.toString()) as Date
+                        val outputText: String = outputFormat.format(date)
+                        binding.txtCalendar.text = outputText
+                        var birthday:String? = outputText
+                        USER.birthday = birthday
                     }
+
                     var passport = binding.passportField.text.toString()
                     var license = binding.licenseField.text.toString()
                     if(TextUtils.isEmpty(surname) || TextUtils.isEmpty(name)){
@@ -199,19 +201,18 @@ class ProfileActivity : AppCompatActivity() {
                      USER.name = name
                      USER.email = email
                      USER.gender = gender
-                     USER.birthday = birthday
                      USER.passport = passport
                      USER.license = license
 
                      if(phone!="" && password != ""){
                          if(binding.passwordField.text.toString() == binding.passwordFieldStill.text.toString()) {
                              viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
-                             viewModel.dataModelUsers.ApiPostIsPhoneUnique.observe(this){
+                             viewModel.ApiPostIsPhoneUnique.observe(this){
                                  if(it){
                                     USER.phone = binding.phoneField.text.toString()
                                     USER.password = binding.passwordField.text.toString()
                                      viewModel.putEditUserSecure(user.id_user, user.password, USER)
-                                     viewModel.dataModelUsers.ApiPutEditUser.observe(this) {
+                                     viewModel.ApiPutEditUser.observe(this) {
                                          CoroutineScope(Dispatchers.IO).launch {
                                              db.getDao().updateUser(it.id_user, it.password, true)
                                              binding.switchChange.isChecked = false
@@ -260,7 +261,7 @@ class ProfileActivity : AppCompatActivity() {
                     phone = phones.text.toString()
                     password = passwords.text.toString()
                     viewModel.postAuthentication(phone,password)
-                    viewModel.dataModelUsers.ApiPostAuthentication.observe(this) {
+                    viewModel.ApiPostAuthentication.observe(this) {
                         if (it != null) {
                             if (USER.password == it.password && USER.phone == it.phone) {
                                 isVisibleSecurity(true)

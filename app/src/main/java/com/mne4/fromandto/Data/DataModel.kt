@@ -202,6 +202,25 @@ class   DataModel: ViewModel {
             })
         }
     }
+    fun putEditUserSecure(guid:String, hashPassword: String, user: User)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            usersApi.putEditUserSecure(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    var list = Gson().fromJson("""${response.body()?.string()}""", com.mne4.fromandto.Data.Room.Models.User::class.java)
+                    users = com.mne4.fromandto.Data.Room.Models.User(
+                        list.id_user,
+                        list.password
+                    )
+                    ApiPutEditUser.value = users
+                    Log.d("Put","Response")
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Put","Failture")
+                }
+            })
+        }
+    }
 
     fun deleteUser(guid: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
