@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
+
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -19,14 +21,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Retrofit2.Models.User
+import com.mne4.fromandto.databinding.ActivityProfileBinding
+import com.mne4.fromandto.Data.Room.MainDB
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
-import com.mne4.fromandto.db.MainDB
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -41,7 +47,8 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private var viewModel = ViewModel()
+    val viewModel: DataModel by viewModels()
+    var gender:String = "Мужской"
     private var gender:String = ""
     private var phone:String = ""
     private var password:String = ""
@@ -115,7 +122,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.dataModelUsers.ApiGetCurrentUser.observe(this){
+        viewModel.ApiGetCurrentUser.observe(this){
             USER = it
             binding.surnameField.setText(it.surname)
             binding.nameField.setText(it.name)

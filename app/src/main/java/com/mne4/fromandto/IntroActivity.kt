@@ -3,21 +3,17 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.asLiveData
-import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.db.MainDB
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Room.MainDB
 import com.yandex.mapkit.MapKitFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class IntroActivity : AppCompatActivity() {
-    private var viewModel = ViewModel()
-    private var key = true
+    val viewModel: DataModel by viewModels()
 
 
 
@@ -27,7 +23,7 @@ class IntroActivity : AppCompatActivity() {
             if (MapKitFactory.getInstance() != null) {
 
             }
-        }catch (ex:java.lang.UnsatisfiedLinkError){
+        }catch (ex: UnsatisfiedLinkError){
             MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
             MapKitFactory.initialize(applicationContext)
         }
@@ -111,11 +107,12 @@ class IntroActivity : AppCompatActivity() {
                     if (user.isInAcc) {
                         isInAccount = true
                         viewModel.postAuthenticationAuto(user.id_user, user.password)
-                        viewModel.dataModelUsers.ApiPostAuthenticationAuto.observe(this) {
+                        viewModel.ApiPostAuthenticationAuto.observe(this) {
                             if (it) {
                                 var intent = Intent(this, WelcomeActivity::class.java)
                                 startActivity(intent)
                                 Toast.makeText(applicationContext,"Быстрый вход!",Toast.LENGTH_SHORT).show()
+                                finish()
                             } else {
                                 loginOrRegister()
                                 Toast.makeText(applicationContext,"Аккаунт не найден!",Toast.LENGTH_SHORT).show()

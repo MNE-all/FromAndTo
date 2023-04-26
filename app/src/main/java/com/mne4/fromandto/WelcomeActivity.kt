@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.asLiveData
-import com.mne4.fromandto.databinding.ActivityWelcomeBinding
-import com.mne4.fromandto.db.MainDB
-import com.mne4.fromandto.db.User
+import com.mne4.fromandto.Data.Room.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,14 +17,16 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onDriverClick(view: View) {
-        startActivity(Intent(this, ProfileActivity::class.java))
+//        startActivity(Intent(this, ProfileActivity::class.java))
 
-        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
+//        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        intent.putExtra("UserStatus", "Driver")
+        startActivity(Intent(applicationContext, FindActivity::class.java))
     }
 
     fun onPassengerClick(view: View) {
-
-        startActivity(Intent(applicationContext, ProfileActivity::class.java))
+        intent.putExtra("UserStatus", "User")
+        startActivity(Intent(applicationContext, FindActivity::class.java))
     }
 
     fun onExit(view: View) {
