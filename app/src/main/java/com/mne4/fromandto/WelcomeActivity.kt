@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.asLiveData
-import com.mne4.fromandto.databinding.ActivityWelcomeBinding
-import com.mne4.fromandto.db.MainDB
-import com.mne4.fromandto.db.User
+import com.mne4.fromandto.Data.Room.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

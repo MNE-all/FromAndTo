@@ -7,10 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.asLiveData
-import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.db.MainDB
-import com.mne4.fromandto.db.User
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Room.MainDB
+import com.mne4.fromandto.Data.Room.Entities.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
     private lateinit var phoneEditText: EditText
     private lateinit var passwordEditText: EditText
-    var viewModel = ViewModel()
+    val viewModel: DataModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -34,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         var password = passwordEditText.text
 
         viewModel.postAuthentication("$phone","$password")
-        viewModel.dataModelUsers.ApiPostAuthentication.observe(this) { userFull ->
+        viewModel.ApiPostAuthentication.observe(this) { userFull ->
             if (userFull != null) {
                 var db = MainDB.getDB(this)
                 db.getDao().getAllUser().asLiveData().observe(this) {

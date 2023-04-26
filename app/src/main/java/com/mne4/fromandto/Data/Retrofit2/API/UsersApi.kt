@@ -1,10 +1,8 @@
-package com.mne4.fromandto.API
+package com.mne4.fromandto.Data.Retrofit2.API
 
-import com.mne4.fromandto.Models.User
-import com.mne4.fromandto.Models.UserFull
+import com.mne4.fromandto.Data.Retrofit2.Models.User
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface UsersApi {

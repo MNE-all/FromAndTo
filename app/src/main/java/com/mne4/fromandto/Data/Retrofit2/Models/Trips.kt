@@ -1,4 +1,4 @@
-package com.mne4.fromandto.Models
+package com.mne4.fromandto.Data.Retrofit2.Models
 
 data class Trips (
     val price: Float,

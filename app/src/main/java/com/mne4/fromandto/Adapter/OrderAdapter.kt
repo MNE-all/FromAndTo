@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.FtsOptions
-import com.mne4.fromandto.Fragment.Domain.OrderDomain
+import com.mne4.fromandto.Data.Retrofit2.Models.Order
 import com.mne4.fromandto.R
 
 class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     lateinit var context: Context
-    lateinit var orders:MutableList<OrderDomain>
-    constructor(context: Context,order:MutableList<OrderDomain>):this(){
+    lateinit var orders:MutableList<Order>
+    constructor(context: Context,order:MutableList<Order>):this(){
         this.context = context
         this.orders = order
     }
@@ -29,13 +28,13 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.orderName.text = orders.get(position).getFIO()
-        holder.orderTimeBegin.text = orders.get(position).getTimeBegin()
-        holder.orderTimeEnd.text = orders.get(position).getTimeEnd()
-        holder.orderPrice.text = orders.get(position).getPrice().toString()
-        holder.orderTripBegin.text = orders.get(position).getTripBegin()
-        holder.orderTripEnd.text = orders.get(position).getTripEnd()
-        holder.orderMark.text = orders.get(position).getMark().toString()
+        holder.orderName.text = orders.get(position).FIO
+        holder.orderTimeBegin.text = orders.get(position).TimeBegin
+        holder.orderTimeEnd.text = orders.get(position).TimeEnd
+        holder.orderPrice.text = orders.get(position).Price.toString()
+        holder.orderTripBegin.text = orders.get(position).TripBegin
+        holder.orderTripEnd.text = orders.get(position).TripEnd
+        holder.orderMark.text = orders.get(position).Mark.toString()
     }
 
     class OrderViewHolder: RecyclerView.ViewHolder{

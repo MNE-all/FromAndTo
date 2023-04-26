@@ -1,4 +1,4 @@
-package com.mne4.fromandto.db
+package com.mne4.fromandto.Data.Room.Entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

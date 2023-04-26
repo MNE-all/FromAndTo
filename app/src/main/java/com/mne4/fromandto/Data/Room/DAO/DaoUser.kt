@@ -1,11 +1,11 @@
-package com.mne4.fromandto.db
+package com.mne4.fromandto.Data.Room.DAO
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
+import com.mne4.fromandto.Data.Room.Entities.User
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.DELETE
 
 @Dao
 interface DaoUser {
@@ -21,7 +21,7 @@ interface DaoUser {
     @Query("SELECT * FROM Users")
     fun getAllUser(): Flow<List<User>>
 
-    @Query("DELETE FROM Users")
-    fun deleteAllUser()
+    @Delete
+    fun deleteAllUser(user: User)
 
 }

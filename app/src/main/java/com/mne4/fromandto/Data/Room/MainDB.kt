@@ -1,12 +1,11 @@
-package com.mne4.fromandto.db
+package com.mne4.fromandto.Data.Room
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.mne4.fromandto.Data.Room.DAO.DaoUser
+import com.mne4.fromandto.Data.Room.Entities.User
 
 
 @Database(
@@ -18,12 +17,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 abstract class MainDB: RoomDatabase() {
-    abstract fun getDao():DaoUser
+    abstract fun getDao(): DaoUser
 
 
     companion object{
 
-        fun getDB(context: Context):MainDB{
+        fun getDB(context: Context): MainDB {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MainDB::class.java,

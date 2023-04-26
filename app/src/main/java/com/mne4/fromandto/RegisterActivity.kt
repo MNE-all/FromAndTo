@@ -1,29 +1,25 @@
 package com.mne4.fromandto
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.db.MainDB
-import com.mne4.fromandto.db.User
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Room.MainDB
+import com.mne4.fromandto.Data.Room.Entities.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
 class RegisterActivity : AppCompatActivity() {
-    lateinit var viewModel:ViewModel
+    val viewModel: DataModel by viewModels()
     lateinit var surname: TextInputEditText
     lateinit var name :TextInputEditText
     lateinit var phone: TextInputEditText
@@ -39,17 +35,29 @@ class RegisterActivity : AppCompatActivity() {
         phone = findViewById(R.id.phoneField)
         password = findViewById(R.id.passwordField)
 
-        viewModel= ViewModel()
     }
 
     private fun addUser() {
         var intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
 
-        val user = com.mne4.fromandto.Models.User("${surname.text}", "${name.text}","Мужской", null, null, "${password.text}", "${phone.text}", false, null, null, null, null )
+        val user = com.mne4.fromandto.Data.Retrofit2.Models.User(
+            "${surname.text}",
+            "${name.text}",
+            "Мужской",
+            null,
+            null,
+            "${password.text}",
+            "${phone.text}",
+            false,
+            null,
+            null,
+            null,
+            null
+        )
         var db = MainDB.getDB(this)
         viewModel.postNewUser(user)
-        viewModel.dataModelUsers.ApiPostNewUser.observe(this) {
+        viewModel.ApiPostNewUser.observe(this) {
             CoroutineScope(Dispatchers.IO).launch {
                 val user = User(
                     null, "${it.id_user}", "${it.password}", false
@@ -80,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
            return
        }
        viewModel.postIsPhoneUnique(phone.text.toString())
-       viewModel.dataModelUsers.ApiPostIsPhoneUnique.observe(this){
+       viewModel.ApiPostIsPhoneUnique.observe(this){
            if(it){
                addUser()
            }else{

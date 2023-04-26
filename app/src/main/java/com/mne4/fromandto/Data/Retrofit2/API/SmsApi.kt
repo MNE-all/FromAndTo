@@ -1,4 +1,4 @@
-package com.mne4.fromandto.API
+package com.mne4.fromandto.Data.Retrofit2.API
 
 import okhttp3.ResponseBody
 import retrofit2.Call

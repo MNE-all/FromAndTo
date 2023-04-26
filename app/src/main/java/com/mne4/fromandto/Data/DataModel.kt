@@ -1,13 +1,15 @@
-package com.mne4.fromandto.API
+package com.mne4.fromandto.Data
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.mne4.fromandto.Models.GetUserRoom
-import com.mne4.fromandto.Models.Trips
-import com.mne4.fromandto.Models.User
-import com.mne4.fromandto.Models.UserFull
-import com.mne4.fromandto.Observe.DataModelTrips
-import com.mne4.fromandto.Observe.DataModelUsers
+import com.mne4.fromandto.Data.Retrofit2.API.SmsApi
+import com.mne4.fromandto.Data.Retrofit2.API.TripsApi
+import com.mne4.fromandto.Data.Retrofit2.API.UsersApi
+import com.mne4.fromandto.Data.Retrofit2.Models.Trips
+import com.mne4.fromandto.Data.Retrofit2.Models.User
+import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,15 +23,51 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @OptIn(ExperimentalMultiplatform::class)
-class   ViewModel{
+class   DataModel: ViewModel {
 
-    private lateinit var users: GetUserRoom
+    val ApiGetTripsAll: MutableLiveData<ArrayList<Trips>> by lazy {
+        MutableLiveData<ArrayList<Trips>>()
+    }
+    val ApiGetCurrenTrips: MutableLiveData<Trips> by lazy {
+        MutableLiveData<Trips>()
+    }
+
+    val ApiGetTripsByDate: MutableLiveData<ArrayList<Trips>> by lazy {
+        MutableLiveData<ArrayList<Trips>>()
+    }
+
+    val ApiGetUserAll: MutableLiveData<ArrayList<User>> by lazy {
+        MutableLiveData<ArrayList<User>>()
+    }
+    val ApiGetCurrentUser: MutableLiveData<User> by lazy {
+        MutableLiveData<User>()
+    }
+
+    val ApiPostAuthentication: MutableLiveData<UserFull?> by lazy {
+        MutableLiveData<UserFull?>()
+    }
+
+    val ApiPostAuthenticationAuto: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
+    val ApiPostIsPhoneUnique: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
+
+    val ApiPostNewUser: MutableLiveData<com.mne4.fromandto.Data.Room.Models.User> by lazy {
+        MutableLiveData<com.mne4.fromandto.Data.Room.Models.User>()
+    }
+    val ApiPutEditUser: MutableLiveData<com.mne4.fromandto.Data.Room.Models.User> by lazy {
+        MutableLiveData<com.mne4.fromandto.Data.Room.Models.User>()
+    }
+
+    private lateinit var users: com.mne4.fromandto.Data.Room.Models.User
     private var usersFull: UserFull? = null
     private lateinit var usersApi: UsersApi
     private lateinit var tripsApi: TripsApi
     private lateinit var registr_sms: SmsApi
-    val dataModelUsers = DataModelUsers()
-    val dataModelTrips = DataModelTrips()
     private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
 
     constructor(){
@@ -54,7 +92,7 @@ class   ViewModel{
     {
         CoroutineScope(Dispatchers.Main).launch {
            var users = usersApi.getAll()
-            dataModelUsers.ApiGetUserAll.value = users
+            ApiGetUserAll.value = users
         }
     }
 
@@ -62,7 +100,7 @@ class   ViewModel{
     {
         CoroutineScope(Dispatchers.Main).launch {
            var user = usersApi.getCurrentUser(guid)
-            dataModelUsers.ApiGetCurrentUser.value = user
+            ApiGetCurrentUser.value = user
         }
     }
     fun postIsPhoneUnique(phone:String)
@@ -70,7 +108,7 @@ class   ViewModel{
         CoroutineScope(Dispatchers.Main).launch {
            usersApi.postIsPhoneUnique(phone).enqueue(object :Callback<Boolean>{
                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                   dataModelUsers.ApiPostIsPhoneUnique.value = response.body()
+                   ApiPostIsPhoneUnique.value = response.body()
                }
                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                }
@@ -82,7 +120,7 @@ class   ViewModel{
         CoroutineScope(Dispatchers.Main).launch {
             usersApi.postAuthenticationAuto(guid, hashPassword).enqueue(object :Callback<Boolean>{
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                    dataModelUsers.ApiPostAuthenticationAuto.value = response.body()
+                    ApiPostAuthenticationAuto.value = response.body()
                 }
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 }
@@ -112,7 +150,7 @@ class   ViewModel{
                            list.license
                        )
                    }
-                       dataModelUsers.ApiPostAuthentication.value = usersFull
+                       ApiPostAuthentication.value = usersFull
 
                    Log.d("Post","Response")
                }
@@ -125,17 +163,17 @@ class   ViewModel{
         }
     }
 
-    fun postNewUser(user:User)
+    fun postNewUser(user: User)
     {
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.postNewUser(user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
-                    users = GetUserRoom(
+                    var list = Gson().fromJson("""${response.body()?.string()}""", com.mne4.fromandto.Data.Room.Models.User::class.java)
+                    users = com.mne4.fromandto.Data.Room.Models.User(
                         list.id_user,
                         list.password
                     )
-                    dataModelUsers.ApiPostNewUser.value = users
+                    ApiPostNewUser.value = users
                     Log.d("Post","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -150,12 +188,12 @@ class   ViewModel{
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    var list = Gson().fromJson("""${response.body()?.string()}""", GetUserRoom::class.java)
-                        users = GetUserRoom(
+                    var list = Gson().fromJson("""${response.body()?.string()}""", com.mne4.fromandto.Data.Room.Models.User::class.java)
+                        users = com.mne4.fromandto.Data.Room.Models.User(
                             list.id_user,
                             list.password
                         )
-                        dataModelUsers.ApiPutEditUser.value = users
+                        ApiPutEditUser.value = users
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -183,7 +221,7 @@ class   ViewModel{
 
         CoroutineScope(Dispatchers.Main).launch {
             var list =  tripsApi.getAll()
-            dataModelTrips.ApiGetTripsAll.value = list
+            ApiGetTripsAll.value = list
         }
     }
 
@@ -191,7 +229,7 @@ class   ViewModel{
     {
         CoroutineScope(Dispatchers.Main).launch {
             var trips = tripsApi.getCurrentTrips(guid)
-            dataModelTrips.ApiGetCurrenTrips.value = trips
+            ApiGetCurrenTrips.value = trips
         }
     }
 
@@ -199,7 +237,7 @@ class   ViewModel{
 
         CoroutineScope(Dispatchers.Main).launch {
             var list =  tripsApi.getTrips(date,start_point,end_point)
-            dataModelTrips.ApiGetTripsByDate.value = list
+            ApiGetTripsByDate.value = list
         }
     }
 

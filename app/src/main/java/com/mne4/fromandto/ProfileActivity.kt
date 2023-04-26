@@ -1,33 +1,29 @@
 package com.mne4.fromandto
 
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import com.mne4.fromandto.API.ViewModel
-import com.mne4.fromandto.Models.User
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.databinding.ActivityProfileBinding
-import com.mne4.fromandto.db.MainDB
+import com.mne4.fromandto.Data.Room.MainDB
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private var viewModel = ViewModel()
+    val viewModel: DataModel by viewModels()
     var gender:String = "Мужской"
     private lateinit var USER: User
 
@@ -56,7 +52,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.dataModelUsers.ApiGetCurrentUser.observe(this){
+        viewModel.ApiGetCurrentUser.observe(this){
             USER = it
             binding.surnameField.setText(it.surname)
             binding.nameField.setText(it.name)

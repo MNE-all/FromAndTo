@@ -1,7 +1,6 @@
-package com.mne4.fromandto.Models
+package com.mne4.fromandto.Data.Retrofit2.Models
 
-data class UserFull (
-    val id_user: String,
+data class User(
     val surname: String,
     val name: String,
     val gender: String?,
@@ -15,4 +14,3 @@ data class UserFull (
     val passport: String?,
     val license : String?
 )
-
