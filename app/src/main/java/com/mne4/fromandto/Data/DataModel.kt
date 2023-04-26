@@ -188,13 +188,7 @@ class   DataModel: ViewModel {
         CoroutineScope(Dispatchers.IO).launch {
             usersApi.putEditUser(guid, hashPassword, user).enqueue(object : retrofit2.Callback<ResponseBody>{
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    var list = Gson().fromJson("""${response.body()?.string()}""", com.mne4.fromandto.Data.Room.Models.User::class.java)
-                        users = com.mne4.fromandto.Data.Room.Models.User(
-                            list.id_user,
-                            list.password
-                        )
-                        ApiPutEditUser.value = users
-                    Log.d("Put","Response")
+                    Log.d("Put","${response.body()}")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("Put","Failture")

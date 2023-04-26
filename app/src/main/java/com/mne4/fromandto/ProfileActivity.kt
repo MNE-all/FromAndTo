@@ -42,7 +42,7 @@ import java.util.*
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     val viewModel: DataModel by viewModels()
-    private var gender: String = ""
+    private var gender: String = "Мужской"
     private var phone: String = ""
     private var password: String = ""
     private lateinit var USER: User
@@ -207,7 +207,7 @@ class ProfileActivity : AppCompatActivity() {
                      if(phone!="" && password != ""){
                          if(binding.passwordField.text.toString() == binding.passwordFieldStill.text.toString()) {
                              viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
-                             viewModel.ApiPostIsPhoneUnique.observe(this){
+                             viewModel.ApiPostIsPhoneUnique.observe(this){ it ->
                                  if(it){
                                     USER.phone = binding.phoneField.text.toString()
                                     USER.password = binding.passwordField.text.toString()
