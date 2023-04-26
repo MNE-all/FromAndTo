@@ -21,7 +21,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @OptIn(ExperimentalMultiplatform::class)
-class ViewModel{
+class   ViewModel{
 
     private lateinit var users: GetUserRoom
     private var usersFull: UserFull? = null

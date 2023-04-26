@@ -100,7 +100,6 @@
                     android:layout_height="wrap_content"
                     android:hint="Когда"
                     android:inputType="text"
-                    android:maxLength="15"
                     android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 

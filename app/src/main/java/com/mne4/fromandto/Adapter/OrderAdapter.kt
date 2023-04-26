@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.FtsOptions
-import com.mne4.fromandto.Domain.OrderDomain
+import com.mne4.fromandto.Fragment.Domain.OrderDomain
 import com.mne4.fromandto.R
 
 class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {

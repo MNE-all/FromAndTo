@@ -1,4 +1,4 @@
-package com.mne4.fromandto.Domain
+package com.mne4.fromandto.Fragment.Domain
 
 class OrderDomain {
     private var FIO: String = ""
