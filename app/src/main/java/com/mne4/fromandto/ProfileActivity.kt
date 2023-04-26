@@ -42,6 +42,7 @@ import java.util.*
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     val viewModel: DataModel by viewModels()
+    private var replay = false
     private var gender: String = "Мужской"
     private var phone: String = ""
     private var password: String = ""
@@ -172,10 +173,11 @@ class ProfileActivity : AppCompatActivity() {
         dialog.show()
     }
     fun butSave(view:View){
+        replay = false
         var db = MainDB.getDB(this)
         db.getDao().getAllUser().asLiveData().observe(this){
             for(user in it){
-                if(user.isInAcc){
+                if(user.isInAcc && !replay){
                     var surname = binding.surnameField.text.toString()
                     var name = binding.nameField.text.toString()
                     var email = binding.emailField.text.toString()
@@ -209,16 +211,20 @@ class ProfileActivity : AppCompatActivity() {
                              viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
                              viewModel.ApiPostIsPhoneUnique.observe(this){ it ->
                                  if(it){
+                                     replay = true
                                     USER.phone = binding.phoneField.text.toString()
                                     USER.password = binding.passwordField.text.toString()
                                      viewModel.putEditUserSecure(user.id_user, user.password, USER)
                                      viewModel.ApiPutEditUser.observe(this) {
                                          CoroutineScope(Dispatchers.IO).launch {
                                              db.getDao().updateUser(it.id_user, it.password, true)
-                                             binding.switchChange.isChecked = false
-                                             isVisibleSecurity(false)
                                              return@launch
                                          }
+                                         runOnUiThread{
+                                             binding.switchChange.isChecked = false
+                                             isVisibleSecurity(false)
+                                         }
+
                                      }
                                  }else{
                                      Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
@@ -229,6 +235,7 @@ class ProfileActivity : AppCompatActivity() {
                          }
                      }else {
                          viewModel.putEditUser(user.id_user, user.password, USER)
+                         replay = true
                          binding.switchChange.isChecked = false
                          isVisibleSecurity(false)
                      }
