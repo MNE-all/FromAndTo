@@ -37,5 +37,7 @@
     <string name="license">Лицензия</string>
     <string name="email">Почта</string>
 
+    <string name="txtDelete">Удалить</string>
+
 
 </resources>

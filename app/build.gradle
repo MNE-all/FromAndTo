@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -46,6 +47,7 @@ dependencies {
     implementation 'com.yandex.android:maps.mobile:4.1.0-full'
 
     implementation 'androidx.room:room-ktx:2.5.1'
+    implementation 'com.android.volley:volley:1.2.1'
     kapt 'androidx.room:room-compiler:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1'
@@ -56,6 +58,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

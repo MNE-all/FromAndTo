@@ -7,28 +7,29 @@
     android:background="@drawable/bg_profile"
     tools:context=".ProfileActivity">
 
-    <ImageView
-        android:id="@+id/imageBackground"
-        android:layout_width="148dp"
-        android:layout_height="147dp"
-        android:layout_marginBottom="30dp"
-
-        android:background="@drawable/bg_image_profile"
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="150dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/imageUser"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/baseline_account_circle_24"
-        app:layout_constraintBottom_toBottomOf="@+id/imageBackground"
-        app:layout_constraintEnd_toEndOf="@+id/imageBackground"
-        app:layout_constraintStart_toStartOf="@+id/imageBackground"
-        app:layout_constraintTop_toTopOf="@+id/imageBackground" />
+        <ImageView
+            android:id="@+id/imageBackground"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/bg_image_profile" />
 
+        <ImageView
+            android:id="@+id/imageUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_profile"
+            android:contentDescription="@string/name"
+            android:onClick="ImgClick" />
 
+    </androidx.cardview.widget.CardView>
     <ScrollView
 
         android:id="@+id/scrollView2"
@@ -170,7 +171,7 @@
                 android:textSize="28sp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip"
+                android:id="@+id/chipSecurity"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -322,5 +323,18 @@
                 android:text="@string/butSave" />
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/txtDeleteAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="butDeleteAcc"
+        android:text="@string/txtDelete"
+        android:textColor="@color/red"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
