@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/butSearchBottomNavigation"
+        android:title="Поиск"
+        android:icon="@drawable/baseline_search_24"/>
+    <item
+        android:id="@+id/butHelpBottomNavigation"
+        android:title="Помощь"
+        android:icon="@drawable/baseline_help_24"/>
+    <item
+        android:id="@+id/fub"
+        android:title=""
+        android:enabled="false"/>
+    <item
+        android:id="@+id/butSettingBottomNavigation"
+        android:title="Настройки"
+        android:icon="@drawable/baseline_settings_24"/>
+    <item
+        android:id="@+id/butProfileBottomNavigation"
+        android:title="Профиль"
+        android:icon="@drawable/baseline_person_24"/>
+</menu>
