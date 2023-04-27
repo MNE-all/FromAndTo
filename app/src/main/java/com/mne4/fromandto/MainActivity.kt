@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mne4.fromandto.Fragment.HelpFragment
+import com.mne4.fromandto.Fragment.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
 
 
@@ -25,11 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationViewMenu.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.butSearchBottomNavigation -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Вы нажали на кнопку поиска!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    fragmentInstance(SearchFragment.newInstance(),R.id.bottomNavigationFrame);
                 }
                 R.id.butHelpBottomNavigation -> {
                     fragmentInstance(HelpFragment.newInstance(),R.id.bottomNavigationFrame);
