@@ -156,6 +156,7 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+           android:id="@+id/createRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/purple_500"
@@ -163,7 +164,9 @@
             android:elevation="3dp"
             android:src="@drawable/baseline_reorder_24"
             app:backgroundTint="@color/purple_500"
-            app:layout_anchor="@id/app_bar"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+            app:layout_anchor="@id/app_bar">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
