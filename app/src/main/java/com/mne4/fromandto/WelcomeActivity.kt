@@ -21,7 +21,7 @@ class WelcomeActivity : AppCompatActivity() {
 
 //        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
         intent.putExtra("UserStatus", "Driver")
-        startActivity(Intent(applicationContext, FindActivity::class.java))
+        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
     }
 
     fun onPassengerClick(view: View) {
