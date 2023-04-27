@@ -13,9 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -30,7 +28,6 @@ import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Room.MainDB
 import com.mne4.fromandto.IntroActivity
 import com.mne4.fromandto.R
-import com.mne4.fromandto.databinding.ActivityProfileBinding
 import com.mne4.fromandto.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -86,9 +83,8 @@ class ProfileFragment : Fragment() {
 //            .into(binding.imageUser)
     }
 
+    @Deprecated("Deprecated in Kotlin")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        @Suppress("DEPRECATION")
-        super.onActivityResult(requestCode, resultCode, data)
         var imageUri: Uri?
         if(requestCode==GalleryPick && resultCode== RESULT_OK && data!=null){
             imageUri = data.data
@@ -96,7 +92,7 @@ class ProfileFragment : Fragment() {
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1,1)
-                .start(requireActivity());
+                .start(requireActivity(),this);
         }
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
@@ -393,6 +389,8 @@ class ProfileFragment : Fragment() {
 
         isVisibleSecurity(true)
         isVisibleSecurity(false)
+
+        binding.imageUser.isEnabled = truth
 
         binding.surnameField.isEnabled = truth
         binding.nameField.isEnabled = truth
