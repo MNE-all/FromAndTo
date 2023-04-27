@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.mne4.fromandto.Fragment.HelpFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
 
 
@@ -31,11 +32,7 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
                 R.id.butHelpBottomNavigation -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Вы нажали на кнопку помощи!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    fragmentInstance(HelpFragment.newInstance(),R.id.bottomNavigationFrame);
                 }
                 R.id.butSettingBottomNavigation -> {
                     Toast.makeText(
@@ -54,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-//        fragmentInstance(BarMenuFragment.newInstance(),R.id.framelayoutMenu);
+
 
     }
     fun fragmentInstance(f: Fragment, idHolder: Int) {

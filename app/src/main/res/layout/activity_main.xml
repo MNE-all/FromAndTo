@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:src="@drawable/search_layer_advert_pin_dust_default"
+            android:src="@drawable/baseline_add_24"
             app:maxImageSize="40dp"
             app:layout_anchor="@id/bottomAppBarCreateRequest"
             android:contentDescription="@string/app_name" />
