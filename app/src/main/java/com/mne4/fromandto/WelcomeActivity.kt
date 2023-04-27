@@ -26,7 +26,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     fun onPassengerClick(view: View) {
         intent.putExtra("UserStatus", "User")
-        startActivity(Intent(applicationContext, ProfileActivity::class.java))
+        startActivity(Intent(applicationContext, MainActivity::class.java))
     }
 
     fun onExit(view: View) {
