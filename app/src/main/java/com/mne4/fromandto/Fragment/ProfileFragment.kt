@@ -205,7 +205,9 @@ class ProfileFragment : Fragment() {
                                     user.password,
                                     false
                                 )
-                                db.getDao().deleteUser(usersDB)
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    db.getDao().deleteUser(usersDB)
+                                }
                                 Toast.makeText(
                                     requireContext(),
                                     "Аккаунт успешно удален!",
