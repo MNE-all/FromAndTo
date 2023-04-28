@@ -34,34 +34,54 @@
                 android:padding="20dp">
 
 
-            <LinearLayout android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutFrom"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Откуда: "
-                    android:textSize="28sp"/>
-                <Spinner
-                    android:id="@+id/textSpinnerFrom"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:contentDescription="@string/app_name"/>
-            </LinearLayout>
-                <LinearLayout android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:endIconMode="clear_text"
 
-                    <TextView
-                        android:layout_width="106dp"
-                        android:layout_height="wrap_content"
-                        android:text="Куда: "
-                        android:textSize="28sp" />
-                    <Spinner
-                        android:id="@+id/textSpinnerTo"
+                    app:helperTextTextColor="@color/red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/baseline_location_on_24">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/textInputEditTextFrom"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:contentDescription="@string/app_name"/>
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:hint="Откуда"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutTo"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+
+                    app:helperTextTextColor="@color/red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/baseline_flag_24">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/textInputEditTextTo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Куда"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutWhere"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -77,7 +97,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:startIconDrawable="@drawable/baseline_event_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
 
                         android:id="@+id/textInputEditTextWhere"
                         android:layout_width="match_parent"
@@ -116,6 +136,16 @@
             android:layout_marginBottom="100dp"
             android:fontFamily="sans-serif-black"
             android:text="Найти"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <AutoCompleteTextView
+
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AutoCompleteTextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

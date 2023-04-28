@@ -1,40 +1,37 @@
 package com.mne4.fromandto.Fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.mne4.fromandto.Data.DataModel
-import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentSearchBinding
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class SearchFragment : Fragment() {
 lateinit var binding: FragmentSearchBinding
     val viewModel: DataModel by activityViewModels()
     lateinit var textTo: String
     lateinit var textFrom: String
-    var cityList = arrayOf("Санкт-Петербург","Москва")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater)
-        SpinnerFrom()
-        SpinnerTo()
+        From()
+        To()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,8 +78,8 @@ lateinit var binding: FragmentSearchBinding
                     viewModel.getReadDateStartToDateEndToFrom(
                         outputDate1,
                         outputDate2,
-                        textFrom,
-                        textTo
+                        binding.textInputEditTextFrom.text.toString(),
+                        binding.textInputEditTextTo.text.toString()
                     )
                 } catch (e: java.lang.IndexOutOfBoundsException) {
 
@@ -95,41 +92,34 @@ lateinit var binding: FragmentSearchBinding
             }
         }
     }
-    private fun SpinnerTo(){
-        var arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, cityList)
-        binding.textSpinnerTo.adapter = arrayAdapter
-        binding.textSpinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                textTo = cityList[position]
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+    private fun From() {
+        viewModel.getCityFrom()
+        viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
+            val adapter: ArrayAdapter<String> = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                it
+            )
+            binding.textInputEditTextFrom.setAdapter(adapter)
         }
 
     }
-    private fun SpinnerFrom(){
-        var arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, cityList)
-        binding.textSpinnerFrom.adapter = arrayAdapter
-        binding.textSpinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                textFrom = cityList[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+    private fun To(){
+        binding.textInputEditTextFrom.addTextChangedListener {
+            var start_point = binding.textInputEditTextFrom.text.toString()
+            if (!TextUtils.isEmpty(start_point)) {
+                viewModel.getCityTo(start_point)
+                viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
+                    val adapter: ArrayAdapter<String> = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_dropdown_item_1line,
+                        it
+                    )
+                    binding.textInputEditTextTo.setAdapter(adapter)
+                }
             }
         }
-
     }
     companion object {
 
