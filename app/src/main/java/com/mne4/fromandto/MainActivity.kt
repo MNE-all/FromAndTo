@@ -12,6 +12,9 @@ import com.mne4.fromandto.Fragment.HelpFragment
 import com.mne4.fromandto.Fragment.ProfileFragment
 import com.mne4.fromandto.Fragment.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +30,15 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationViewMenu.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.butSearchBottomNavigation -> {
-                    fragmentInstance(SearchFragment.newInstance(),R.id.bottomNavigationFrame);
+                    CoroutineScope(Dispatchers.IO).launch {
+                        fragmentInstance(SearchFragment.newInstance(),R.id.bottomNavigationFrame);
+                    }
+
                 }
                 R.id.butHelpBottomNavigation -> {
-                    fragmentInstance(HelpFragment.newInstance(),R.id.bottomNavigationFrame);
+                    CoroutineScope(Dispatchers.IO).launch {
+                        fragmentInstance(HelpFragment.newInstance(), R.id.bottomNavigationFrame);
+                    }
                 }
                 R.id.butSettingBottomNavigation -> {
                     Toast.makeText(
@@ -40,7 +48,9 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
                 R.id.butProfileBottomNavigation -> {
-                    fragmentInstance(ProfileFragment.newInstance(),R.id.bottomNavigationFrame);
+                    CoroutineScope(Dispatchers.IO).launch {
+                        fragmentInstance(ProfileFragment.newInstance(),R.id.bottomNavigationFrame);
+                    }
                 }
             }
             true

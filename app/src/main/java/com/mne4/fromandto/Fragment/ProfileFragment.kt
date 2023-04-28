@@ -1,13 +1,16 @@
 package com.mne4.fromandto.Fragment
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +19,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
@@ -35,9 +39,11 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class ProfileFragment : Fragment() {
 
@@ -79,7 +85,7 @@ class ProfileFragment : Fragment() {
             startActivityForResult(galleryIntent, GalleryPick)
         }
 //        Picasso.get()
-//            .load( "http://vsegda-pomnim.com/uploads/posts/2022-04/1649121458_29-vsegda-pomnim-com-p-samie-krasivie-mesta-prirodi-foto-29.jpg")
+//            .load( "/storage/emulated/0/Pictures/Title (1).jpg")
 //            .into(binding.imageUser)
     }
 
@@ -98,15 +104,42 @@ class ProfileFragment : Fragment() {
             var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
             if(resultCode == RESULT_OK){
                 var resultUri: Uri? = result.uri
-                Log.d("img","${resultUri?.encodedPath}")
+                binding.imageUser.buildDrawingCache()
+                var bitmap = binding.imageUser.getDrawingCache()
                 Picasso.get().load(resultUri).into(binding.imageUser)
 
+                //Log.d("img","${getImageUri(requireContext(),bitmap)}")
             }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 var error:Exception = result.error
             }
         }
 
 
+    }
+    fun getImageUri(inContext: Context, inImage: Bitmap): String? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            inContext.getContentResolver(),
+            inImage,
+            "Title",
+            null
+        )
+        return getRealPathFromUri(inContext,Uri.parse(path))
+    }
+    fun getRealPathFromUri(context: Context, contentUri: Uri?): String? {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
+            val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            return cursor.getString(column_index)
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
     }
 
     fun InitUser(){
