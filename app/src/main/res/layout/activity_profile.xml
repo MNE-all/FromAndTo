@@ -8,10 +8,10 @@
     tools:context=".ProfileActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView9"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:cardCornerRadius="150dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDeleteAcc">
@@ -31,15 +31,19 @@
             android:onClick="ImgClick" />
 
     </androidx.cardview.widget.CardView>
+
     <ScrollView
 
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_scrollview_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView9"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/linearLayout2"

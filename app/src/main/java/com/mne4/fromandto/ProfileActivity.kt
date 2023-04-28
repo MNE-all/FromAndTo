@@ -230,6 +230,7 @@ class ProfileActivity : AppCompatActivity() {
                                      }
                                  }else{
                                      Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
+                                     return@observe
                                  }
                              }
                          }else{

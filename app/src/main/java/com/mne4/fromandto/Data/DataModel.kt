@@ -1,5 +1,6 @@
 package com.mne4.fromandto.Data
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.mne4.fromandto.Data.Retrofit2.API.UsersApi
 import com.mne4.fromandto.Data.Retrofit2.Models.Trips
 import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
+import com.mne4.fromandto.Data.Room.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +25,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @OptIn(ExperimentalMultiplatform::class)
-class   DataModel: ViewModel {
+class   DataModel: ViewModel() {
+    fun getLocalDB(context: Context): MainDB {
+        return MainDB.getDB(context)
+    }
+    val onboardPosition: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
 
     val ApiGetTripsAll: MutableLiveData<ArrayList<Trips>> by lazy {
         MutableLiveData<ArrayList<Trips>>()
@@ -76,7 +84,7 @@ class   DataModel: ViewModel {
     private lateinit var registr_sms: SmsApi
     private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
 
-    constructor(){
+    init{
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
