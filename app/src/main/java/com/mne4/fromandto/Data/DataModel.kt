@@ -32,7 +32,7 @@ class   DataModel: ViewModel {
         MutableLiveData<Trips>()
     }
 
-    val ApiGetTripsByDate: MutableLiveData<ArrayList<Trips>> by lazy {
+    val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<Trips>> by lazy {
         MutableLiveData<ArrayList<Trips>>()
     }
 
@@ -246,11 +246,11 @@ class   DataModel: ViewModel {
         }
     }
 
-    fun getTripsByDate(date:String, start_point:String, end_point: String){
+    fun getReadDateStartToDateEndToFrom(date_start:String,date_end:String, start_point:String, end_point: String){
 
         CoroutineScope(Dispatchers.Main).launch {
-            var list =  tripsApi.getTrips(date,start_point,end_point)
-            ApiGetTripsByDate.value = list
+            var list =  tripsApi.getReadDateStartToDateEndToFrom(date_start,date_end,start_point,end_point)
+                ApiGetTripsReadDateStartToDateEndToFrom.value = list
         }
     }
 
