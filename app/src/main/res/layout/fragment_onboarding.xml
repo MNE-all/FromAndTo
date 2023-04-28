@@ -15,8 +15,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:rotation="-35"
-            android:scrollbarSize="5dp"
             app:cardBackgroundColor="#314267"
             app:cardCornerRadius="200dp"
             app:layout_constraintBottom_toTopOf="@+id/textViewOnboardTitle"
@@ -25,9 +26,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewOnboard"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="80dp"
                 android:rotation="35"
                 android:scaleType="centerCrop"
@@ -40,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:gravity="center"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/textViewDescription"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,46 +54,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:gravity="center"
             android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
 
-            <ImageView
-                android:id="@+id/imageViewBtn1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_radio_button_checked_24" />
-
-            <ImageView
-                android:id="@+id/imageViewBtn2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_radio_button_unchecked_24" />
-
-            <ImageView
-                android:id="@+id/imageViewBtn3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_radio_button_unchecked_24" />
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

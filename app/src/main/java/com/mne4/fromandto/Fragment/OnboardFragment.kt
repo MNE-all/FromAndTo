@@ -1,59 +1,55 @@
 package com.mne4.fromandto.Fragment
 
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OnboardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_TITLE = "title"
+private const val ARG_DESCRIPTION = "description"
+private const val ARG_POSITION = "position"
+private const val ARG_IMAGE = "image"
 class OnboardFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    val viewModel: DataModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_onboarding, container, false)
+        val view = inflater.inflate(R.layout.fragment_onboarding, container, false)
+        val textViewOnboardTitle = view.findViewById<TextView>(R.id.textViewOnboardTitle)
+        val textViewDescription = view.findViewById<TextView>(R.id.textViewDescription)
+        val imageViewOnboard = view.findViewById<ImageView>(R.id.imageViewOnboard)
+        arguments?.let {
+            textViewOnboardTitle.text = it.getString(ARG_TITLE)
+            textViewDescription.text =it.getString(ARG_DESCRIPTION)
+            imageViewOnboard.setImageDrawable(view.context.getDrawable(it.getInt(ARG_IMAGE)))
+        }
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onboardPosition.value = arguments?.getInt(ARG_POSITION)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OnboardingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(title: String, description: String, position: Int, image: Int) =
             OnboardFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_TITLE, title)
+                    putString(ARG_DESCRIPTION, description)
+                    putInt(ARG_POSITION, position)
+                    putInt(ARG_IMAGE, image)
                 }
             }
     }

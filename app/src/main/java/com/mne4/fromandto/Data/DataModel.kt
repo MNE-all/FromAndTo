@@ -29,6 +29,9 @@ class   DataModel: ViewModel() {
     fun getLocalDB(context: Context): MainDB {
         return MainDB.getDB(context)
     }
+    val onboardPosition: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
 
     val ApiGetTripsAll: MutableLiveData<ArrayList<Trips>> by lazy {
         MutableLiveData<ArrayList<Trips>>()
