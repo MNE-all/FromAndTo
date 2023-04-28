@@ -61,6 +61,9 @@ class IntroActivity : AppCompatActivity() {
             findViewById(R.id.imageViewBtn2), findViewById(R.id.imageViewBtn3))
 
         val skipBtn = findViewById<TextView>(R.id.textViewSkip)
+        skipBtn.setOnClickListener {
+            notificationPage()
+        }
         viewModel.onboardPosition.observe(this) { it ->
             buttons.forEach { it ->
                 it.setImageDrawable(getDrawable(R.drawable.baseline_radio_button_unchecked_24))
@@ -72,21 +75,6 @@ class IntroActivity : AppCompatActivity() {
             else {
                 skipBtn.text = "Пропустить"
             }
-        }
-    }
-    private fun firstIntroPage() {
-        setContentView(R.layout.activity_intro_first_page)
-        var button = findViewById<Button>(R.id.buttonIntroFirstNext)
-        button.setOnClickListener {
-            secondIntroPage()
-        }
-    }
-
-    private fun secondIntroPage() {
-        setContentView(R.layout.activity_intro_second_page)
-        var button = findViewById<Button>(R.id.buttonNextIntroSecondPage)
-        button.setOnClickListener {
-            notificationPage()
         }
     }
 
