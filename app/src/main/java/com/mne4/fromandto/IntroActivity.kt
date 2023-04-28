@@ -4,13 +4,23 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.asLiveData
+import androidx.viewpager2.widget.ViewPager2
+import com.mne4.fromandto.Adapter.OnboardAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Room.MainDB
 import com.yandex.mapkit.MapKitFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class IntroActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
@@ -19,6 +29,8 @@ class IntroActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_intro_load_screen)
         try {
             if (MapKitFactory.getInstance() != null) {
 
@@ -27,33 +39,42 @@ class IntroActivity : AppCompatActivity() {
             MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
             MapKitFactory.initialize(applicationContext)
         }
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro_load_screen)
-
-
     }
 
     override fun onStart() {
         super.onStart()
-
-
-        checkLocalDb()
-    }
-
-    private fun firstIntroPage() {
-        setContentView(R.layout.activity_intro_first_page)
-        var button = findViewById<Button>(R.id.buttonIntroFirstNext)
-        button.setOnClickListener {
-            secondIntroPage()
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(3000)
+            runOnUiThread{
+                checkLocalDb()
+            }
         }
     }
 
-    private fun secondIntroPage() {
-        setContentView(R.layout.activity_intro_second_page)
-        var button = findViewById<Button>(R.id.buttonNextIntroSecondPage)
-        button.setOnClickListener {
+    private fun onboard() {
+        setContentView(R.layout.activity_intro)
+        val adapter = OnboardAdapter(this)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        viewPager.adapter = adapter
+
+        val buttons = arrayOf<ImageView>(findViewById(R.id.imageViewBtn1),
+            findViewById(R.id.imageViewBtn2), findViewById(R.id.imageViewBtn3))
+
+        val skipBtn = findViewById<TextView>(R.id.textViewSkip)
+        skipBtn.setOnClickListener {
             notificationPage()
+        }
+        viewModel.onboardPosition.observe(this) { it ->
+            buttons.forEach { it ->
+                it.setImageDrawable(getDrawable(R.drawable.baseline_radio_button_unchecked_24))
+            }
+            buttons[it].setImageDrawable(getDrawable(R.drawable.baseline_radio_button_checked_24))
+            if (it == adapter.itemCount - 1) {
+                skipBtn.text = "Завершить"
+            }
+            else {
+                skipBtn.text = "Пропустить"
+            }
         }
     }
 
@@ -99,7 +120,7 @@ class IntroActivity : AppCompatActivity() {
         db.getDao().getAllUser().asLiveData().observe(this) {
             var isInAccount = false
             if (it.isEmpty()) {
-                firstIntroPage()
+                onboard()
             }
             else
             {

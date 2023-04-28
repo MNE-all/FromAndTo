@@ -21,7 +21,6 @@ abstract class MainDB: RoomDatabase() {
 
 
     companion object{
-
         fun getDB(context: Context): MainDB {
             return Room.databaseBuilder(
                 context.applicationContext,
