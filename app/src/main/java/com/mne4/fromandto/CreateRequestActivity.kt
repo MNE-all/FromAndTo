@@ -10,7 +10,9 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import com.google.android.material.textfield.TextInputEditText
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
@@ -27,6 +29,9 @@ import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
@@ -41,6 +46,9 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     lateinit var txtTo: TextView
     lateinit var imgPin: ImageView
     lateinit var imgMyLocation: ImageView
+
+    lateinit var price: TextInputEditText
+    var passengerCount: Int = 1
 
     var START_POSITION: Point = Point(0.0, 0.0)
     var END_POSITION: Point = Point(0.0, 0.0)
@@ -63,6 +71,20 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         mapView = findViewById(R.id.mapview)
         searchEdit = findViewById(R.id.EditSearch)
 
+        price = findViewById(R.id.editTextPrice)
+        val textPassengerCount = findViewById<TextView>(R.id.textViewPassengerAmount)
+        val btnAddPass = findViewById<CardView>(R.id.CardViewAddPassenger)
+        val btnDeletePass = findViewById<CardView>(R.id.CardViewRemovePassenger)
+        btnAddPass.setOnClickListener {
+            passengerCount++
+            textPassengerCount.text = passengerCount.toString()
+        }
+        btnDeletePass.setOnClickListener {
+            if (passengerCount - 1 > 0) {
+                passengerCount--
+                textPassengerCount.text = passengerCount.toString()
+            }
+        }
 
         // Перемещение карты на колледж
         mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
@@ -189,24 +211,32 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         cameraUpdateReason: CameraUpdateReason,
         finished: Boolean
     ) {
+
         if(finished) {
-            val geoCoder = Geocoder(applicationContext, Locale.getDefault())
-            val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val geoCoder = Geocoder(applicationContext, Locale.getDefault())
+                    val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
 
-            var nameAdress = address?.get(0)?.getAddressLine(0)
-            if (radioFrom.isChecked) {
-                txtFrom.text = nameAdress
-                START_POSITION = cameraPosition.target
-            } else {
-                txtTo.text = nameAdress
-                END_POSITION = cameraPosition.target
-            }
+                    var nameAdress = address?.get(0)?.getAddressLine(0)
+                    if (radioFrom.isChecked) {
+                        txtFrom.text = nameAdress
+                        START_POSITION = cameraPosition.target
+                    } else {
+                        txtTo.text = nameAdress
+                        END_POSITION = cameraPosition.target
+                    }
 
-            mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
-                mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
-                    Animation(Animation.Type.SMOOTH, 1f), null
-                )
-                false
+                    mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
+                        mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
+                            Animation(Animation.Type.SMOOTH, 1f), null
+                        )
+                        false
+                    }
+                }
+                catch (e: Exception) {
+                    Log.d("onCameraPositionChanged", e.message.toString())
+                }
             }
         }
     }
