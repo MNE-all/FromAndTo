@@ -27,29 +27,32 @@ class MainActivity : AppCompatActivity() {
         binding.floatingActionButton.setOnClickListener{
             Toast.makeText(applicationContext,"Вы нажали на кнопку создание запроса!",Toast.LENGTH_SHORT).show()
         }
-        binding.bottomNavigationViewMenu.setOnItemSelectedListener{
-            when(it.itemId){
-                R.id.butSearchBottomNavigation -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        fragmentInstance(SearchFragment.newInstance(),R.id.bottomNavigationFrame);
+        binding.bottomNavigationViewMenu.setOnItemSelectedListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                when (it.itemId) {
+                    R.id.butSearchBottomNavigation -> {
+                            fragmentInstance(
+                                SearchFragment.newInstance(),
+                                R.id.bottomNavigationFrame
+                            );
                     }
+                    R.id.butHelpBottomNavigation -> {
 
-                }
-                R.id.butHelpBottomNavigation -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        fragmentInstance(HelpFragment.newInstance(), R.id.bottomNavigationFrame);
+                            fragmentInstance(
+                                HelpFragment.newInstance(),
+                                R.id.bottomNavigationFrame
+                            );
+
                     }
-                }
-                R.id.butSettingBottomNavigation -> {
-                    Toast.makeText(
-                        applicationContext,
-                        "Вы нажали на кнопку настройки!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                R.id.butProfileBottomNavigation -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        fragmentInstance(ProfileFragment.newInstance(),R.id.bottomNavigationFrame);
+                    R.id.butSettingBottomNavigation -> {
+
+                    }
+                    R.id.butProfileBottomNavigation -> {
+
+                            fragmentInstance(
+                                ProfileFragment.newInstance(),
+                                R.id.bottomNavigationFrame
+                            );
                     }
                 }
             }
