@@ -9,14 +9,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_profile">
+        android:background="@drawable/background_loadscreen">
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView6"
             android:layout_width="150dp"
             android:layout_height="150dp"
             app:cardCornerRadius="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDeleteAcc">
 
             <ImageView
                 android:id="@+id/imageBackground"
@@ -37,12 +39,13 @@
 
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:layout_marginBottom="55dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_scrollview_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView6">
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
