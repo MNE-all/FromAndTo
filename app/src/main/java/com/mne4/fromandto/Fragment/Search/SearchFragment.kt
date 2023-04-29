@@ -1,4 +1,4 @@
-package com.mne4.fromandto.Fragment
+package com.mne4.fromandto.Fragment.Search
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -83,11 +83,6 @@ lateinit var binding: FragmentSearchBinding
                     )
                 } catch (e: java.lang.IndexOutOfBoundsException) {
 
-                }
-            }
-            viewModel.ApiGetTripsReadDateStartToDateEndToFrom.observe(requireActivity()) {
-                for (trip in it) {
-                    Log.d("array<trips>", "${trip}")
                 }
             }
         }
