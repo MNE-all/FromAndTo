@@ -36,9 +36,9 @@ class FindFragment : Fragment() {
             var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
             binding.recyclerFindFragment.layoutManager = layoutManager
 
-            adapter = OrderAdapter(this,it.toList())
-            binding.recyclerOrder.adapter = adapter
-           binding.recyclerFindFragment.adapter = ArrayAdapter()
+//            adapter = OrderAdapter(this,it.toList())
+//            binding.recyclerOrder.adapter = adapter
+//           binding.recyclerFindFragment.adapter = ArrayAdapter()
         }
     }
 
