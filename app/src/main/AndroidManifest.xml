@@ -27,9 +27,6 @@
             android:name=".OrderActivity"
             android:exported="false" />
         <activity
-            android:name=".FindActivity"
-            android:exported="false" />
-        <activity
             android:name=".CreateRequestActivity"
             android:exported="false" />
         <activity
@@ -40,12 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".DescriptionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FeedbackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HelpActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

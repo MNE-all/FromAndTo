@@ -44,14 +44,10 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        var x = Intent(this, CreateRequestActivity::class.java)
         CoroutineScope(Dispatchers.IO).launch {
             delay(3000)
             runOnUiThread{
-
-                startActivity(x)
-                finish()
-//                checkLocalDb()
+               checkLocalDb()
             }
         }
     }
