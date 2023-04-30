@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.R
-import com.mne4.fromandto.databinding.FragmentFindBinding
 import com.squareup.picasso.Picasso
 
 class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {

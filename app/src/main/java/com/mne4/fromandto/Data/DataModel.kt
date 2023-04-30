@@ -262,7 +262,6 @@ class   DataModel: ViewModel() {
     }
 
     fun getReadDateStartToDateEndToFrom(date_start:String,date_end:String, start_point:String, end_point: String){
-
         CoroutineScope(Dispatchers.Main).launch {
             var list =  tripsApi.getReadDateStartToDateEndToFrom(date_start,date_end,start_point,end_point)
                 ApiGetTripsReadDateStartToDateEndToFrom.value = list
