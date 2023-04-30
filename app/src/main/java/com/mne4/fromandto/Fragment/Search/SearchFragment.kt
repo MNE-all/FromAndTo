@@ -10,18 +10,24 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.FindActivity
 import com.mne4.fromandto.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SearchFragment : Fragment() {
@@ -29,6 +35,7 @@ lateinit var binding: FragmentSearchBinding
     val viewModel: DataModel by activityViewModels()
     lateinit var textTo: String
     lateinit var textFrom: String
+    var listFind: MutableList<FindRequest> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -78,16 +85,38 @@ lateinit var binding: FragmentSearchBinding
                 val date2: Date?
                 date2 = outputFormat.parse(date[2]) as Date
                 val outputDate2: String = inputFormat.format(date2)
-                val intent = Intent(requireContext(), FindActivity::class.java)
-                startActivity(intent)
-                try {
-                    viewModel.getReadDateStartToDateEndToFrom(
-                        outputDate1,
-                        outputDate2,
-                        binding.textInputEditTextFrom.text.toString(),
-                        binding.textInputEditTextTo.text.toString()
-                    )
-                } catch (e: java.lang.IndexOutOfBoundsException) {
+                viewModel.getReadDateStartToDateEndToFrom(
+                    outputDate1,
+                    outputDate2,
+                    binding.textInputEditTextFrom.text.toString(),
+                    binding.textInputEditTextTo.text.toString()
+                )
+                viewModel.ApiGetTripsReadDateStartToDateEndToFrom.observe(requireActivity()){
+                    for(trips in it){
+                        if(trips.driver_id != null){
+                            viewModel.getCurrentUser(trips.driver_id.toString())
+                            viewModel.ApiGetCurrentUser.observe(requireActivity()){
+                                var tripsFind = FindRequest(
+                                    "${it.surname}",
+                                    "${it.image_url}",
+                                    it.raiting,
+                                    "${it.phone}",
+                                    "${trips.start_time}",
+                                    trips.price,
+                                    "${trips.description}",
+                                    "${trips.start_point}",
+                                    "${trips.end_point}",
+                                    trips.seats_amount,
+                                    true
+                                )
+                                listFind.add(tripsFind)
+                            }
+                        }
+                    }
+
+                    val intent = Intent(requireContext(), FindActivity::class.java)
+                    intent.putExtra("arrayTripsFull", ArrayList(listFind))
+                    startActivity(intent)
 
                 }
             }
