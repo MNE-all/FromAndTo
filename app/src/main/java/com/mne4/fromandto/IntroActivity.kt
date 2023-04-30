@@ -24,6 +24,7 @@ import org.w3c.dom.Text
 
 class IntroActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
+    private var replay = false
 
 
 
@@ -43,14 +44,10 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        var x = Intent(this, CreateRequestActivity::class.java)
         CoroutineScope(Dispatchers.IO).launch {
             delay(3000)
             runOnUiThread{
-
-                startActivity(x)
-                finish()
-//                checkLocalDb()
+               checkLocalDb()
             }
         }
     }
@@ -115,6 +112,7 @@ class IntroActivity : AppCompatActivity() {
 
     private fun checkLocalDb() {
         var db = MainDB.getDB(this)
+        replay = false
         // TODO удаление всех пользователей
 //        CoroutineScope(Dispatchers.IO).launch {
 //            db.getDao().deleteAllUser()
@@ -129,7 +127,7 @@ class IntroActivity : AppCompatActivity() {
             else
             {
                 for (user in it) {
-                    if (user.isInAcc) {
+                    if (user.isInAcc && !replay) {
                         isInAccount = true
                         viewModel.postAuthenticationAuto(user.id_user, user.password)
                         viewModel.ApiPostAuthenticationAuto.observe(this) {
@@ -151,6 +149,7 @@ class IntroActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,"Зарегистрируйтесь или войдите!",Toast.LENGTH_SHORT).show()
                 }
             }
+            replay = true
         }
     }
 }

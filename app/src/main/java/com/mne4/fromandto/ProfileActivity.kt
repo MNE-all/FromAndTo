@@ -40,7 +40,10 @@ import java.util.*
 
 
 class ProfileActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityProfileBinding
+
+    /*
     val viewModel: DataModel by viewModels()
     private var replay = false
     private var gender: String = "Мужской"
@@ -49,19 +52,20 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var USER: User
     private lateinit var imageUser:ImageView
     private var GalleryPick: Int =1
-
-    @RequiresApi(Build.VERSION_CODES.O)
+*/
+    //@RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        InitUser()
+        //InitUser()
 
-        Change()
-        ChipActive()
-        SpinnerGender()
+        //Change()
+        // ChipActive()
+        //SpinnerGender()
     }
+    /*
     fun ImgClick(view: View) {
         imageUser = findViewById(R.id.imageUser)
 
@@ -371,5 +375,7 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.butSave.isEnabled = truth
     }
-}
+     */
 
+     */
+}
