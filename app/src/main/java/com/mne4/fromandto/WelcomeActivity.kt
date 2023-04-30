@@ -33,7 +33,7 @@ class WelcomeActivity : AppCompatActivity() {
     fun onPassengerClick(view: View) {
         var intent = Intent(applicationContext, CreateRequestActivity::class.java)
         intent.putExtra(Companion.ARG_USER_STATUS, "User")
-        startActivity(intent)
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     fun onExit(view: View) {
