@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
-import com.mne4.fromandto.Data.Retrofit2.Models.Example
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityFindBinding

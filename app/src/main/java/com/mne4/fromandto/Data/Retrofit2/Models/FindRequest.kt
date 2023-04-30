@@ -59,3 +59,5 @@ data class FindRequest(
         }
     }
 }
+
+annotation class Parcelize
