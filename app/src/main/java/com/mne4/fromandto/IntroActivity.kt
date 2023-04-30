@@ -31,7 +31,6 @@ class IntroActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro_load_screen)
         try {
             if (MapKitFactory.getInstance() != null) {
 
