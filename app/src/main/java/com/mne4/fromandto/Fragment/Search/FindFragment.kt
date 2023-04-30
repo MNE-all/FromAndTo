@@ -23,7 +23,7 @@ private const val Array_TRIPS = "ArrayTrips"
 
 class FindFragment : Fragment() {
     private lateinit var binding: FragmentFindBinding
-    private lateinit var listFind: MutableList<FindRequest>
+    lateinit var listFind: MutableList<FindRequest>
     val viewModel: DataModel by activityViewModels()
     private lateinit var adapter: RecyclerView.Adapter<FindAdapter.FindViewHolder>
     override fun onCreateView(
@@ -37,8 +37,7 @@ class FindFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.ApiGetTripsReadDateStartToDateEndToFrom.observe(requireActivity()) {
-            var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
-            binding.recyclerFindFragment.layoutManager = layoutManager
+
              for(trips in it){
                  if(trips.driver_id != null){
                      viewModel.getCurrentUser(trips.driver_id)
@@ -56,18 +55,16 @@ class FindFragment : Fragment() {
                              trips.seats_amount,
                              true
                          )
+                         listFind.add(tripsFind)
                      }
                  }
              }
-            adapter = FindAdapter(requireContext(),listFind)
-            binding.recyclerFindFragment.adapter = adapter
+
         }
-    }
-    fun fragmentInstance(f: Fragment, idHolder: Int) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(idHolder, f)
-            .commit()
+        var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+        binding.recyclerFindFragment.layoutManager = layoutManager
+        adapter = FindAdapter(requireContext(),listFind)
+        binding.recyclerFindFragment.adapter = adapter
     }
     companion object {
         @JvmStatic

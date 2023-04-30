@@ -5,11 +5,11 @@ data class FindRequest(
     val Image_url: String?,
     val Rating: Double?,
     val Phone:String,
-    val TimeBegin: String,
+    val Start_Time: String,
     val Price: Float,
     val Descreption: String,
-    val TripBegin: String,
-    val TripEnd: String,
+    val Start_Point: String,
+    val End_Point: String,
     val Seats_amount:Int,
     val Status: Boolean
 )

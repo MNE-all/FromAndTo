@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.view.get
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,10 +15,13 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.MainActivity
+import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentSearchBinding
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.RandomAccess
 
 
 class SearchFragment : Fragment() {
@@ -81,13 +85,19 @@ lateinit var binding: FragmentSearchBinding
                         binding.textInputEditTextFrom.text.toString(),
                         binding.textInputEditTextTo.text.toString()
                     )
+                    fragmentInstance(FindFragment.newInstance(), MainActivity().binding.bottomNavigationFrame.id)
                 } catch (e: java.lang.IndexOutOfBoundsException) {
 
                 }
             }
         }
     }
-
+    fun fragmentInstance(f: Fragment, idHolder: Int) {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(idHolder, f)
+            .commit()
+    }
     private fun From() {
         viewModel.getCityFrom()
         viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {

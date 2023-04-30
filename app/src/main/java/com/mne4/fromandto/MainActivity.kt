@@ -29,14 +29,12 @@ class MainActivity : AppCompatActivity() {
                     R.id.butSearchBottomNavigation -> {
                             fragmentInstance(
                                 SearchFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
                     }
                     R.id.butHelpBottomNavigation -> {
 
                             fragmentInstance(
                                 HelpFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
 
                     }
@@ -47,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
                             fragmentInstance(
                                 ProfileFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
                     }
                 }
@@ -57,10 +54,10 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun fragmentInstance(f: Fragment, idHolder: Int) {
+    fun fragmentInstance(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(idHolder, f)
+            .replace( R.id.bottomNavigationFrame, f)
             .commit()
     }
 
