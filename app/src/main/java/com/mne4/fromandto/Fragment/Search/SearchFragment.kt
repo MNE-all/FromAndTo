@@ -35,7 +35,6 @@ lateinit var binding: FragmentSearchBinding
     val viewModel: DataModel by activityViewModels()
     lateinit var textTo: String
     lateinit var textFrom: String
-    var listFind: MutableList<FindRequest> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -71,10 +70,10 @@ lateinit var binding: FragmentSearchBinding
                 date.show(super.getParentFragmentManager(), "DATE_PICKER")
             }
         }
-        binding.butFind.setOnClickListener{
+        binding.butFind.setOnClickListener {
 
             var txtDate = binding.textInputEditTextWhere.text.toString()
-            if(txtDate != "") {
+            if (txtDate != "") {
                 var date = txtDate.split(" ")
                 val inputFormat: DateFormat =
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
@@ -85,40 +84,13 @@ lateinit var binding: FragmentSearchBinding
                 val date2: Date?
                 date2 = outputFormat.parse(date[2]) as Date
                 val outputDate2: String = inputFormat.format(date2)
-                viewModel.getReadDateStartToDateEndToFrom(
-                    outputDate1,
-                    outputDate2,
-                    binding.textInputEditTextFrom.text.toString(),
-                    binding.textInputEditTextTo.text.toString()
-                )
-                viewModel.ApiGetTripsReadDateStartToDateEndToFrom.observe(requireActivity()){
-                    for(trips in it){
-                        if(trips.driver_id != null){
-                            viewModel.getCurrentUser(trips.driver_id.toString())
-                            viewModel.ApiGetCurrentUser.observe(requireActivity()){
-                                var tripsFind = FindRequest(
-                                    "${it.surname}",
-                                    "${it.image_url}",
-                                    it.raiting,
-                                    "${it.phone}",
-                                    "${trips.start_time}",
-                                    trips.price,
-                                    "${trips.description}",
-                                    "${trips.start_point}",
-                                    "${trips.end_point}",
-                                    trips.seats_amount,
-                                    true
-                                )
-                                listFind.add(tripsFind)
-                            }
-                        }
-                    }
+                val intent = Intent(requireContext(), FindActivity::class.java)
+                intent.putExtra("outputDate1", outputDate1)
+                intent.putExtra("outputDate2", outputDate1)
+                intent.putExtra("txtFrom", binding.textInputEditTextFrom.toString())
+                intent.putExtra("txtTo", binding.textInputEditTextTo.toString())
+                startActivity(intent)
 
-                    val intent = Intent(requireContext(), FindActivity::class.java)
-                    intent.putExtra("arrayTripsFull", ArrayList(listFind))
-                    startActivity(intent)
-
-                }
             }
         }
     }

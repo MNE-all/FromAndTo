@@ -25,11 +25,43 @@ class FindActivity : AppCompatActivity() {
 
     }
     fun recuclear(){
-            val list = intent.getParcelableArrayListExtra<FindRequest>("arrayTripsFull") as MutableList<FindRequest>
-            var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,
-                RecyclerView.VERTICAL,false)
+        var outputDate1:String = intent.getStringExtra("outputDate1").toString()
+        var outputDate2:String = intent!!.getStringExtra("outputDate2").toString()
+        var txtFrom = intent.getStringExtra("txtFrom").toString()
+        var txtTo = intent.getStringExtra("txtTo").toString()
+        viewModel.getReadDateStartToDateEndToFrom(
+            outputDate1,
+            outputDate2,
+            txtFrom,
+            txtTo
+        )
+        viewModel.ApiGetTripsReadDateStartToDateEndToFrom.observe(this) {
+            for (trips in it) {
+                if (trips.driver_id != null) {
+                    viewModel.getCurrentUser(trips.driver_id.toString())
+                    viewModel.ApiGetCurrentUser.observe(this) {
+                        var tripsFind = FindRequest(
+                            "${it.surname}",
+                            "${it.image_url}",
+                            it.raiting,
+                            "${it.phone}",
+                            "${trips.start_time}",
+                            trips.price,
+                            "${trips.description}",
+                            "${trips.start_point}",
+                            "${trips.end_point}",
+                            trips.seats_amount,
+                            true
+                        )
+                        listFind.add(tripsFind)
+                    }
+                }
+            }
+            var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
             binding.recyclerFind.layoutManager = layoutManager
-            adapter = FindAdapter(this,list)
+            adapter = FindAdapter(this,listFind)
             binding.recyclerFind.adapter = adapter
+        }
+
     }
 }
