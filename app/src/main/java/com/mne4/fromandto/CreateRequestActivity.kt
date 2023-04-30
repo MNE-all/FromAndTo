@@ -13,6 +13,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
@@ -33,6 +36,7 @@ import com.yandex.runtime.network.RemoteError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
@@ -113,6 +117,33 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             false
         }
 
+
+
+        val whenText = findViewById<TextInputEditText>(R.id.TextInputEditTextWhen)
+        val constraintsBuilder = CalendarConstraints.Builder()
+            .setValidator(DateValidatorPointForward.now())
+        val date = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Дата выезда")
+            .setCalendarConstraints(constraintsBuilder.build())
+            .build()
+
+        date.addOnPositiveButtonClickListener {
+            val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+            val result = simpleDateFormat.format(it)
+            whenText.setText(result)
+        }
+
+
+
+        // Слушатели для нажатия на "Куда"
+        whenText.setOnClickListener {
+            date.show(supportFragmentManager, "DATE_PICKER")
+        }
+        whenText.setOnFocusChangeListener { _, b ->
+            if (b) {
+                date.show(supportFragmentManager, "DATE_PICKER")
+            }
+        }
     }
 
     fun moveToMyLocation(view: View) {
