@@ -171,8 +171,7 @@
                 android:layout_height="107dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
-                android:background="@color/white"
-                android:textColorHint="Комментарий" />
+                android:background="@color/white"/>
         </LinearLayout>
 
         <LinearLayout

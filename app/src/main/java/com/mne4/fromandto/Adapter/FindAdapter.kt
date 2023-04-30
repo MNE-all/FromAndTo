@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.R
 
-class FindAdapter(): RecyclerView.Adapter<FindAdapter.OrderViewHolder>() {
+class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
 
     lateinit var context: Context
     lateinit var findList:MutableList<FindRequest>
@@ -17,20 +17,20 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.OrderViewHolder>() {
         this.findList = FindRequest
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FindViewHolder {
         var orderItems:View = LayoutInflater.from(context).inflate(R.layout.viewholder_order,parent,false)
-        return OrderViewHolder(orderItems)
+        return FindViewHolder(orderItems)
     }
 
     override fun getItemCount():Int{
         return findList.size
     }
 
-    override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FindViewHolder, position: Int) {
 
     }
 
-    class OrderViewHolder: RecyclerView.ViewHolder{
+    class FindViewHolder: RecyclerView.ViewHolder{
 
         constructor(itemView: View):super(itemView){
 
