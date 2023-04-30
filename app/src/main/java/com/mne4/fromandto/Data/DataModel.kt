@@ -9,6 +9,7 @@ import com.mne4.fromandto.Data.Retrofit2.API.SmsApi
 import com.mne4.fromandto.Data.Retrofit2.API.TripsApi
 import com.mne4.fromandto.Data.Retrofit2.API.UsersApi
 import com.mne4.fromandto.Data.Retrofit2.Models.Trips
+import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
 import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
 import com.mne4.fromandto.Data.Room.MainDB
@@ -33,15 +34,15 @@ class   DataModel: ViewModel() {
         MutableLiveData<Int>()
     }
 
-    val ApiGetTripsAll: MutableLiveData<ArrayList<Trips>> by lazy {
-        MutableLiveData<ArrayList<Trips>>()
+    val ApiGetTripsAll: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
     }
-    val ApiGetCurrenTrips: MutableLiveData<Trips> by lazy {
-        MutableLiveData<Trips>()
+    val ApiGetCurrenTrips: MutableLiveData<TripsFull> by lazy {
+        MutableLiveData<TripsFull>()
     }
 
-    val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<Trips>> by lazy {
-        MutableLiveData<ArrayList<Trips>>()
+    val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
     }
     val ApiGetTripsCityFrom: MutableLiveData<ArrayList<String>> by lazy {
         MutableLiveData<ArrayList<String>>()
