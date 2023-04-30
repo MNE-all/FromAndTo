@@ -3,6 +3,7 @@ package com.mne4.fromandto
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.GnssAntennaInfo.Listener
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -211,13 +212,11 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         cameraUpdateReason: CameraUpdateReason,
         finished: Boolean
     ) {
-
         if(finished) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val geoCoder = Geocoder(applicationContext, Locale.getDefault())
                     val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
-
                     var nameAdress = address?.get(0)?.getAddressLine(0)
                     if (radioFrom.isChecked) {
                         txtFrom.text = nameAdress
