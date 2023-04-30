@@ -7,5 +7,5 @@ data class Trips (
     val seats_amount: Int,
     val start_point: String,
     val end_point: String,
-    val status: String
+    val status: Boolean
 )

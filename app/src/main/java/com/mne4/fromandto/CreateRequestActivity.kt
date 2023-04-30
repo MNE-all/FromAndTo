@@ -10,13 +10,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.asLiveData
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import com.mne4.fromandto.Data.DataModel
+import com.mne4.fromandto.Data.Retrofit2.Models.Trips
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
@@ -41,6 +45,7 @@ import java.util.*
 
 class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     Session.SearchListener, CameraListener {
+    val viewModel: DataModel by viewModels()
     lateinit var mapView: MapView
     lateinit var cameraListener: CameraListener
     lateinit var mapKit: MapKit
@@ -57,11 +62,16 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
     var START_POSITION: Point = Point(0.0, 0.0)
     var END_POSITION: Point = Point(0.0, 0.0)
+    var START_TIME: String = ""
+
+    var userStatus = ""
 
     lateinit var locationMapKit: UserLocationLayer
     lateinit var searchEdit: EditText
     lateinit var searchManager: SearchManager
     lateinit var searchSession: Session
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_request)
@@ -90,6 +100,8 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                 textPassengerCount.text = passengerCount.toString()
             }
         }
+
+
 
         // Перемещение карты на колледж
         mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
@@ -130,6 +142,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         date.addOnPositiveButtonClickListener {
             val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
             val result = simpleDateFormat.format(it)
+            START_TIME = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(it)
             whenText.setText(result)
         }
 
@@ -142,6 +155,45 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         whenText.setOnFocusChangeListener { _, b ->
             if (b) {
                 date.show(supportFragmentManager, "DATE_PICKER")
+            }
+        }
+
+
+        // Добавление поездки/запроса на поездку
+        userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS)!!
+
+        val description = findViewById<TextInputEditText>(R.id.editTextDescription)
+        val btnCreate = findViewById<Button>(R.id.btnCreate)
+        btnCreate.setOnClickListener {
+            if (!whenText.text.isNullOrEmpty() &&
+                !txtFrom.text.isNullOrEmpty() &&
+                !txtTo.text.isNullOrEmpty() &&
+                !price.text.isNullOrEmpty()) {
+                val trip = Trips(
+                    price.text.toString().toFloat(),
+                    description.text.toString(),
+                    START_TIME,
+                    passengerCount,
+                    "${START_POSITION.latitude} ${START_POSITION.longitude}",
+                    "${END_POSITION.latitude} ${END_POSITION.longitude}",
+                    true
+                )
+                viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
+                    for (i in it) {
+                        if (i.isInAcc){
+                            if (userStatus == "Driver") {
+                                viewModel.postCreateTrips(i.id_user, trip)
+                            }
+                            else if (userStatus == "User") {
+                                viewModel.postCreateRequest(i.id_user, trip)
+                            }
+                            finish()
+                        }
+                    }
+                }
+            }
+            else {
+                Toast.makeText(this, "Не все нужные поля заполнены", Toast.LENGTH_SHORT)
             }
         }
     }

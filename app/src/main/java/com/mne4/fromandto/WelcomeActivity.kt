@@ -12,6 +12,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
+
 class WelcomeActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,14 +24,16 @@ class WelcomeActivity : AppCompatActivity() {
     fun onDriverClick(view: View) {
 //        startActivity(Intent(this, ProfileActivity::class.java))
 
-//        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
-        intent.putExtra("UserStatus", "Driver")
-        startActivity(Intent(applicationContext, CreateRequestActivity::class.java))
+        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        intent.putExtra(Companion.ARG_USER_STATUS, "Driver")
+
+        startActivity(intent)
     }
 
     fun onPassengerClick(view: View) {
-        intent.putExtra("UserStatus", "User")
-        startActivity(Intent(applicationContext, MainActivity::class.java))
+        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        intent.putExtra(Companion.ARG_USER_STATUS, "User")
+        startActivity(intent)
     }
 
     fun onExit(view: View) {
@@ -50,5 +54,9 @@ class WelcomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val ARG_USER_STATUS = "UserStatus"
     }
 }
