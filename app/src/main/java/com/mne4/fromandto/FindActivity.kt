@@ -2,8 +2,10 @@ package com.mne4.fromandto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mne4.fromandto.Adapter.FindAdapter
@@ -26,6 +28,7 @@ class FindActivity : AppCompatActivity() {
         recuclear()
 
     }
+
     fun recuclear(){
         var outputDate1:String = intent.getStringExtra("outputDate1").toString()
         var outputDate2:String = intent!!.getStringExtra("outputDate2").toString()
@@ -63,6 +66,7 @@ class FindActivity : AppCompatActivity() {
                         if(count == 0){
                             adapter = FindAdapter(this,listFind)
                             binding.recyclerFind.adapter = adapter
+                            binding.progressBar.isVisible = false
                         }
                     }
                 }
