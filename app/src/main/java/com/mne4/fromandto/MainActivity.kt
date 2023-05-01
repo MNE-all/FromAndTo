@@ -1,16 +1,12 @@
 package com.mne4.fromandto
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mne4.fromandto.Fragment.HelpFragment
 import com.mne4.fromandto.Fragment.ProfileFragment
-import com.mne4.fromandto.Fragment.SearchFragment
+import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,14 +29,12 @@ class MainActivity : AppCompatActivity() {
                     R.id.butSearchBottomNavigation -> {
                             fragmentInstance(
                                 SearchFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
                     }
                     R.id.butHelpBottomNavigation -> {
 
                             fragmentInstance(
                                 HelpFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
 
                     }
@@ -51,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
                             fragmentInstance(
                                 ProfileFragment.newInstance(),
-                                R.id.bottomNavigationFrame
                             );
                     }
                 }
@@ -61,10 +54,10 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun fragmentInstance(f: Fragment, idHolder: Int) {
+    fun fragmentInstance(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(idHolder, f)
+            .replace( R.id.bottomNavigationFrame, f)
             .commit()
     }
 
