@@ -19,6 +19,7 @@ import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.FindActivity
+import com.mne4.fromandto.WelcomeActivity
 import com.mne4.fromandto.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,7 @@ lateinit var binding: FragmentSearchBinding
     val viewModel: DataModel by activityViewModels()
     lateinit var textTo: String
     lateinit var textFrom: String
+    var userStatus = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -42,6 +44,9 @@ lateinit var binding: FragmentSearchBinding
         binding = FragmentSearchBinding.inflate(inflater)
         From()
         To()
+        viewModel.UserStatus.observe(requireActivity()){
+            userStatus = it
+        }
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +66,7 @@ lateinit var binding: FragmentSearchBinding
 
 
 
+
         // Слушатели для нажатия на "Куда"
         binding.textInputEditTextWhere.setOnClickListener {
             date.show(super.getParentFragmentManager(), "DATE_PICKER")
@@ -73,6 +79,11 @@ lateinit var binding: FragmentSearchBinding
         binding.butFind.setOnClickListener {
 
             var txtDate = binding.textInputEditTextWhere.text.toString()
+            var txtFrom = binding.textInputEditTextFrom.text.toString()
+            var txtTo = binding.textInputEditTextTo.text.toString()
+            val intent = Intent(requireContext(), FindActivity::class.java)
+            intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
+
             if (txtDate != "") {
                 var date = txtDate.split(" ")
                 val inputFormat: DateFormat =
@@ -84,14 +95,13 @@ lateinit var binding: FragmentSearchBinding
                 val date2: Date?
                 date2 = outputFormat.parse(date[2]) as Date
                 val outputDate2: String = inputFormat.format(date2)
-                val intent = Intent(requireContext(), FindActivity::class.java)
+
                 intent.putExtra("outputDate1", outputDate1)
                 intent.putExtra("outputDate2", outputDate2)
-                intent.putExtra("txtFrom", binding.textInputEditTextFrom.text.toString())
-                intent.putExtra("txtTo", binding.textInputEditTextTo.text.toString())
-                startActivity(intent)
-
             }
+            intent.putExtra("txtFrom", txtFrom)
+            intent.putExtra("txtTo", txtTo)
+            startActivity(intent)
         }
     }
     private fun From() {

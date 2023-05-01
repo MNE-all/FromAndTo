@@ -33,6 +33,9 @@ class   DataModel: ViewModel() {
     val onboardPosition: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
+    val UserStatus: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
     val ApiGetTripsAll: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
@@ -42,6 +45,12 @@ class   DataModel: ViewModel() {
     }
 
     val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
+    }
+    val ApiGetTripsReadDateStartToDateEnd: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
+    }
+    val ApiGetTripsReadByStartPointEndPoint: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
     }
     val ApiGetTripsCityFrom: MutableLiveData<ArrayList<String>> by lazy {
@@ -265,6 +274,18 @@ class   DataModel: ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             var list =  tripsApi.getReadDateStartToDateEndToFrom(date_start,date_end,start_point,end_point)
                 ApiGetTripsReadDateStartToDateEndToFrom.value = list
+        }
+    }
+    fun getReadDateStartToDateEnd(date_start:String,date_end:String){
+        CoroutineScope(Dispatchers.Main).launch {
+            var list = tripsApi.getReadByDateStartDateEnd(date_start,date_end)
+                ApiGetTripsReadDateStartToDateEnd.value = list
+        }
+    }
+    fun getReadByStartPointEndPoint(start_point:String,end_point: String){
+        CoroutineScope(Dispatchers.Main).launch {
+            var list = tripsApi.getReadByStartPointEndPoint(start_point,end_point)
+            ApiGetTripsReadByStartPointEndPoint.value = list
         }
     }
     fun getCityFrom(){

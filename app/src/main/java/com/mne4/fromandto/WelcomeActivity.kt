@@ -24,16 +24,15 @@ class WelcomeActivity : AppCompatActivity() {
     fun onDriverClick(view: View) {
 //        startActivity(Intent(this, ProfileActivity::class.java))
 
-        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        var intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra(Companion.ARG_USER_STATUS, "Driver")
-
         startActivity(intent)
     }
 
     fun onPassengerClick(view: View) {
-        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        var intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra(Companion.ARG_USER_STATUS, "User")
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(intent)
     }
 
     fun onExit(view: View) {

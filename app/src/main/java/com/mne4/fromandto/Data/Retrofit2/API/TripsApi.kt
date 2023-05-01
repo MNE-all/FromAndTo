@@ -29,6 +29,13 @@ interface TripsApi {
                                                 @Path("date_end") date_end:String,
                                                 @Path("start_point") start_point:String,
                                                 @Path("end_point") end_point: String): ArrayList<TripsFull>
+
+    @GET("Trips/ReadByDateStartDateEnd/{date_start}/{date_end}")
+    suspend fun getReadByDateStartDateEnd(@Path("date_start") date_start:String,
+                                                @Path("date_end") date_end:String): ArrayList<TripsFull>
+    @GET("Trips/ReadByStartPointEndPoint/{start_point}/{end_point}")
+    suspend fun getReadByStartPointEndPoint(@Path("start_point") start_point:String,
+                                                @Path("end_point") end_point:String): ArrayList<TripsFull>
     @ExperimentalMultiplatform
         @POST("Trips/CreateTrip")
         fun postCreateTrips(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>

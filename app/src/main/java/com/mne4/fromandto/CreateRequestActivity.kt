@@ -178,6 +178,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                     "${END_POSITION.latitude} ${END_POSITION.longitude}",
                     true
                 )
+
                 viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
                     for (i in it) {
                         if (i.isInAcc){
