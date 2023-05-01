@@ -86,9 +86,9 @@ lateinit var binding: FragmentSearchBinding
                 val outputDate2: String = inputFormat.format(date2)
                 val intent = Intent(requireContext(), FindActivity::class.java)
                 intent.putExtra("outputDate1", outputDate1)
-                intent.putExtra("outputDate2", outputDate1)
-                intent.putExtra("txtFrom", binding.textInputEditTextFrom.toString())
-                intent.putExtra("txtTo", binding.textInputEditTextTo.toString())
+                intent.putExtra("outputDate2", outputDate2)
+                intent.putExtra("txtFrom", binding.textInputEditTextFrom.text.toString())
+                intent.putExtra("txtTo", binding.textInputEditTextTo.text.toString())
                 startActivity(intent)
 
             }
