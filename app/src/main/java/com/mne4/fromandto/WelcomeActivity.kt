@@ -22,8 +22,6 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onDriverClick(view: View) {
-//        startActivity(Intent(this, ProfileActivity::class.java))
-
         var intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra(Companion.ARG_USER_STATUS, "Driver")
         startActivity(intent)
