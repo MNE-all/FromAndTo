@@ -21,18 +21,22 @@ interface TripsApi {
                          @Path("end_point") end_point: String): ArrayList<Trips>
 
     @GET("Trips/ReadFromCities")
-    suspend fun getCitysFrom(): ArrayList<String>
-    @GET("Trips/ReadToCities")
-    suspend fun getCitysTo(@Query("start_point") start_point:String): ArrayList<String>
+    suspend fun getCitysFrom( @Query("isDriver") isDriver:Boolean): ArrayList<String>
+    @GET("Trips/ReadToCities/{start_point}")
+    suspend fun getCitysTo(@Path("start_point") start_point:String,
+                            @Query("isDriver") isDriver:Boolean): ArrayList<String>
     @GET("Trips/Read/{date_start}/{date_end}/{start_point}/{end_point}")
     suspend fun getReadDateStartToDateEndToFrom(@Path("date_start") date_start:String,
                                                 @Path("date_end") date_end:String,
                                                 @Path("start_point") start_point:String,
                                                 @Path("end_point") end_point: String): ArrayList<TripsFull>
 
-    @GET("Trips/ReadByDateStartDateEnd/{date_start}/{date_end}")
-    suspend fun getReadByDateStartDateEnd(@Path("date_start") date_start:String,
-                                                @Path("date_end") date_end:String): ArrayList<TripsFull>
+    @GET("Trips/ReadByDateStartDateEndStartPoint/{date_start}/{date_end}/{start_point}")
+    suspend fun getReadByDateStartDateEndFrom(@Path("date_start") date_start:String,
+                                          @Path("date_end") date_end:String,
+                                          @Path("start_point") start_point:String): ArrayList<TripsFull>
+    @GET("Trips/ReadByStart/{start_point}")
+    suspend fun getReadByStart(@Path("start_point") start_point:String): ArrayList<TripsFull>
     @GET("Trips/ReadByStartPointEndPoint/{start_point}/{end_point}")
     suspend fun getReadByStartPointEndPoint(@Path("start_point") start_point:String,
                                                 @Path("end_point") end_point:String): ArrayList<TripsFull>

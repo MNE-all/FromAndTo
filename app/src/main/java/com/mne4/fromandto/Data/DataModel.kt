@@ -47,7 +47,10 @@ class   DataModel: ViewModel() {
     val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
     }
-    val ApiGetTripsReadDateStartToDateEnd: MutableLiveData<ArrayList<TripsFull>> by lazy {
+    val ApiGetTripsReadDateStartToDateEndFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
+    }
+    val ApiGetTripsReadByStart: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
     }
     val ApiGetTripsReadByStartPointEndPoint: MutableLiveData<ArrayList<TripsFull>> by lazy {
@@ -276,27 +279,33 @@ class   DataModel: ViewModel() {
                 ApiGetTripsReadDateStartToDateEndToFrom.value = list
         }
     }
-    fun getReadDateStartToDateEnd(date_start:String,date_end:String){
+    fun getReadDateStartToDateEndFrom(date_start: String, date_end: String, start_point: String){
         CoroutineScope(Dispatchers.Main).launch {
-            var list = tripsApi.getReadByDateStartDateEnd(date_start,date_end)
-                ApiGetTripsReadDateStartToDateEnd.value = list
+            var list = tripsApi.getReadByDateStartDateEndFrom(date_start,date_end,start_point)
+                ApiGetTripsReadDateStartToDateEndFrom.value = list
         }
     }
-    fun getReadByStartPointEndPoint(start_point:String,end_point: String){
+    fun getReadByStart(start_point: String){
+        CoroutineScope(Dispatchers.Main).launch {
+            var list = tripsApi.getReadByStart(start_point)
+            ApiGetTripsReadByStart.value = list
+        }
+    }
+    fun getReadByStartPointEndPoint(start_point:String, end_point: String){
         CoroutineScope(Dispatchers.Main).launch {
             var list = tripsApi.getReadByStartPointEndPoint(start_point,end_point)
             ApiGetTripsReadByStartPointEndPoint.value = list
         }
     }
-    fun getCityFrom(){
+    fun getCityFrom(isDriver:Boolean){
         CoroutineScope(Dispatchers.Main).launch {
-            var list =  tripsApi.getCitysFrom()
+            var list =  tripsApi.getCitysFrom(isDriver)
             ApiGetTripsCityFrom.value = list
         }
     }
-    fun getCityTo(start_point:String){
+    fun getCityTo(start_point:String,isDriver:Boolean){
         CoroutineScope(Dispatchers.Main).launch {
-            var list =  tripsApi.getCitysTo(start_point)
+            var list =  tripsApi.getCitysTo(start_point, isDriver)
             ApiGetTripsCityTo.value = list
         }
     }

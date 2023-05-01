@@ -2,8 +2,6 @@ package com.mne4.fromandto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.text.BoringLayout
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -14,7 +12,6 @@ import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
 import com.mne4.fromandto.Data.Retrofit2.Models.User
-import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityFindBinding
 
 class FindActivity : AppCompatActivity() {
@@ -57,15 +54,18 @@ class FindActivity : AppCompatActivity() {
             Log.d("All","ReadDateStartToDateEndToFrom()")
             ReadDateStartToDateEndToFrom()
         }else if(outputDate1 != "null" &&
-            outputDate2 != "null")
+            outputDate2 != "null" && txtFrom != "")
         {
-            Log.d("All","ReadDateStartToDateEnd()")
-            ReadDateStartToDateEnd()
+            Log.d("All","ReadDateStartToDateEndFrom()")
+            ReadDateStartToDateEndFrom()
         }else if(txtFrom != "" &&
-        txtTo != "")
+                txtTo != "")
         {
             Log.d("All","ReadByStartPointEndPoint()")
             ReadByStartPointEndPoint()
+        }else if(txtFrom !=""){
+            Log.d("All","ReadByStart()")
+            ReadByStart()
         }
 
 
@@ -83,12 +83,13 @@ class FindActivity : AppCompatActivity() {
             RequestSeacrh(it)
         }
     }
-    fun ReadDateStartToDateEnd() {
-        viewModel.getReadDateStartToDateEnd(
+    fun ReadDateStartToDateEndFrom() {
+        viewModel.getReadDateStartToDateEndFrom(
             outputDate1,
-            outputDate2
+            outputDate2,
+            txtFrom
         )
-        viewModel.ApiGetTripsReadDateStartToDateEnd.observe(this) {
+        viewModel.ApiGetTripsReadDateStartToDateEndFrom.observe(this) {
             RequestSeacrh(it)
         }
     }
@@ -98,6 +99,14 @@ class FindActivity : AppCompatActivity() {
             txtTo
         )
         viewModel.ApiGetTripsReadByStartPointEndPoint.observe(this) {
+            RequestSeacrh(it)
+        }
+    }
+    fun ReadByStart() {
+        viewModel.getReadByStart(
+            txtFrom
+        )
+        viewModel.ApiGetTripsReadByStart.observe(this) {
             RequestSeacrh(it)
         }
     }

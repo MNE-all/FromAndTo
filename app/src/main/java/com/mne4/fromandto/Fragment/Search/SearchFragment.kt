@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
@@ -42,11 +43,13 @@ lateinit var binding: FragmentSearchBinding
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater)
-        From()
-        To()
         viewModel.UserStatus.observe(requireActivity()){
             userStatus = it
+            From()
+            To()
         }
+        binding.textInputEditTextTo.isEnabled = false
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,9 +84,15 @@ lateinit var binding: FragmentSearchBinding
             var txtDate = binding.textInputEditTextWhere.text.toString()
             var txtFrom = binding.textInputEditTextFrom.text.toString()
             var txtTo = binding.textInputEditTextTo.text.toString()
+
+            if(txtFrom == ""){
+                Snackbar.make(requireView(), "Должны быть заполнено Откуда",Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent = Intent(requireContext(), FindActivity::class.java)
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
-
+            var outputDate1:String = "null"
+            var outputDate2:String = "null"
             if (txtDate != "") {
                 var date = txtDate.split(" ")
                 val inputFormat: DateFormat =
@@ -91,21 +100,21 @@ lateinit var binding: FragmentSearchBinding
                 val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
                 val date1: Date?
                 date1 = outputFormat.parse(date[0]) as Date
-                val outputDate1: String = inputFormat.format(date1)
+                outputDate1 = inputFormat.format(date1)
                 val date2: Date?
                 date2 = outputFormat.parse(date[2]) as Date
-                val outputDate2: String = inputFormat.format(date2)
-
-                intent.putExtra("outputDate1", outputDate1)
-                intent.putExtra("outputDate2", outputDate2)
+                outputDate2 = inputFormat.format(date2)
             }
+            intent.putExtra("outputDate1", outputDate1)
+            intent.putExtra("outputDate2", outputDate2)
             intent.putExtra("txtFrom", txtFrom)
             intent.putExtra("txtTo", txtTo)
             startActivity(intent)
         }
     }
     private fun From() {
-        viewModel.getCityFrom()
+        if(userStatus == "User") viewModel.getCityFrom(false)
+        else if(userStatus == "Driver") viewModel.getCityFrom(true)
         viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
             val adapter: ArrayAdapter<String> = ArrayAdapter(
                 requireContext(),
@@ -115,18 +124,21 @@ lateinit var binding: FragmentSearchBinding
             binding.textInputEditTextFrom.setAdapter(adapter)
         }
 
+
     }
     private fun To(){
         binding.textInputEditTextFrom.addTextChangedListener {
             var start_point = binding.textInputEditTextFrom.text.toString()
             if (!TextUtils.isEmpty(start_point)) {
-                viewModel.getCityTo(start_point)
+                if(userStatus == "User")  viewModel.getCityTo(start_point, false)
+                else if(userStatus == "Driver") viewModel.getCityTo(start_point, true)
                 viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
                     val adapter: ArrayAdapter<String> = ArrayAdapter(
                         requireContext(),
                         android.R.layout.simple_dropdown_item_1line,
                         it
                     )
+                    binding.textInputEditTextTo.isEnabled = true
                     binding.textInputEditTextTo.setAdapter(adapter)
                 }
             }
