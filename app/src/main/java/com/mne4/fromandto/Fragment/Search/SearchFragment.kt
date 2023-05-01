@@ -20,6 +20,7 @@ import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.FindActivity
+import com.mne4.fromandto.R
 import com.mne4.fromandto.WelcomeActivity
 import com.mne4.fromandto.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
@@ -85,10 +86,6 @@ lateinit var binding: FragmentSearchBinding
             var txtFrom = binding.textInputEditTextFrom.text.toString()
             var txtTo = binding.textInputEditTextTo.text.toString()
 
-            if(txtFrom == ""){
-                Snackbar.make(requireView(), "Должны быть заполнено Откуда",Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
             val intent = Intent(requireContext(), FindActivity::class.java)
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             var outputDate1:String = "null"
@@ -118,7 +115,7 @@ lateinit var binding: FragmentSearchBinding
         viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
             val adapter: ArrayAdapter<String> = ArrayAdapter(
                 requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
+                R.layout.style_dropdown_item,
                 it
             )
             binding.textInputEditTextFrom.setAdapter(adapter)
@@ -128,14 +125,17 @@ lateinit var binding: FragmentSearchBinding
     }
     private fun To(){
         binding.textInputEditTextFrom.addTextChangedListener {
+
             var start_point = binding.textInputEditTextFrom.text.toString()
+            binding.butFind.isEnabled = (start_point!="")
+
             if (!TextUtils.isEmpty(start_point)) {
                 if(userStatus == "User")  viewModel.getCityTo(start_point, false)
                 else if(userStatus == "Driver") viewModel.getCityTo(start_point, true)
                 viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
                     val adapter: ArrayAdapter<String> = ArrayAdapter(
                         requireContext(),
-                        android.R.layout.simple_dropdown_item_1line,
+                        R.layout.style_dropdown_item,
                         it
                     )
                     binding.textInputEditTextTo.isEnabled = true

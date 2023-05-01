@@ -51,20 +51,16 @@ class FindActivity : AppCompatActivity() {
             txtFrom != "" &&
             txtTo != "")
         {
-            Log.d("All","ReadDateStartToDateEndToFrom()")
             ReadDateStartToDateEndToFrom()
         }else if(outputDate1 != "null" &&
             outputDate2 != "null" && txtFrom != "")
         {
-            Log.d("All","ReadDateStartToDateEndFrom()")
             ReadDateStartToDateEndFrom()
         }else if(txtFrom != "" &&
                 txtTo != "")
         {
-            Log.d("All","ReadByStartPointEndPoint()")
             ReadByStartPointEndPoint()
         }else if(txtFrom !=""){
-            Log.d("All","ReadByStart()")
             ReadByStart()
         }
 

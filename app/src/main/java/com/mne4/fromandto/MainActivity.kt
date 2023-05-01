@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
                             fragmentInstance(
-                                SearchFragment.newInstance(),
+                                SearchFragment.newInstance()
                             );
                         runOnUiThread {
                             viewModel.UserStatus.value = userStatus
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.butHelpBottomNavigation -> {
 
                             fragmentInstance(
-                                HelpFragment.newInstance(),
+                                HelpFragment.newInstance()
                             );
 
                     }
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.butProfileBottomNavigation -> {
 
                             fragmentInstance(
-                                ProfileFragment.newInstance(),
+                                ProfileFragment.newInstance()
                             );
                     }
                 }
