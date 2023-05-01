@@ -44,6 +44,9 @@ class   DataModel: ViewModel() {
         MutableLiveData<TripsFull>()
     }
 
+    val ApiGetMyOrdersTripsCurrentUser: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
+    }
     val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
     }
@@ -270,6 +273,13 @@ class   DataModel: ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             var trips = tripsApi.getCurrentTrips(guid)
             ApiGetCurrenTrips.value = trips
+        }
+    }
+    fun getMyOrdersTripsCurrentUser(guid:String, isDriver: Boolean)
+    {
+        CoroutineScope(Dispatchers.Main).launch {
+            var trips = tripsApi.getMyOrdersTripsCurrentUser(guid,isDriver)
+            ApiGetMyOrdersTripsCurrentUser.value = trips
         }
     }
 
