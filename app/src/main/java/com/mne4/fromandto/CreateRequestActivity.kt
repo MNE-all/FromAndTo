@@ -64,7 +64,6 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     var END_POSITION: Point = Point(0.0, 0.0)
     var START_TIME: String = ""
 
-    var userStatus = ""
 
     lateinit var locationMapKit: UserLocationLayer
     lateinit var searchEdit: EditText
@@ -160,7 +159,10 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
         // Добавление поездки/запроса на поездку
-        userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS)!!
+        var userStatus = ""
+        viewModel.UserStatus.observe(this) {
+            userStatus = it
+        }
 
         val description = findViewById<TextInputEditText>(R.id.editTextDescription)
         val btnCreate = findViewById<Button>(R.id.btnCreate)

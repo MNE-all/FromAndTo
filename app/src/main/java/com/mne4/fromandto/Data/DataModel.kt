@@ -30,6 +30,11 @@ class   DataModel: ViewModel() {
     fun getLocalDB(context: Context): MainDB {
         return MainDB.getDB(context)
     }
+
+    val UserStatus: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
     val onboardPosition: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
