@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,9 +14,9 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,16 +29,23 @@
                 android:layout_height="match_parent"
 
                 android:background="@drawable/custom_button_style2"
-                android:contentDescription="@string/app_name"
-                android:text="Карта">
+                android:contentDescription="@string/app_name">
 
             </com.google.android.material.tabs.TabItem>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center"
-                android:text="Карта"
+                android:text="Запросы"
                 android:textColor="@color/black"
                 android:textSize="28sp">
 
@@ -55,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button_style"
                 android:contentDescription="@string/app_name"
-                android:text="Данные"
                 android:textAlignment="center">
 
             </com.google.android.material.tabs.TabItem>
@@ -63,9 +70,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_alignParentStart="true"
 
-                android:text="Данные"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:text="Поездки"
                 android:textColor="@color/black"
                 android:textSize="28sp">
 
