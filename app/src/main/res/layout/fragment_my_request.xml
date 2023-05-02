@@ -9,6 +9,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/txtInfoResultMyOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ничего не найдено!"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
@@ -90,7 +103,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclearMyOrders"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="545dp"
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,8 +111,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/viewholder_order">
+        app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
 

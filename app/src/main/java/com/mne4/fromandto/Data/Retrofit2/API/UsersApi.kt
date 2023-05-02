@@ -1,6 +1,8 @@
 package com.mne4.fromandto.Data.Retrofit2.API
 
+import android.util.Pair
 import com.mne4.fromandto.Data.Retrofit2.Models.User
+import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -11,6 +13,10 @@ interface UsersApi {
 
     @GET("Users/Read/{guid}")
     suspend fun getCurrentUser(@Path("guid") guid:String): User
+
+    @GET("Users/Read/TwoUser")
+    suspend fun getTwoUser(@Query("userOne") userOne:String,
+                           @Query("userTwo") userTwo:String): ArrayList<UserFull>
 
     @POST("Users/AuthenticationAuto")
     fun postAuthenticationAuto(@Query("guid") guid:String, @Query("hashPassword") hashPassword:String): Call<Boolean>
