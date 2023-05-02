@@ -32,7 +32,9 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
     override fun onBindViewHolder(holder: FindViewHolder, position: Int) {
         holder.surname.text = findList.get(position).Surname
         holder.rating.text = findList.get(position).Rating.toString()
-        Picasso.get().load(findList.get(position).Image_url.toString()).into(holder.image_url)
+        Picasso.get().load(findList.get(position).Image_url.toString())
+            .placeholder(R.drawable.baseline_account_circle_24)
+            .error(R.drawable.baseline_account_circle_24).into(holder.image_url)
         holder.start_time.text = findList.get(position).Start_Time
         holder.price.text = findList.get(position).Price.toString()
         holder.start_point.text = findList.get(position).Start_Point
