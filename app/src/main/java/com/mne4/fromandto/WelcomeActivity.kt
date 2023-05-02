@@ -30,7 +30,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun onPassengerClick(view: View) {
-        var intent = Intent(applicationContext, CreateRequestActivity::class.java)
+        var intent = Intent(applicationContext, MainActivity::class.java)
         viewModel.UserStatus.value = "User"
         startActivity(intent)
     }
