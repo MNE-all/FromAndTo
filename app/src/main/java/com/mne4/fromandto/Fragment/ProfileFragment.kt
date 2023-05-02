@@ -377,7 +377,6 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long,
             ) {
-                Snackbar.make(view!!,"Вы выбрали пол: ${genderList[position]}", Snackbar.LENGTH_SHORT).show()
                 gender = genderList[position]
             }
 
