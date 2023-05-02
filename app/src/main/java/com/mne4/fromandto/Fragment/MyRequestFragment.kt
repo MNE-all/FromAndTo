@@ -19,7 +19,16 @@ class MyRequestFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.mapTabItem.setOnClickListener {
 
+        }
+        binding.dataTabItem.setOnClickListener {
+
+        }
+
+    }
     companion object {
 
         @JvmStatic
