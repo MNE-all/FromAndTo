@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.mne4.fromandto.Data.Retrofit2.API.ImageAPI
 import com.mne4.fromandto.Data.Retrofit2.API.SmsApi
 import com.mne4.fromandto.Data.Retrofit2.API.TripsApi
 import com.mne4.fromandto.Data.Retrofit2.API.UsersApi
@@ -16,6 +17,7 @@ import com.mne4.fromandto.Data.Room.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,6 +36,10 @@ class   DataModel: ViewModel() {
         MutableLiveData<Int>()
     }
     val UserStatus: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+    val ApiImgUrl: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
@@ -95,6 +101,7 @@ class   DataModel: ViewModel() {
     private lateinit var usersApi: UsersApi
     private lateinit var tripsApi: TripsApi
     private lateinit var registr_sms: SmsApi
+    private var imageAPI: ImageAPI
     private val api_sms_key = "812064B6-84ED-BE83-505C-E729039CB70A"
 
     init{
@@ -110,10 +117,31 @@ class   DataModel: ViewModel() {
             .baseUrl("https://sms.ru").client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+        var retrofit_img = Retrofit.Builder()
+            .baseUrl("http://upload-soft.photolab.me/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        imageAPI = retrofit_img.create(ImageAPI::class.java)
+
         usersApi = retrofit.create(UsersApi::class.java)
         tripsApi = retrofit.create(TripsApi::class.java)
 
         registr_sms = retrofit_sms.create(SmsApi::class.java)
+    }
+
+    fun makeImgUrl(file: MultipartBody.Part){
+        CoroutineScope(Dispatchers.IO).launch {
+            imageAPI.postImg(file).enqueue(object :Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    ApiImgUrl.value = response.body()?.string()
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        }
     }
     fun getUserAll()
     {

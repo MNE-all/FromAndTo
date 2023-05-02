@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -39,6 +39,10 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -55,6 +59,7 @@ class ProfileFragment : Fragment() {
     private var password: String = ""
     private lateinit var USER: User
     private var GalleryPick: Int =1
+    private var imgURL = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -91,10 +96,7 @@ class ProfileFragment : Fragment() {
 
     @Deprecated("Deprecated in Kotlin")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        var imageUri: Uri?
         if(requestCode==GalleryPick && resultCode== RESULT_OK && data!=null){
-            imageUri = data.data
-
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1,1)
@@ -103,41 +105,26 @@ class ProfileFragment : Fragment() {
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
             if(resultCode == RESULT_OK){
+                // result.uri - local URL картинки
                 var resultUri: Uri? = result.uri
-                binding.imageUser.buildDrawingCache()
-                var bitmap = binding.imageUser.getDrawingCache()
-                Picasso.get().load(resultUri).into(binding.imageUser)
+                var file = result.uri.toFile()
+                val requestFile= RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+
+                viewModel.ApiImgUrl.observe(this) {
+                    Picasso.get().load(it).into(binding.imageUser)
+                    imgURL = it
+                }
+
+                viewModel.makeImgUrl(filePart)
+//                binding.imageUser.buildDrawingCache()
+//                var bitmap = binding.imageUser.getDrawingCache()
+
 
                 //Log.d("img","${getImageUri(requireContext(),bitmap)}")
             }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 var error:Exception = result.error
-            }
-        }
-
-
-    }
-    fun getImageUri(inContext: Context, inImage: Bitmap): String? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            inContext.getContentResolver(),
-            inImage,
-            "Title",
-            null
-        )
-        return getRealPathFromUri(inContext,Uri.parse(path))
-    }
-    fun getRealPathFromUri(context: Context, contentUri: Uri?): String? {
-        var cursor: Cursor? = null
-        return try {
-            val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
-            val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            return cursor.getString(column_index)
-        } finally {
-            if (cursor != null) {
-                cursor.close()
             }
         }
     }
@@ -156,6 +143,12 @@ class ProfileFragment : Fragment() {
 
         viewModel.ApiGetCurrentUser.observe(requireActivity()){
             USER = it
+
+            Picasso.get().load(USER.image_url)
+                .placeholder(R.drawable.baseline_account_circle_24)
+                .error(R.drawable.search_result)
+                .into(binding.imageUser)
+
             binding.surnameField.setText(it.surname)
             binding.nameField.setText(it.name)
             val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
@@ -262,6 +255,9 @@ class ProfileFragment : Fragment() {
                         USER.gender = gender
                         USER.passport = passport
                         USER.license = license
+                        if (!imgURL.isNullOrEmpty()){
+                            USER.image_url = imgURL
+                        }
 
                         if (phone != "" && password != "") {
                             if (binding.passwordField.text.toString() == binding.passwordFieldStill.text.toString()) {
