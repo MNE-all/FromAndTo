@@ -6,17 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mne4.fromandto.R
+import com.mne4.fromandto.databinding.FragmentMyRequestBinding
 
 class MyRequestFragment : Fragment() {
-
+    lateinit var binding:FragmentMyRequestBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_request, container, false)
+        binding = FragmentMyRequestBinding.inflate(inflater)
+        return binding.root
     }
+
 
     companion object {
 
