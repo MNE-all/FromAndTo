@@ -125,8 +125,9 @@ class MyRequestFragment : Fragment() {
 
                 listMyOrders.add(tripsMyOrder)
             }catch (ex:java.lang.IndexOutOfBoundsException){
+                count=1
                 return@observe
-                count=0
+
             }
             count -= 1
             if (count == 0) {
