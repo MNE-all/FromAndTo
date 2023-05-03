@@ -5,11 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.MyRequestFragment">
-<androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="125dp"
+            android:layout_height="115dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
         android:id="@+id/txtInfoResultMyOrders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,17 +35,19 @@
 
     <LinearLayout
         android:id="@+id/tabLayout"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
+            android:id="@+id/RequestLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            >
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/RequestTabItem"
@@ -47,6 +60,7 @@
             </com.google.android.material.tabs.TabItem>
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
@@ -66,8 +80,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/TripsLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1">
 
             <com.google.android.material.tabs.TabItem
@@ -101,19 +116,19 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclearMyOrders"
-        android:layout_width="match_parent"
-        android:layout_height="545dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintVertical_bias="0.0">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclearMyOrders"
+            android:layout_width="0dp"
+            android:layout_height="577dp"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            app:layout_constraintVertical_bias="0.0">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

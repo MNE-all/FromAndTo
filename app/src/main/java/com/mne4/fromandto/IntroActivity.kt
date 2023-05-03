@@ -129,15 +129,25 @@ class IntroActivity : AppCompatActivity() {
                     if (user.isInAcc && !replay) {
                         isInAccount = true
                         viewModel.postAuthenticationAuto(user.id_user, user.password)
-                        viewModel.ApiPostAuthenticationAuto.observe(this) {
-                            if (it) {
-                                var intent = Intent(this, WelcomeActivity::class.java)
-                                startActivity(intent)
-                                Toast.makeText(applicationContext,"Быстрый вход!",Toast.LENGTH_SHORT).show()
-                                finish()
-                            } else {
-                                loginOrRegister()
-                                Toast.makeText(applicationContext,"Аккаунт не найден!",Toast.LENGTH_SHORT).show()
+                        this.let {
+                            viewModel.ApiPostAuthenticationAuto.observe(this) {
+                                if (it) {
+                                    var intent = Intent(this, WelcomeActivity::class.java)
+                                    startActivity(intent)
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Быстрый вход!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    finish()
+                                } else {
+                                    loginOrRegister()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Аккаунт не найден!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     }

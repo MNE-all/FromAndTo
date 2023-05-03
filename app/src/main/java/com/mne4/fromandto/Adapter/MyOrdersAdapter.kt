@@ -61,6 +61,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         holder.price.text = findList.get(position).Price.toString()
         holder.start_point.text = findList.get(position).Start_Point
         holder.end_point.text = findList.get(position).End_Point
+        holder.seats_amount.text = findList.get(position).Seats_amount.toString()
     }
 
     class MyOrderViewHolder: RecyclerView.ViewHolder{
@@ -74,6 +75,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var price: TextView
         lateinit var start_point: TextView
         lateinit var end_point: TextView
+        lateinit var seats_amount: TextView
 
         constructor(itemView: View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
@@ -88,6 +90,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             price = binding.txtPriceOne
             start_point =binding.txtStartPoint
             end_point =binding.txtEndPoint
+            seats_amount =binding.txtSeatsAmount
             binding.butViewMore.setOnClickListener{
                 var button = it as Button
                 Snackbar.make(itemView, "Вы нажали на кнопку! ${start_time.text}",Snackbar.LENGTH_SHORT).show()
