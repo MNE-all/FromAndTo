@@ -2,7 +2,6 @@ package com.mne4.fromandto
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,9 +11,6 @@ import com.mne4.fromandto.Fragment.MyRequestFragment
 import com.mne4.fromandto.Fragment.ProfileFragment
 import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,27 +24,29 @@ class MainActivity : AppCompatActivity() {
         userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS).toString()
         binding.bottomNavigationViewMenu.setBackground(null)
         binding.floatingActionButton.setOnClickListener{
-            var intent = Intent(this, CreateRequestActivity::class.java)
+            val intent = Intent(this, CreateRequestActivity::class.java)
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             startActivity(intent)
         }
+
+        // Установка поиска как первого фрагмента
+        fragmentInstance(
+            SearchFragment.newInstance()
+        )
+        viewModel.UserStatus.value = userStatus
+
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
-            CoroutineScope(Dispatchers.IO).launch {
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
-                            fragmentInstance(
-                                SearchFragment.newInstance()
-                            );
-                        runOnUiThread {
-                            viewModel.UserStatus.value = userStatus
-                        }
+                        fragmentInstance(
+                            SearchFragment.newInstance()
+                        )
+                        viewModel.UserStatus.value = userStatus
                     }
                     R.id.butHelpBottomNavigation -> {
-
-                            fragmentInstance(
-                                HelpFragment.newInstance()
-                            );
-
+                        fragmentInstance(
+                            HelpFragment.newInstance()
+                        )
                     }
                     R.id.butMyOrdersBottomNavigation -> {
                         fragmentInstance(
@@ -59,13 +57,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     R.id.butProfileBottomNavigation -> {
-
-                            fragmentInstance(
-                                ProfileFragment.newInstance()
-                            );
+                        fragmentInstance(
+                            ProfileFragment.newInstance()
+                        )
                     }
                 }
-            }
+
             true
         }
 
@@ -74,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     fun fragmentInstance(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace( R.id.bottomNavigationFrame, f)
+            .replace(R.id.bottomNavigationFrame, f)
             .commit()
     }
 

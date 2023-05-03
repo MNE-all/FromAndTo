@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:rotation="0"
-            android:text="Регистрация"
+            android:text="@string/register"
             android:textColor="#C0C1C5"
             android:textSize="24sp" />
 
@@ -64,7 +64,7 @@
                 android:id="@+id/surnameField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/entry_name"
+                android:hint="@string/surname"
                 android:inputType="textEmailAddress"
                 android:maxLength="20"
                 android:text="" />
