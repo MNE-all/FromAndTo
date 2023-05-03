@@ -15,6 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
+import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
@@ -22,11 +26,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Room.MainDB
@@ -70,15 +77,38 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        InitUser()
-        butDeleteAcc()
-        butSave()
-        ImgClick()
+        viewModel.getLocalDB(view.context).getDao().getAllUser().asLiveData().observe(requireActivity()) {
+            for (user in it) {
+                if (user.isInAcc) {
+                    viewModel.getCurrentUser(user.id_user)
+                    return@observe
+                }
+            }
+        }
+        viewModel.ApiGetCurrentUser.observe(requireActivity()){
+            Picasso.get().load(it.image_url)
+                .placeholder(R.drawable.baseline_account_circle_24)
+                .error(R.drawable.search_result)
+                .into(binding.imageUser)
+        }
 
-        Change()
-        ChipActive()
-        SpinnerGender()
-        DateDialog()
+        binding.buttonAccSettings.setOnClickListener {
+            var bottomSheetDialog = BottomSheetDialog(view.context)
+            bottomSheetDialog.setContentView(R.layout.profile_bottom_sheet_dialog)
+            bottomSheetDialog.show()
+
+            InitUser(bottomSheetDialog)
+            butDeleteAcc()
+            butSave(bottomSheetDialog)
+            ImgClick()
+
+            Change(bottomSheetDialog)
+            ChipActive(bottomSheetDialog)
+            SpinnerGender(bottomSheetDialog)
+            DateDialog(bottomSheetDialog)
+
+        }
+
     }
 
     fun ImgClick() {
@@ -129,7 +159,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun InitUser(){
+    fun InitUser(view: BottomSheetDialog){
 
         var db = MainDB.getDB(requireActivity())
         db.getDao().getAllUser().asLiveData().observe(requireActivity()) {
@@ -149,8 +179,8 @@ class ProfileFragment : Fragment() {
                 .error(R.drawable.search_result)
                 .into(binding.imageUser)
 
-            binding.surnameField.setText(it.surname)
-            binding.nameField.setText(it.name)
+            view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(it.surname)
+            view.findViewById<TextInputEditText>(R.id.nameField)?.setText(it.name)
             val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
             val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
 
@@ -158,15 +188,14 @@ class ProfileFragment : Fragment() {
             if (!it.birthday.isNullOrEmpty()) {
                 date = inputFormat.parse(it.birthday.toString()) as Date
                 val outputText: String = outputFormat.format(date)
-                binding.txtCalendar.setText(outputText)
+                view.findViewById<TextView>(R.id.txtCalendar)?.text = outputText
             }
 
 
 
-            binding.emailField.setText(it.email)
-            binding.passportField.setText(it.passport)
-            binding.licenseField.setText(it.license)
-
+            view.findViewById<TextInputEditText>(R.id.emailField)?.setText(it.email)
+            view.findViewById<TextInputEditText>(R.id.passportField)?.setText(it.passport)
+            view.findViewById<TextInputEditText>(R.id.licenseField)?.setText(it.license)
         }
     }
 
@@ -216,31 +245,39 @@ class ProfileFragment : Fragment() {
             dialog.show()
         }
     }
-    fun butSave(){
-        binding.butSave.setOnClickListener {
+    fun butSave(view: BottomSheetDialog){
+        view.findViewById<Button>(R.id.butSave)?.setOnClickListener {
             replay = false
             var db = MainDB.getDB(requireActivity())
             db.getDao().getAllUser().asLiveData().observe(requireActivity()) {
                 for (user in it) {
                     if (user.isInAcc && !replay) {
-                        var surname = binding.surnameField.text.toString()
-                        var name = binding.nameField.text.toString()
-                        var email = binding.emailField.text.toString()
+
+                        val switchChange = view.findViewById<Switch>(R.id.switchChange)
+
+
+                        var surname = view.findViewById<TextInputEditText>(R.id.surnameField)?.text.toString()
+                        var name = view.findViewById<TextInputEditText>(R.id.nameField)?.text.toString()
+                        var email = view.findViewById<TextInputEditText>(R.id.emailField)?.text.toString()
+                        var txtCalendar = view.findViewById<TextView>(R.id.txtCalendar)
 
                         val outputFormat: DateFormat =
                             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
                         val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
                         val date: Date?
-                        if (!binding.txtCalendar.text.isNullOrEmpty()) {
-                            date = inputFormat.parse(binding.txtCalendar.text.toString()) as Date
+                        if (!view.findViewById<TextView>(R.id.txtCalendar)?.text.isNullOrEmpty()) {
+                            date = inputFormat.parse(txtCalendar?.text.toString()) as Date
                             val outputText: String = outputFormat.format(date)
-                            binding.txtCalendar.text = outputText
+                            txtCalendar?.text = outputText
                             var birthday: String? = outputText
                             USER.birthday = birthday
                         }
 
-                        var passport = binding.passportField.text.toString()
-                        var license = binding.licenseField.text.toString()
+                        var passportField = view.findViewById<TextInputEditText>(R.id.passportField)
+
+                        view.findViewById<TextInputEditText>(R.id.passportField)?.text.toString()
+                        var passport = passportField?.text.toString()
+                        var license = view.findViewById<TextInputEditText>(R.id.licenseField)?.text.toString()
                         if (TextUtils.isEmpty(surname) || TextUtils.isEmpty(name)) {
                             Toast.makeText(
                                 requireContext(),
@@ -260,12 +297,13 @@ class ProfileFragment : Fragment() {
                         }
 
                         if (phone != "" && password != "") {
-                            if (binding.passwordField.text.toString() == binding.passwordFieldStill.text.toString()) {
-                                viewModel.postIsPhoneUnique(binding.phoneField.text.toString())
+                            var phoneField = view.findViewById<TextInputEditText>(R.id.phoneField)
+                            if (passportField?.text.toString() == view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.text.toString()) {
+                                viewModel.postIsPhoneUnique(phoneField?.text.toString())
                                 viewModel.ApiPostIsPhoneUnique.observe(requireActivity()) { it ->
                                     if (it) {
-                                        USER.phone = binding.phoneField.text.toString()
-                                        USER.password = binding.passwordField.text.toString()
+                                        USER.phone = phoneField?.text.toString()
+                                        USER.password = view.findViewById<TextInputEditText>(R.id.passwordField)?.text.toString()
                                         viewModel.putEditUserSecure(
                                             user.id_user,
                                             user.password,
@@ -278,8 +316,9 @@ class ProfileFragment : Fragment() {
                                                 return@launch
                                             }
                                             activity?.runOnUiThread {
-                                                binding.switchChange.isChecked = false
-                                                isVisibleSecurity(false)
+
+                                                switchChange?.isChecked = false
+                                                isVisibleSecurity(false, view)
                                             }
                                         }
                                     } else {
@@ -299,8 +338,8 @@ class ProfileFragment : Fragment() {
                             }
                         } else {
                             viewModel.putEditUser(user.id_user, user.password, USER)
-                            binding.switchChange.isChecked = false
-                            isVisibleSecurity(false)
+                            switchChange?.isChecked = false
+                            isVisibleSecurity(false, view)
                         }
                         replay = true
                     }
@@ -311,15 +350,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun updateText(calendar: Calendar){
-        val dateFormat = "dd-MM-yyyy"
-        var simple = SimpleDateFormat(dateFormat,Locale.UK)
-        binding.txtCalendar.text = simple.format(calendar.time)
-    }
-
-    private fun ChipActive(){
-        binding.chipSecurity.setOnClickListener {
-            if (binding.chipSecurity.isChecked) {
+    private fun ChipActive(view: BottomSheetDialog){
+        val chipSecurity = view.findViewById<Chip>(R.id.chipSecurity)
+        chipSecurity?.setOnClickListener {
+            if (chipSecurity.isChecked) {
                 var dialog:AlertDialog.Builder = AlertDialog.Builder(requireContext())
 
                 dialog.setTitle("Подтвердите данные")
@@ -335,41 +369,45 @@ class ProfileFragment : Fragment() {
                     viewModel.ApiPostAuthentication.observe(requireActivity()) {
                         if (it != null) {
                             if (USER.password == it.password && USER.phone == it.phone) {
-                                isVisibleSecurity(true)
-                                binding.phoneField.setText(phone)
-                                binding.passwordField.setText(password)
-                                binding.passwordFieldStill.setText(password)
+                                isVisibleSecurity(true, view)
+                                view.findViewById<TextInputEditText>(R.id.phoneField)?.setText(phone)
+                                view.findViewById<TextInputEditText>(R.id.passwordField)?.setText(password)
+                                view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.setText(password)
                                 return@observe
                             }
                         }
                         Toast.makeText(requireContext(), "Неправильно введенные данные!",Toast.LENGTH_SHORT).show()
-                        isVisibleSecurity(false)
+                        isVisibleSecurity(false, view)
                     }
                 })
                 dialog.show()
             }else{
-                isVisibleSecurity(false)
+                isVisibleSecurity(false, view)
             }
         }
     }
 
-    private fun isVisibleSecurity(truth: Boolean){
-        binding.phoneFieldLayout.isVisible = truth
-        binding.passwordFieldLayout.isVisible = truth
-        binding.passwordFieldLayoutStill.isVisible = truth
+    private fun isVisibleSecurity(truth: Boolean, view: BottomSheetDialog){
 
-        binding.chipSecurity.isChecked = truth
+        val chipSecurity = view.findViewById<Chip>(R.id.chipSecurity)
+
+        view.findViewById<TextInputLayout>(R.id.phoneFieldLayout)?.isVisible = truth
+        view.findViewById<TextInputLayout>(R.id.passwordFieldLayout)?.isVisible = truth
+        view.findViewById<TextInputLayout>(R.id.passwordFieldLayoutStill)?.isVisible = truth
+
+        chipSecurity?.isChecked = truth
         if(!truth) {
-            binding.chipSecurity.text = "Пройти безопасность"
+            chipSecurity?.text = "Пройти безопасность"
         }else{
-            binding.chipSecurity.text = "Безопасность подтверждена"
+            chipSecurity?.text = "Безопасность подтверждена"
         }
     }
-    private fun SpinnerGender(){
+    private fun SpinnerGender(view: BottomSheetDialog){
+        val spinnerGender = view.findViewById<Spinner>(R.id.spinnerGender)
         var genderList = arrayOf("Мужской","Женский")
         var arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, genderList)
-        binding.spinnerGender.adapter = arrayAdapter
-        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerGender?.adapter = arrayAdapter
+        spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -382,8 +420,9 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-    fun DateDialog(){
-        binding.txtCalendar.setOnClickListener {
+    fun DateDialog(view: BottomSheetDialog){
+        val txtCalendar = view.findViewById<TextView>(R.id.txtCalendar)
+        txtCalendar?.setOnClickListener {
 
             val constraintsBuilder = CalendarConstraints.Builder()
                 .setValidator(DateValidatorPointBackward.now())
@@ -395,45 +434,46 @@ class ProfileFragment : Fragment() {
 
             date.show(super.getParentFragmentManager(), "DATE_PICKER")
             date.addOnPositiveButtonClickListener {
-                binding.txtCalendar.text = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT).format(it)
+                txtCalendar?.text = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT).format(it)
             }
 
         }
     }
 
-    private fun Change(){
-        Init(false)
-        binding.switchChange.setOnCheckedChangeListener{buttonView, isChecked->
-            Init(isChecked)
-            InitUser()
+    private fun Change(view: BottomSheetDialog){
+        Init(false, view)
+        view.findViewById<Switch>(R.id.switchChange)?.setOnCheckedChangeListener{buttonView, isChecked->
+            Init(isChecked, view)
+            InitUser(view)
         }
 
 
     }
 
-    private fun Init(truth:Boolean){
+    private fun Init(truth:Boolean, view: BottomSheetDialog){
 
-        isVisibleSecurity(true)
-        isVisibleSecurity(false)
+        isVisibleSecurity(true, view)
+        isVisibleSecurity(false, view)
 
         binding.imageUser.isEnabled = truth
 
-        binding.surnameField.isEnabled = truth
-        binding.nameField.isEnabled = truth
-        binding.emailField.isEnabled = truth
 
-        binding.phoneField.isEnabled = truth
-        binding.passwordField.isEnabled = truth
-        binding.passwordFieldStill.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.surnameField)?.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.nameField)?.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.emailField)?.isEnabled = truth
 
-        binding.passportField.isEnabled = truth
-        binding.licenseField.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.phoneField)?.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.passwordField)?.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.isEnabled = truth
 
-        binding.spinnerGender.isEnabled = truth
-        binding.txtCalendar.isEnabled = truth
-        binding.chipSecurity.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.passportField)?.isEnabled = truth
+        view.findViewById<TextInputEditText>(R.id.licenseField)?.isEnabled = truth
 
-        binding.butSave.isEnabled = truth
+        view.findViewById<Spinner>(R.id.spinnerGender)?.isEnabled = truth
+        view.findViewById<TextView>(R.id.txtCalendar)?.isEnabled = truth
+        view.findViewById<Chip>(R.id.chipSecurity)?.isEnabled = truth
+
+        view.findViewById<Button>(R.id.butSave)?.isEnabled = truth
 
         if(!truth){
             phone = ""
