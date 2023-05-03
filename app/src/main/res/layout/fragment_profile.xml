@@ -63,6 +63,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView6" />
 
+        <TextView
+            android:id="@+id/textViewUserFIO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

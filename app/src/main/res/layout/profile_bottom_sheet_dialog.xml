@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_scrollview_profile">
+    android:background="@drawable/transperent">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp"
+
+            android:background="@drawable/transperent"
             >
 
             <Switch
@@ -43,6 +45,14 @@
                 android:text="@string/mainInfo"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
+
+            <Button
+                android:id="@+id/buttonChangeUserImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="Сменить изображение профиля" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameFieldLayout"

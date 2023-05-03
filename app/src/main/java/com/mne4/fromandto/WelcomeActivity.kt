@@ -55,7 +55,8 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun onExit() {
+    fun onExit() {
+
         val localDB = viewModel.getLocalDB(this)
         localDB.getDao().getAllUser().asLiveData().observe(this) {
             if (it.isNotEmpty()) {

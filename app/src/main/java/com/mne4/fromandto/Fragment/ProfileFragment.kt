@@ -1,14 +1,10 @@
 package com.mne4.fromandto.Fragment
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +27,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mne4.fromandto.Data.DataModel
@@ -46,11 +41,9 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,7 +63,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater)
         return binding.root
     }
@@ -85,40 +78,46 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+
+
+
+        // Получение данных о пользователе
         viewModel.ApiGetCurrentUser.observe(requireActivity()){
             Picasso.get().load(it.image_url)
                 .placeholder(R.drawable.baseline_account_circle_24)
                 .error(R.drawable.search_result)
                 .into(binding.imageUser)
+            val fio = "${it.surname} ${it.name}"
+            binding.textViewUserFIO.text = fio
         }
 
         binding.buttonAccSettings.setOnClickListener {
             var bottomSheetDialog = BottomSheetDialog(view.context)
             bottomSheetDialog.setContentView(R.layout.profile_bottom_sheet_dialog)
-            bottomSheetDialog.show()
 
+            bottomSheetDialog.findViewById<Button>(R.id.buttonChangeUserImage)!!.setOnClickListener {
+                imgClick()
+            }
+
+            bottomSheetDialog.show()
 
             InitUser(bottomSheetDialog)
             butDeleteAcc()
             butSave(bottomSheetDialog)
-            ImgClick()
 
             Change(bottomSheetDialog)
             ChipActive(bottomSheetDialog)
             SpinnerGender(bottomSheetDialog)
             DateDialog(bottomSheetDialog)
-
         }
     }
 
-    fun ImgClick() {
-        binding.imageUser.setOnClickListener {
-            var galleryIntent = Intent()
-            galleryIntent.setAction(Intent.ACTION_GET_CONTENT)
-            galleryIntent.setType("image/*")
-            @Suppress("DEPRECATION")
-            startActivityForResult(galleryIntent, GalleryPick)
-        }
+    fun imgClick() {
+        var galleryIntent = Intent()
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT)
+        galleryIntent.setType("image/*")
+        @Suppress("DEPRECATION")
+        startActivityForResult(galleryIntent, GalleryPick)
     }
 
     @Deprecated("Deprecated in Kotlin")
@@ -348,6 +347,7 @@ class ProfileFragment : Fragment() {
         val chipSecurity = view.findViewById<Chip>(R.id.chipSecurity)
         chipSecurity?.setOnClickListener {
             if (chipSecurity.isChecked) {
+                chipSecurity.isChecked = false
                 var dialog:AlertDialog.Builder = AlertDialog.Builder(requireContext())
 
                 dialog.setTitle("Подтвердите данные")
@@ -375,6 +375,7 @@ class ProfileFragment : Fragment() {
                     }
                 })
                 dialog.show()
+
             }else{
                 isVisibleSecurity(false, view)
             }
@@ -437,6 +438,8 @@ class ProfileFragment : Fragment() {
     private fun Change(view: BottomSheetDialog){
         Init(false, view)
         view.findViewById<Switch>(R.id.switchChange)?.setOnCheckedChangeListener{buttonView, isChecked->
+
+
             Init(isChecked, view)
             InitUser(view)
         }
@@ -448,6 +451,8 @@ class ProfileFragment : Fragment() {
 
         isVisibleSecurity(true, view)
         isVisibleSecurity(false, view)
+
+        view.findViewById<Button>(R.id.buttonChangeUserImage)?.isEnabled = truth
 
         binding.imageUser.isEnabled = truth
 
