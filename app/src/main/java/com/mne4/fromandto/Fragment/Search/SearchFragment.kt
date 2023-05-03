@@ -2,7 +2,6 @@ package com.mne4.fromandto.Fragment.Search
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,27 +9,17 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
-import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
-import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.FindActivity
 import com.mne4.fromandto.R
 import com.mne4.fromandto.WelcomeActivity
 import com.mne4.fromandto.databinding.FragmentSearchBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SearchFragment : Fragment() {
@@ -44,7 +33,7 @@ lateinit var binding: FragmentSearchBinding
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater)
-        viewModel.UserStatus.observe(requireActivity()){
+        viewModel.UserStatus.observe(requireActivity()) {
             userStatus = it
             From()
             To()
@@ -112,6 +101,7 @@ lateinit var binding: FragmentSearchBinding
     private fun From() {
         if(userStatus == "User") viewModel.getCityFrom(false)
         else if(userStatus == "Driver") viewModel.getCityFrom(true)
+
         viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
             val adapter: ArrayAdapter<String> = ArrayAdapter(
                 requireContext(),
@@ -122,25 +112,30 @@ lateinit var binding: FragmentSearchBinding
         }
 
 
+
+
     }
     private fun To(){
         binding.textInputEditTextFrom.addTextChangedListener {
 
-            var start_point = binding.textInputEditTextFrom.text.toString()
-            binding.butFind.isEnabled = (start_point!="")
+            var startPoint = binding.textInputEditTextFrom.text.toString()
+            binding.butFind.isEnabled = (startPoint!="")
 
-            if (!TextUtils.isEmpty(start_point)) {
-                if(userStatus == "User")  viewModel.getCityTo(start_point, false)
-                else if(userStatus == "Driver") viewModel.getCityTo(start_point, true)
-                viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
-                    val adapter: ArrayAdapter<String> = ArrayAdapter(
-                        requireContext(),
-                        R.layout.style_dropdown_item,
-                        it
-                    )
-                    binding.textInputEditTextTo.isEnabled = true
-                    binding.textInputEditTextTo.setAdapter(adapter)
+            if (!startPoint.isNullOrEmpty()) {
+                if(userStatus == "User")  viewModel.getCityTo(startPoint, false)
+                else if(userStatus == "Driver") viewModel.getCityTo(startPoint, true)
+//                activity?.let {
+                    viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
+                        val adapter: ArrayAdapter<String> = ArrayAdapter(
+                            requireContext(),
+                            R.layout.style_dropdown_item,
+                            it
+                        )
+                        binding.textInputEditTextTo.isEnabled = true
+                        binding.textInputEditTextTo.setAdapter(adapter)
+//                    }
                 }
+
             }
         }
     }

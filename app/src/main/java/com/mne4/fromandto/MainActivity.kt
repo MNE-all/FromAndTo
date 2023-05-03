@@ -13,6 +13,7 @@ import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
@@ -32,15 +33,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
-            CoroutineScope(Dispatchers.IO).launch {
+
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
                             fragmentInstance(
                                 SearchFragment.newInstance()
                             );
-                        runOnUiThread {
-                            viewModel.UserStatus.value = userStatus
-                        }
+                        viewModel.UserStatus.value = userStatus
+
+//                        if (viewModel.UserStatus.value.isNullOrEmpty()) {
+//                            viewModel.UserStatus.value = userStatus
+//                        }
                     }
                     R.id.butHelpBottomNavigation -> {
 
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                             );
                     }
                 }
-            }
+
             true
         }
 
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     fun fragmentInstance(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace( R.id.bottomNavigationFrame, f)
+            .replace(R.id.bottomNavigationFrame, f)
             .commit()
     }
 

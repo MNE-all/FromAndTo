@@ -366,7 +366,6 @@ class ProfileFragment : Fragment() {
         }
     }
     private fun SpinnerGender(){
-
         var genderList = arrayOf("Мужской","Женский")
         var arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, genderList)
         binding.spinnerGender.adapter = arrayAdapter
@@ -379,12 +378,9 @@ class ProfileFragment : Fragment() {
             ) {
                 gender = genderList[position]
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
         }
-
     }
     fun DateDialog(){
         binding.txtCalendar.setOnClickListener {
