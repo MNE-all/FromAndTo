@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_marginTop="32dp"
         android:rotation="-26"
         android:scrollbarSize="5dp"
@@ -21,16 +21,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageViewAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="302dp"
-            android:contentDescription="@string/avatar"
-            android:padding="25dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:layout_gravity="center"
+            android:background="@drawable/transperent"
             android:rotation="26"
-            android:scaleType="centerCrop"
-            android:scrollbarSize="2dp"
-            app:srcCompat="@drawable/baseline_account_circle_24" />
+            app:cardBackgroundColor="#314267"
+            app:cardCornerRadius="9999dp">
+
+            <ImageView
+                android:id="@+id/imageViewAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/avatar"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/baseline_account_circle_24" />
+        </androidx.cardview.widget.CardView>
+
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -55,13 +63,13 @@
         android:fontFamily="sans-serif-black"
         android:onClick="onEnterClick"
         android:text="@string/driver_in"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPassanger"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPassenger"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
 
     <Button
-        android:id="@+id/buttonPassanger"
+        android:id="@+id/buttonPassenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -75,8 +83,9 @@
 
     <TextView
         android:id="@+id/textViewExitAccount"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:gravity="center"
         android:text="@string/exit"
         android:textColor="#3F51B5"
@@ -84,5 +93,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
