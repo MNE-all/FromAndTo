@@ -35,6 +35,14 @@ class RegisterActivity : AppCompatActivity() {
         phone = findViewById(R.id.phoneField)
         password = findViewById(R.id.passwordField)
 
+        viewModel.ApiPostIsPhoneUnique.observe(this) {
+            if (it) {
+                addUser()
+            } else {
+                Toast.makeText(this, "Номер уже существует!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     private fun addUser() {
@@ -88,16 +96,7 @@ class RegisterActivity : AppCompatActivity() {
            return
        }
        viewModel.postIsPhoneUnique(phone.text.toString())
-       viewModel.ApiPostIsPhoneUnique.observe(this){
-           if(it){
-               addUser()
-           }else{
-               Toast.makeText(this,"Номер уже существует!",Toast.LENGTH_SHORT).show()
-           }
-       }
-
-
-
+       
 //       var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
 //       dialog.setTitle("Подтверждение номера")
 //       dialog.setMessage("Подтвердите номер телефона. Введите пароль по смс!")

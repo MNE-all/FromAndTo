@@ -3,6 +3,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.mne4.fromandto.Adapter.OnboardAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Room.MainDB
+import com.mne4.fromandto.databinding.ActivityIntroBinding
 import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +41,25 @@ class IntroActivity : AppCompatActivity() {
             MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
             MapKitFactory.initialize(applicationContext)
         }
+        viewModel.ApiPostAuthenticationAuto.observe(this) {
+            if (it) {
+                var intent = Intent(this, WelcomeActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(
+                    applicationContext,
+                    "Быстрый вход!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            } else {
+                loginOrRegister()
+                Toast.makeText(
+                    applicationContext,
+                    "Аккаунт не найден!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     override fun onStart() {
@@ -53,6 +74,7 @@ class IntroActivity : AppCompatActivity() {
 
     private fun onboard() {
         setContentView(R.layout.activity_intro)
+
         val adapter = OnboardAdapter(this)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         viewPager.adapter = adapter
@@ -129,27 +151,6 @@ class IntroActivity : AppCompatActivity() {
                     if (user.isInAcc && !replay) {
                         isInAccount = true
                         viewModel.postAuthenticationAuto(user.id_user, user.password)
-                        this.let {
-                            viewModel.ApiPostAuthenticationAuto.observe(this) {
-                                if (it) {
-                                    var intent = Intent(this, WelcomeActivity::class.java)
-                                    startActivity(intent)
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Быстрый вход!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    finish()
-                                } else {
-                                    loginOrRegister()
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Аккаунт не найден!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
                     }
                 }
                 if (!isInAccount) {

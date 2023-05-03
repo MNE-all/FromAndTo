@@ -113,7 +113,6 @@ class MyRequestFragment : Fragment() {
                 adapter.notifyDataSetChanged()
                 binding.progressBar2.isVisible = false
             }
-
         }
     }
     fun ObserveTripsAdapter() {

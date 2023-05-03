@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.R
+import com.mne4.fromandto.databinding.ActivityFindBinding
+import com.mne4.fromandto.databinding.ViewholderOrderBinding
 import com.squareup.picasso.Picasso
 
 class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
@@ -50,13 +52,14 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
         lateinit var start_point: TextView
         lateinit var end_point: TextView
         constructor(itemView: View):super(itemView){
-            surname =itemView.findViewById(R.id.txtName)
-            rating =itemView.findViewById(R.id.txtRating)
-            image_url =itemView.findViewById(R.id.imgUrl)
-            start_time =itemView.findViewById(R.id.txtTimeE)
-            price =itemView.findViewById(R.id.txtPriceOne)
-            start_point =itemView.findViewById(R.id.txtStartPoint)
-            end_point =itemView.findViewById(R.id.txtEndPoint)
+            var binding = ViewholderOrderBinding.bind(itemView)
+            surname =binding.txtName
+            rating =binding.txtRating
+            image_url =binding.imgUrl
+            start_time =binding.txtTimeE
+            price =binding.txtPriceOne
+            start_point =binding.txtStartPoint
+            end_point =binding.txtEndPoint
         }
     }
 }
