@@ -86,7 +86,7 @@ class MyRequestFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun ObserveAddMyOrderAdapter() {
-        viewModel.ApiGetTwoUser.observe(activity as LifecycleOwner) {
+        viewModel.ApiGetTwoUser.observe(requireActivity()) {
             var trip = tripsArray[tripsArray.size - count]
             var tripsMyOrder = MyOrder(
                 "${it[0].surname}",
@@ -116,20 +116,22 @@ class MyRequestFragment : Fragment() {
         }
     }
     fun ObserveTripsAdapter() {
-        viewModel.ApiGetMyOrdersTripsCurrentUser.observe(requireActivity()) {
-            for (trip in it) {
-                count += 1
-                var clientID: String
-                var driverID: String
-                clientID =
-                    if (trip.client_id != null) trip.client_id.toString() else MyRequestFragment.GUID_NULL
-                driverID =
-                    if (trip.driver_id != null) trip.driver_id.toString() else MyRequestFragment.GUID_NULL
-                viewModel.getTwoUser(clientID, driverID)
+        activity?.let {
+            viewModel.ApiGetMyOrdersTripsCurrentUser.observe(requireActivity()) {
+                for (trip in it) {
+                    count += 1
+                    var clientID: String
+                    var driverID: String
+                    clientID =
+                        if (trip.client_id != null) trip.client_id.toString() else MyRequestFragment.GUID_NULL
+                    driverID =
+                        if (trip.driver_id != null) trip.driver_id.toString() else MyRequestFragment.GUID_NULL
+                    viewModel.getTwoUser(clientID, driverID)
+                }
+                listMyOrders.clear()
+                tripsArray = it
+                binding.txtInfoResultMyOrders.isVisible = (it.size == 0)
             }
-            listMyOrders.clear()
-            tripsArray = it
-            binding.txtInfoResultMyOrders.isVisible = (it.size == 0)
         }
     }
     companion object {

@@ -52,9 +52,7 @@ class MainActivity : AppCompatActivity() {
                         fragmentInstance(
                             MyRequestFragment.newInstance()
                         );
-                        runOnUiThread {
-                            viewModel.UserStatus.value = userStatus
-                        }
+                        viewModel.UserStatus.value = userStatus
                     }
                     R.id.butProfileBottomNavigation -> {
                         fragmentInstance(
