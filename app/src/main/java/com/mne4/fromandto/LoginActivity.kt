@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
     private lateinit var phoneEditText: EditText
     private lateinit var passwordEditText: EditText
-    private var userGlobal: String? = null
+    private var userGlobal: List<User> = listOf()
     val viewModel: DataModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +30,27 @@ class LoginActivity : AppCompatActivity() {
         phoneEditText = findViewById(R.id.phoneField)
         passwordEditText = findViewById(R.id.passField)
         viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
-            for (user in it) {
-                if(user.isInAcc){
-                    userGlobal = user.id_user
+                userGlobal = it
+        }
+        viewModel.ApiPostAuthentication.observe(this) { userFull ->
+            if (userFull == null) {
+                Toast.makeText(this, "Пользователь не найден!", Toast.LENGTH_SHORT).show()
+                return@observe
+            }
+            if (userGlobal.size != 0) {
+                var isInLocalDb = false
+                for (user in userGlobal) {
+                    if (user.id_user == userFull.id_user) {
+                        isInLocalDb = true
+                        AuthUser(user)
+                    }
                 }
+                if (!isInLocalDb) {
+                    AddLocalDB(userFull, true)
+                }
+            }
+            else {
+                AddLocalDB(userFull, false)
             }
         }
     }
@@ -46,65 +63,30 @@ class LoginActivity : AppCompatActivity() {
 
 
         viewModel.postAuthentication("$phone", "$password")
-        viewModel.ApiPostAuthentication.observe(this) { userFull ->
-            if (userFull == null) {
-                Toast.makeText(this, "Пользователь не найден!", Toast.LENGTH_SHORT).show()
-                return@observe
-            }
-            if (userGlobal != null) {
-                if(userGlobal == userFull.id_user) {
-                    AuthUser(userGlobal)
-                }
-           }
-            if(userGlobal == null){
-                AddLocalDB(userFull)
-            }
-
-            //            else {
-//                Log.d("colNull", "$userFull")
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    val user = User(
-//                        null, "${userFull.id_user}", "${userFull.password}", false
-//                    )
-//                    db.getDao().insertUser(user)
-//
-//                }
-//                runOnUiThread {
-//                    var intent = Intent(this, WelcomeActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-        }
 
     }
 
-    fun AuthUser(guid:String?){
+    fun AuthUser(user:User){
 
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.getLocalDB(this@LoginActivity).getDao().updateUserisAcc(
-                "${guid}",
-                true
-            )
-
+                "${user.id_user}",
+                true)
         }
-        runOnUiThread {
-            Toast.makeText(
-                this,
-                "Пользователь авторизирован!",
-                Toast.LENGTH_SHORT
-            ).show()
-            var intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-        }
+        StartActivityWelcome()
     }
 
-    fun AddLocalDB(userFull:UserFull){
+
+    fun AddLocalDB(userFull:UserFull, isActiv: Boolean){
         CoroutineScope(Dispatchers.IO).launch {
             val user = User(
-                null, "${userFull.id_user}", "${userFull.password}", true
+                null, "${userFull.id_user}", "${userFull.password}", isActiv
             )
             viewModel.getLocalDB(this@LoginActivity).getDao().insertUser(user)
         }
+        StartActivityWelcome()
+    }
+    fun StartActivityWelcome(){
         runOnUiThread {
             Toast.makeText(
                 this,
@@ -114,10 +96,6 @@ class LoginActivity : AppCompatActivity() {
             var intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    fun example(){
-
     }
     fun register (view: View) {
         startActivity(Intent(this, RegisterActivity::class.java))
