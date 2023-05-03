@@ -103,7 +103,6 @@ class MyRequestFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     fun ObserveAddMyOrderAdapter(activ:FragmentActivity) {
         viewModel.ApiGetTwoUser.observe(activ) {
-
             try {
                 var trip = tripsArray[tripsArray.size - count]
                 var tripsMyOrder = MyOrder(
@@ -126,8 +125,6 @@ class MyRequestFragment : Fragment() {
                 listMyOrders.add(tripsMyOrder)
             }catch (ex:java.lang.IndexOutOfBoundsException){
                 count=1
-                return@observe
-
             }
             count -= 1
             if (count == 0) {
