@@ -97,6 +97,7 @@ class ProfileFragment : Fragment() {
             bottomSheetDialog.setContentView(R.layout.profile_bottom_sheet_dialog)
             bottomSheetDialog.show()
 
+
             InitUser(bottomSheetDialog)
             butDeleteAcc()
             butSave(bottomSheetDialog)
@@ -108,7 +109,6 @@ class ProfileFragment : Fragment() {
             DateDialog(bottomSheetDialog)
 
         }
-
     }
 
     fun ImgClick() {
@@ -119,9 +119,6 @@ class ProfileFragment : Fragment() {
             @Suppress("DEPRECATION")
             startActivityForResult(galleryIntent, GalleryPick)
         }
-//        Picasso.get()
-//            .load( "/storage/emulated/0/Pictures/Title (1).jpg")
-//            .into(binding.imageUser)
     }
 
     @Deprecated("Deprecated in Kotlin")
@@ -148,12 +145,9 @@ class ProfileFragment : Fragment() {
                 }
 
                 viewModel.makeImgUrl(filePart)
-//                binding.imageUser.buildDrawingCache()
-//                var bitmap = binding.imageUser.getDrawingCache()
 
-
-                //Log.d("img","${getImageUri(requireContext(),bitmap)}")
-            }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+            }
+            else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 var error:Exception = result.error
             }
         }
