@@ -26,7 +26,7 @@
     <string name="txtPasswordTwo">Подтвердите пароль</string>
     <string name="txtReg">Зарегистрироваться</string>
 
-    <string name="mainInfo">Основа</string>
+    <string name="mainInfo">Основные</string>
     <string name="securityInfo">Безопасность</string>
     <string name="securityValidate">Пройти безопасность</string>
     <string name="butSave">Сохранить</string>

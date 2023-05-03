@@ -64,8 +64,6 @@ class IntroActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         CoroutineScope(Dispatchers.IO).launch {
-
-            delay(3000)
             runOnUiThread{
                 viewModel.getLocalDB(this@IntroActivity).getDao().getAllUser().asLiveData().observe(this@IntroActivity) {
                     localSize = it.size

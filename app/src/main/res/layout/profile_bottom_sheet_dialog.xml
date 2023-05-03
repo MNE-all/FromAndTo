@@ -40,19 +40,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/values"
                 android:gravity="center"
                 android:text="@string/mainInfo"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/buttonChangeUserImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/material_dynamic_neutral80"
                 android:enabled="false"
-                android:text="Сменить изображение профиля" />
+                android:text="Сменить изображение профиля"
+                android:textColor="@color/black"
+                app:cornerRadius="14dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameFieldLayout"
@@ -73,7 +76,8 @@
                     android:hint="@string/Surname"
                     android:inputType="text"
                     android:maxLength="30"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -96,7 +100,8 @@
                     android:hint="@string/name"
                     android:inputType="text"
                     android:maxLength="20"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -116,7 +121,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="text"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -137,7 +143,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="dd/MM/yyyy"
+                    android:hint="дд/мм/гггг"
+                    android:textColor="@color/black"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -147,15 +154,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/values"
                 android:gravity="center"
                 android:text="@string/securityInfo"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chipSecurity"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:id="@+id/chipSecurity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -163,7 +170,8 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="@string/securityValidate"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneFieldLayout"
@@ -186,7 +194,8 @@
                     android:hint="@string/txtPhone"
                     android:inputType="phone"
                     android:maxLength="10"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -209,7 +218,8 @@
                     android:hint="@string/txtPassword"
                     android:inputType="textPassword"
                     android:maxLength="15"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -231,7 +241,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/txtPasswordTwo"
                     android:inputType="textPassword"
-                    android:maxLength="15" />
+                    android:maxLength="15"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -241,11 +252,11 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/values"
                 android:gravity="center"
                 android:text="@string/driverInfo"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passportFieldLayout"
@@ -267,7 +278,8 @@
                     android:hint="@string/passport"
                     android:inputType="text"
                     android:maxLength="11"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -291,7 +303,8 @@
                     android:hint="@string/license"
                     android:inputType="text"
                     android:maxLength="30"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -301,8 +314,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/material_dynamic_neutral80"
                 android:gravity="center"
-                android:text="@string/butSave" />
+                android:text="@string/butSave"
+                android:textColor="@color/black"
+                app:cornerRadius="14dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -271,7 +271,7 @@ class ProfileFragment : Fragment() {
                         view.findViewById<TextInputEditText>(R.id.passportField)?.text.toString()
                         var passport = passportField?.text.toString()
                         var license = view.findViewById<TextInputEditText>(R.id.licenseField)?.text.toString()
-                        if (TextUtils.isEmpty(surname) || TextUtils.isEmpty(name)) {
+                        if (surname.isNullOrEmpty() || name.isNullOrEmpty()) {
                             Toast.makeText(
                                 requireContext(),
                                 "Фамилия и имя не должны быть пустыми!",
@@ -331,6 +331,7 @@ class ProfileFragment : Fragment() {
                             }
                         } else {
                             viewModel.putEditUser(user.id_user, user.password, USER)
+                            Toast.makeText(view.context.applicationContext, "Изменения успешно сохранены", Toast.LENGTH_SHORT).show()
                             switchChange?.isChecked = false
                             isVisibleSecurity(false, view)
                         }
@@ -448,11 +449,25 @@ class ProfileFragment : Fragment() {
     }
 
     private fun Init(truth:Boolean, view: BottomSheetDialog){
+        view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
 
         isVisibleSecurity(true, view)
         isVisibleSecurity(false, view)
 
         view.findViewById<Button>(R.id.buttonChangeUserImage)?.isEnabled = truth
+        view.findViewById<Button>(R.id.butSave)?.isEnabled = truth
+
+        if (truth){
+            view.findViewById<Button>(R.id.buttonChangeUserImage)?.setBackgroundColor(view.context.getColor(R.color.teal_200))
+            view.findViewById<Button>(R.id.butSave)?.setBackgroundColor(view.context.getColor(R.color.teal_200))
+            view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(R.color.teal_200)
+        }
+        else {
+            view.findViewById<Button>(R.id.buttonChangeUserImage)?.setBackgroundColor(view.context.getColor(com.google.android.material.R.color.material_dynamic_neutral80))
+            view.findViewById<Button>(R.id.butSave)?.setBackgroundColor(view.context.getColor(com.google.android.material.R.color.material_dynamic_neutral80))
+            view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
+        }
+
 
         binding.imageUser.isEnabled = truth
 
@@ -472,7 +487,7 @@ class ProfileFragment : Fragment() {
         view.findViewById<TextView>(R.id.txtCalendar)?.isEnabled = truth
         view.findViewById<Chip>(R.id.chipSecurity)?.isEnabled = truth
 
-        view.findViewById<Button>(R.id.butSave)?.isEnabled = truth
+
 
         if(!truth){
             phone = ""
