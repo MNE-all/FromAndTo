@@ -14,7 +14,7 @@ import com.mne4.fromandto.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val viewModel: DataModel by viewModels()
     private lateinit var userStatus:String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +29,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Установка поиска как первого фрагмента
-        fragmentInstance(
-            SearchFragment.newInstance()
-        )
-        viewModel.UserStatus.value = userStatus
 
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
                 when (it.itemId) {
@@ -60,13 +55,10 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                 }
-
             true
         }
-
-
     }
-    fun fragmentInstance(f: Fragment) {
+    private fun fragmentInstance(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.bottomNavigationFrame, f)

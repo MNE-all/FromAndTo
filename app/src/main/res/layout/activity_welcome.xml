@@ -87,13 +87,14 @@
         android:id="@+id/textViewExitAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:gravity="center"
+        android:onClick="onExit"
+        android:padding="16dp"
         android:text="@string/exit"
         android:textColor="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
