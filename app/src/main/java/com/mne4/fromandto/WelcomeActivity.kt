@@ -23,24 +23,24 @@ class WelcomeActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textViewExitAccount).setOnClickListener {
             onExit()
         }
-
+        viewModel.ApiGetCurrentUser.observe(this) { userAPI ->
+            val img = findViewById<ImageView>(R.id.imageViewAvatar)
+            Picasso.get().load(userAPI.image_url)
+                .placeholder(R.drawable.baseline_account_circle_24)
+                .error(R.drawable.search_result)
+                .into(img)
+            val welcomeText = "Добро пожаловать, ${userAPI.name}!"
+            findViewById<TextView>(R.id.textViewWelcome).text = welcomeText
+        }
         viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
             for (user in it) {
                 if (user.isInAcc) {
                     viewModel.getCurrentUser(user.id_user)
-                    viewModel.ApiGetCurrentUser.observe(this) { userAPI ->
-                        val img = findViewById<ImageView>(R.id.imageViewAvatar)
-                        Picasso.get().load(userAPI.image_url)
-                            .placeholder(R.drawable.baseline_account_circle_24)
-                            .error(R.drawable.search_result)
-                            .into(img)
-                        val welcomeText = "Добро пожаловать, ${userAPI.name}!"
-                        findViewById<TextView>(R.id.textViewWelcome).text = welcomeText
-                    }
                 }
             }
-
         }
+
+
     }
 
     fun onEnterClick(view: View) {
