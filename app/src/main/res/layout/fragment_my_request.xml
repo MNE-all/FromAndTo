@@ -10,16 +10,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="125dp"
-            android:layout_height="115dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
         android:id="@+id/txtInfoResultMyOrders"
         android:layout_width="wrap_content"
@@ -42,78 +32,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/RequestLayout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+        <TextView
             android:layout_weight="1"
-            >
+            android:id="@+id/RequestTabItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Запросы"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:background="@drawable/custom_button_style2"
+            android:contentDescription="@string/app_name">
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/RequestTabItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+        </TextView>
 
-                android:background="@drawable/custom_button_style2"
-                android:contentDescription="@string/app_name">
 
-            </com.google.android.material.tabs.TabItem>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/TripsTabItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Поездки"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:background="@drawable/custom_button_style_noactive"
+            android:contentDescription="@string/app_name"
+            android:textAlignment="center">
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:gravity="center"
-                android:text="Запросы"
-                android:textColor="@color/black"
-                android:textSize="28sp">
-
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/TripsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/TripsTabItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button_style"
-                android:contentDescription="@string/app_name"
-                android:textAlignment="center">
-
-            </com.google.android.material.tabs.TabItem>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:gravity="center"
-                android:text="Поездки"
-                android:textColor="@color/black"
-                android:textSize="28sp">
-
-            </TextView>
-        </RelativeLayout>
+        </TextView>
     </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -130,7 +77,17 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="125dp"
+            android:layout_height="115dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tabLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -1,12 +1,14 @@
 package com.mne4.fromandto.Fragment
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
@@ -23,6 +25,7 @@ import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
 import com.mne4.fromandto.Data.Room.DAO.DaoUser
 import com.mne4.fromandto.Data.Room.MainDB
 import com.mne4.fromandto.MainActivity
+import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
 import okhttp3.internal.notify
 import okhttp3.internal.notifyAll
@@ -74,7 +77,9 @@ class MyRequestFragment : Fragment() {
 
 
         binding.RequestTabItem.setOnClickListener {
-            binding.progressBar2.isVisible = true
+            AnimationBut()
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
                 viewModel.getMyOrdersTripsCurrentUser(userID, false)
             } else {
@@ -82,7 +87,9 @@ class MyRequestFragment : Fragment() {
             }
         }
         binding.TripsTabItem.setOnClickListener {
-            binding.progressBar2.isVisible = true
+            AnimationBut()
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
                 viewModel.getMyOrdersTripsCurrentUser(userID, true)
             } else {
@@ -91,6 +98,11 @@ class MyRequestFragment : Fragment() {
         }
     }
 
+    fun AnimationBut(){
+        binding.progressBar2.isVisible = true
+        binding.recyclearMyOrders.isVisible = false
+
+    }
     fun getCurrentUser(activ: FragmentActivity) {
         viewModel.getLocalDB(activ).getDao().getAllUser().asLiveData().observe(activ) {
             for (user in it) {
@@ -145,6 +157,7 @@ class MyRequestFragment : Fragment() {
         binding.recyclearMyOrders.adapter = adapter
         adapter.notifyDataSetChanged()
         binding.progressBar2.isVisible = false
+        binding.recyclearMyOrders.isVisible = true
         count = 0
     }
     fun ObserveTripsAdapter(activ:FragmentActivity) {
