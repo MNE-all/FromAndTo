@@ -53,7 +53,8 @@
                         android:id="@+id/textInputEditTextFrom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Откуда"
+                        android:hint="@string/from"
+                        android:completionThreshold="0"
                         android:inputType="text"
                         android:maxLength="15"
                         android:text="" />
@@ -76,7 +77,8 @@
                         android:id="@+id/textInputEditTextTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Куда"
+                        android:hint="@string/to"
+                        android:completionThreshold="0"
                         android:inputType="text"
                         android:maxLength="15"
                         android:text="" />
@@ -102,7 +104,7 @@
                         android:id="@+id/textInputEditTextWhere"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Когда"
+                        android:hint="@string/where"
                         android:inputType="text"
                         android:text="" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -114,6 +116,7 @@
 
 
         <ImageView
+            android:contentDescription="@string/background"
             android:id="@+id/imageViewBackground"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -136,7 +139,7 @@
             android:layout_marginBottom="100dp"
             android:enabled="false"
             android:fontFamily="sans-serif-black"
-            android:text="Найти"
+            android:text="@string/find"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

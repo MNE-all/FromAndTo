@@ -43,6 +43,11 @@
     <string name="surname">Фамилия</string>
     <string name="register">Регистрация</string>
     <string name="exit">Выйти</string>
+    <string name="find">Поиск</string>
+    <string name="from">Откуда</string>
+    <string name="to">Куда</string>
+    <string name="where">Когда</string>
+    <string name="background">background</string>
 
 
 </resources>
