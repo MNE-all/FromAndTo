@@ -25,14 +25,12 @@ import java.util.*
 class SearchFragment : Fragment() {
 lateinit var binding: FragmentSearchBinding
     val viewModel: DataModel by activityViewModels()
-    lateinit var textTo: String
-    lateinit var textFrom: String
     var userStatus = ""
     lateinit var fragmentView: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentSearchBinding.inflate(inflater)
 
         binding.textInputEditTextTo.isEnabled = false
@@ -79,24 +77,24 @@ lateinit var binding: FragmentSearchBinding
         }
         binding.butFind.setOnClickListener {
 
-            var txtDate = binding.textInputEditTextWhere.text.toString()
-            var txtFrom = binding.textInputEditTextFrom.text.toString()
-            var txtTo = binding.textInputEditTextTo.text.toString()
+            val txtDate = binding.textInputEditTextWhere.text.toString()
+            val txtFrom = binding.textInputEditTextFrom.text.toString()
+            val txtTo = binding.textInputEditTextTo.text.toString()
 
             val intent = Intent(requireContext(), FindActivity::class.java)
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
-            var outputDate1:String = "null"
-            var outputDate2:String = "null"
+            var outputDate1 = "null"
+            var outputDate2 = "null"
             if (txtDate != "") {
-                var date = txtDate.split(" ")
+                val userDate = txtDate.split(" ")
                 val inputFormat: DateFormat =
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
                 val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
                 val date1: Date?
-                date1 = outputFormat.parse(date[0]) as Date
+                date1 = outputFormat.parse(userDate[0]) as Date
                 outputDate1 = inputFormat.format(date1)
                 val date2: Date?
-                date2 = outputFormat.parse(date[2]) as Date
+                date2 = outputFormat.parse(userDate[2]) as Date
                 outputDate2 = inputFormat.format(date2)
             }
             intent.putExtra("outputDate1", outputDate1)
@@ -128,24 +126,26 @@ lateinit var binding: FragmentSearchBinding
     private fun To(){
         binding.textInputEditTextFrom.addTextChangedListener {
 
-            var startPoint = binding.textInputEditTextFrom.text.toString()
+            val startPoint = binding.textInputEditTextFrom.text.toString()
             binding.butFind.isEnabled = (startPoint!="")
 
-            if (!startPoint.isNullOrEmpty()) {
+            if (startPoint.isNotEmpty()) {
                 if(userStatus == "User") {
                     viewModel.getCityTo(startPoint, false)
                 }
                 else if(userStatus == "Driver") {
                     viewModel.getCityTo(startPoint, true)
                 }
+                activity?.let {
                     viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
                         val adapter: ArrayAdapter<String> = ArrayAdapter(
-                            requireContext(),
+                            fragmentView.context,
                             R.layout.style_dropdown_item,
                             it
                         )
                         binding.textInputEditTextTo.isEnabled = true
                         binding.textInputEditTextTo.setAdapter(adapter)
+                    }
                 }
             }
         }
