@@ -32,31 +32,24 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             startActivity(intent)
         }
-        binding.bottomNavigationViewMenu.setOnItemSelectedListener {
 
+        binding.bottomNavigationViewMenu.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
                             fragmentInstance(
                                 SearchFragment.newInstance()
                             );
                         viewModel.UserStatus.value = userStatus
-
-//                        if (viewModel.UserStatus.value.isNullOrEmpty()) {
-//                            viewModel.UserStatus.value = userStatus
-//                        }
                     }
                     R.id.butHelpBottomNavigation -> {
-
                             fragmentInstance(
                                 HelpFragment.newInstance()
                             );
-
                     }
                     R.id.butSettingBottomNavigation -> {
 
                     }
                     R.id.butProfileBottomNavigation -> {
-
                             fragmentInstance(
                                 ProfileFragment.newInstance()
                             );

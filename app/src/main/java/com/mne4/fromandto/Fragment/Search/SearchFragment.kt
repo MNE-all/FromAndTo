@@ -28,20 +28,28 @@ lateinit var binding: FragmentSearchBinding
     lateinit var textTo: String
     lateinit var textFrom: String
     var userStatus = ""
+    lateinit var fragmentView: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater)
+
+        binding.textInputEditTextTo.isEnabled = false
+
+        fragmentView = binding.root
+        return fragmentView
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.UserStatus.observe(requireActivity()) {
             userStatus = it
             From()
             To()
         }
-        binding.textInputEditTextTo.isEnabled = false
-
-        return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val constraintsBuilder = CalendarConstraints.Builder()
@@ -102,13 +110,15 @@ lateinit var binding: FragmentSearchBinding
         if(userStatus == "User") viewModel.getCityFrom(false)
         else if(userStatus == "Driver") viewModel.getCityFrom(true)
 
-        viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
-            val adapter: ArrayAdapter<String> = ArrayAdapter(
-                requireContext(),
-                R.layout.style_dropdown_item,
-                it
-            )
-            binding.textInputEditTextFrom.setAdapter(adapter)
+        activity?.let {
+            viewModel.ApiGetTripsCityFrom.observe(requireActivity()) {
+                val adapter: ArrayAdapter<String> = ArrayAdapter(
+                    fragmentView.context.applicationContext,
+                    R.layout.style_dropdown_item,
+                    it
+                )
+                binding.textInputEditTextFrom.setAdapter(adapter)
+            }
         }
 
 
@@ -122,9 +132,12 @@ lateinit var binding: FragmentSearchBinding
             binding.butFind.isEnabled = (startPoint!="")
 
             if (!startPoint.isNullOrEmpty()) {
-                if(userStatus == "User")  viewModel.getCityTo(startPoint, false)
-                else if(userStatus == "Driver") viewModel.getCityTo(startPoint, true)
-//                activity?.let {
+                if(userStatus == "User") {
+                    viewModel.getCityTo(startPoint, false)
+                }
+                else if(userStatus == "Driver") {
+                    viewModel.getCityTo(startPoint, true)
+                }
                     viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
                         val adapter: ArrayAdapter<String> = ArrayAdapter(
                             requireContext(),
@@ -133,9 +146,7 @@ lateinit var binding: FragmentSearchBinding
                         )
                         binding.textInputEditTextTo.isEnabled = true
                         binding.textInputEditTextTo.setAdapter(adapter)
-//                    }
                 }
-
             }
         }
     }
