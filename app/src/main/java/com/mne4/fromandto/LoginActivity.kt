@@ -52,7 +52,9 @@ class LoginActivity : AppCompatActivity() {
                 return@observe
             }
             if (userGlobal != null) {
-                AuthUser(userGlobal)
+                if(userGlobal == userFull.id_user) {
+                    AuthUser(userGlobal)
+                }
            }
             if(userGlobal == null){
                 AddLocalDB(userFull)
@@ -114,6 +116,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun example(){
+
+    }
     fun register (view: View) {
         startActivity(Intent(this, RegisterActivity::class.java))
     }
