@@ -137,7 +137,7 @@ lateinit var binding: FragmentSearchBinding
                     viewModel.getCityTo(startPoint, true)
                 }
                 activity?.let {
-                    viewModel.ApiGetTripsCityTo.observe(requireActivity()) {
+                    viewModel.ApiGetTripsCityTo.observe(it) {
                         val adapter: ArrayAdapter<String> = ArrayAdapter(
                             fragmentView.context,
                             R.layout.style_dropdown_item,
