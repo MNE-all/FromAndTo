@@ -14,7 +14,7 @@
         android:title=""
         android:enabled="false"/>
     <item
-        android:id="@+id/butSettingBottomNavigation"
+        android:id="@+id/butMyOrdersBottomNavigation"
         android:title="Мои заказы"
         android:icon="@drawable/baseline_history_24"/>
     <item

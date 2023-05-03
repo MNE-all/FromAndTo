@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Fragment.HelpFragment
+import com.mne4.fromandto.Fragment.MyRequestFragment
 import com.mne4.fromandto.Fragment.ProfileFragment
 import com.mne4.fromandto.Fragment.Search.SearchFragment
 import com.mne4.fromandto.databinding.ActivityMainBinding
@@ -47,8 +48,13 @@ class MainActivity : AppCompatActivity() {
                             HelpFragment.newInstance()
                         )
                     }
-                    R.id.butSettingBottomNavigation -> {
-
+                    R.id.butMyOrdersBottomNavigation -> {
+                        fragmentInstance(
+                            MyRequestFragment.newInstance()
+                        );
+                        runOnUiThread {
+                            viewModel.UserStatus.value = userStatus
+                        }
                     }
                     R.id.butProfileBottomNavigation -> {
                         fragmentInstance(

@@ -114,6 +114,16 @@
             android:textSize="19sp" />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/txtPriceRub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="руб."
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtPrice"
+        app:layout_constraintStart_toEndOf="@+id/txtPriceOne"
+        app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
     <TextView
         android:id="@+id/txtPriceOne"
@@ -126,16 +136,6 @@
         app:layout_constraintStart_toStartOf="@+id/txtPrice"
         app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
-    <TextView
-        android:id="@+id/txtPriceRub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="руб."
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtPrice"
-        app:layout_constraintStart_toEndOf="@+id/txtPriceOne"
-        app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
     <TextView
         android:id="@+id/txtPrice"

@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,19 +13,17 @@ import androidx.lifecycle.asLiveData
 import androidx.viewpager2.widget.ViewPager2
 import com.mne4.fromandto.Adapter.OnboardAdapter
 import com.mne4.fromandto.Data.DataModel
-import com.mne4.fromandto.Data.Room.MainDB
+import com.mne4.fromandto.Data.Room.Entities.User
 import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 class IntroActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
-    private var replay = false
-
-
+    private var userLocalDB:User? = null
+    private var localSize:Int = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,20 +37,52 @@ class IntroActivity : AppCompatActivity() {
             MapKitFactory.setApiKey("429ae64e-46c4-4b6a-aebe-e8ef49cbc0c5")
             MapKitFactory.initialize(applicationContext)
         }
+
+        viewModel.ApiPostAuthenticationAuto.observe(this) {
+            if (it) {
+                var intent = Intent(this, WelcomeActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(
+                    applicationContext,
+                    "Быстрый вход!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            } else {
+                loginOrRegister()
+                Toast.makeText(
+                    applicationContext,
+                    "Аккаунт не найден!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+
     }
 
     override fun onStart() {
         super.onStart()
         CoroutineScope(Dispatchers.IO).launch {
+
             delay(3000)
             runOnUiThread{
-               checkLocalDb()
+                viewModel.getLocalDB(this@IntroActivity).getDao().getAllUser().asLiveData().observe(this@IntroActivity) {
+                    localSize = it.size
+                    for(user in it){
+                        if(user.isInAcc){
+                            userLocalDB = user
+                        }
+                    }
+                    checkLocalDb()
+                }
             }
         }
     }
 
     private fun onboard() {
         setContentView(R.layout.activity_intro)
+
         val adapter = OnboardAdapter(this)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         viewPager.adapter = adapter
@@ -111,45 +140,20 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun checkLocalDb() {
-        var db = MainDB.getDB(this)
-        replay = false
-        // TODO удаление всех пользователей
-//        CoroutineScope(Dispatchers.IO).launch {
-//            db.getDao().deleteAllUser()
-//        }
-
-
-        db.getDao().getAllUser().asLiveData().observe(this) {
-            var isInAccount = false
-            if (it.isEmpty()) {
-                onboard()
+        if (localSize == 0) {
+            onboard()
+        } else {
+            if (userLocalDB != null) {
+                viewModel.postAuthenticationAuto(userLocalDB!!.id_user, userLocalDB!!.password)
+            } else {
+                // TODO в alertDialog предлагать использовать один из аккаунтов из локальной базы данных + авторизовать пользователя
+                loginOrRegister()
+                Toast.makeText(
+                    applicationContext,
+                    "Зарегистрируйтесь или войдите!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            else
-            {
-                for (user in it) {
-                    if (user.isInAcc && !replay) {
-                        isInAccount = true
-                        viewModel.postAuthenticationAuto(user.id_user, user.password)
-                        viewModel.ApiPostAuthenticationAuto.observe(this) {
-                            if (it) {
-                                var intent = Intent(this, WelcomeActivity::class.java)
-                                startActivity(intent)
-                                Toast.makeText(applicationContext,"Быстрый вход!",Toast.LENGTH_SHORT).show()
-                                finish()
-                            } else {
-                                loginOrRegister()
-                                Toast.makeText(applicationContext,"Аккаунт не найден!",Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
-                if (!isInAccount) {
-                    // TODO в alertDialog предлагать использовать один из аккаунтов из локальной базы данных + авторизовать пользователя
-                    loginOrRegister()
-                    Toast.makeText(applicationContext,"Зарегистрируйтесь или войдите!",Toast.LENGTH_SHORT).show()
-                }
-            }
-            replay = true
         }
     }
 }

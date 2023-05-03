@@ -9,10 +9,7 @@ import com.mne4.fromandto.Data.Retrofit2.API.ImageAPI
 import com.mne4.fromandto.Data.Retrofit2.API.SmsApi
 import com.mne4.fromandto.Data.Retrofit2.API.TripsApi
 import com.mne4.fromandto.Data.Retrofit2.API.UsersApi
-import com.mne4.fromandto.Data.Retrofit2.Models.Trips
-import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
-import com.mne4.fromandto.Data.Retrofit2.Models.User
-import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
+import com.mne4.fromandto.Data.Retrofit2.Models.*
 import com.mne4.fromandto.Data.Room.MainDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +18,15 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import android.util.*
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 @OptIn(ExperimentalMultiplatform::class)
 class   DataModel: ViewModel() {
@@ -50,6 +51,9 @@ class   DataModel: ViewModel() {
         MutableLiveData<TripsFull>()
     }
 
+    val ApiGetMyOrdersTripsCurrentUser: MutableLiveData<ArrayList<TripsFull>> by lazy {
+        MutableLiveData<ArrayList<TripsFull>>()
+    }
     val ApiGetTripsReadDateStartToDateEndToFrom: MutableLiveData<ArrayList<TripsFull>> by lazy {
         MutableLiveData<ArrayList<TripsFull>>()
     }
@@ -74,6 +78,9 @@ class   DataModel: ViewModel() {
     }
     val ApiGetCurrentUser: MutableLiveData<User> by lazy {
         MutableLiveData<User>()
+    }
+    val ApiGetTwoUser: MutableLiveData<ArrayList<UserFull>> by lazy {
+        MutableLiveData<ArrayList<UserFull>>()
     }
 
     val ApiPostAuthentication: MutableLiveData<UserFull?> by lazy {
@@ -156,6 +163,14 @@ class   DataModel: ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
            var user = usersApi.getCurrentUser(guid)
             ApiGetCurrentUser.value = user
+        }
+    }
+    fun getTwoUser(userOne:String,userTwo:String)
+    {
+        CoroutineScope(Dispatchers.Main).launch {
+         var user =  usersApi.getTwoUser(userOne, userTwo)
+            ApiGetTwoUser.value = user
+
         }
     }
     fun postIsPhoneUnique(phone:String)
@@ -298,6 +313,13 @@ class   DataModel: ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             var trips = tripsApi.getCurrentTrips(guid)
             ApiGetCurrenTrips.value = trips
+        }
+    }
+    fun getMyOrdersTripsCurrentUser(guid:String, isDriver: Boolean)
+    {
+        CoroutineScope(Dispatchers.Main).launch {
+            var trips = tripsApi.getMyOrdersTripsCurrentUser(guid,isDriver)
+            ApiGetMyOrdersTripsCurrentUser.value = trips
         }
     }
 

@@ -20,6 +20,9 @@ interface TripsApi {
     suspend fun getReadByDateStartPointEndPoint(@Path("date") date:String, @Path("start_point") start_point:String,
                          @Path("end_point") end_point: String): ArrayList<Trips>
 
+    @GET("Trips/ReadMyOrdersTripsCurrentUser/{guid}")
+    suspend fun getMyOrdersTripsCurrentUser(@Path("guid") guid:String,
+                                             @Query("isDriver") isDriver:Boolean): ArrayList<TripsFull>
     @GET("Trips/ReadFromCities")
     suspend fun getCitysFrom( @Query("isDriver") isDriver:Boolean): ArrayList<String>
     @GET("Trips/ReadToCities/{start_point}")
