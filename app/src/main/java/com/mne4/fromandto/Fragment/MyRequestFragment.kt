@@ -77,7 +77,7 @@ class MyRequestFragment : Fragment() {
 
 
         binding.RequestTabItem.setOnClickListener {
-            AnimationBut()
+            AnimationBut(true)
             binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
             binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
@@ -87,7 +87,7 @@ class MyRequestFragment : Fragment() {
             }
         }
         binding.TripsTabItem.setOnClickListener {
-            AnimationBut()
+            AnimationBut(true)
             binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
             binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
@@ -98,10 +98,9 @@ class MyRequestFragment : Fragment() {
         }
     }
 
-    fun AnimationBut(){
-        binding.progressBar2.isVisible = true
-        binding.recyclearMyOrders.isVisible = false
-
+    fun AnimationBut(isLoad:Boolean){
+        binding.progressBar2.isVisible = isLoad
+        binding.recyclearMyOrders.isVisible = !isLoad
     }
     fun getCurrentUser(activ: FragmentActivity) {
         viewModel.getLocalDB(activ).getDao().getAllUser().asLiveData().observe(activ) {
@@ -156,8 +155,7 @@ class MyRequestFragment : Fragment() {
         adapter = MyOrdersAdapter(binding.root.context.applicationContext, listMyOrders)
         binding.recyclearMyOrders.adapter = adapter
         adapter.notifyDataSetChanged()
-        binding.progressBar2.isVisible = false
-        binding.recyclearMyOrders.isVisible = true
+        AnimationBut(false)
         count = 0
     }
     fun ObserveTripsAdapter(activ:FragmentActivity) {
