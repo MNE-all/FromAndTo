@@ -3,9 +3,7 @@ package com.mne4.fromandto
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.GnssAntennaInfo.Listener
-import android.location.Location
-import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,11 +41,11 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     Session.SearchListener, CameraListener {
     val viewModel: DataModel by viewModels()
     lateinit var mapView: MapView
-    lateinit var cameraListener: CameraListener
     lateinit var mapKit: MapKit
 
     lateinit var userStatus: String
@@ -122,6 +120,8 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         mapKit = MapKitFactory.getInstance()
 
         locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
+
+
         locationMapKit.isVisible = true
         locationMapKit.setObjectListener(this)
 
@@ -205,7 +205,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                 }
             }
             else {
-                Toast.makeText(this, "Не все нужные поля заполнены", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Не все нужные поля заполнены", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -214,7 +214,13 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         try {
             var position = locationMapKit.cameraPosition()?.target
             if (position == null) {
-                Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
+                // Включение местоположения
+                if (isGeoDisabled()) {
+                    startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
+                else {
+                    Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
+                }
             }
             else {
                 mapView.map.move(
@@ -226,6 +232,15 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         catch (ex: Exception) {
             Log.d("moveToMyLocation","${ex.message}")
         }
+    }
+    fun isGeoDisabled(): Boolean {
+        val mLocationManager: LocationManager =
+            this.getSystemService(LOCATION_SERVICE) as LocationManager
+        val mIsGPSEnabled: Boolean =
+            mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val mIsNetworkEnabled: Boolean =
+            mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        return !mIsGPSEnabled && !mIsNetworkEnabled
     }
 
     fun radioFrom(view: View) {
