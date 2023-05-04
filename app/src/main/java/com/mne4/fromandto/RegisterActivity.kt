@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -30,10 +31,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        surname = findViewById(R.id.surnameField)
-        name = findViewById(R.id.nameField)
-        phone = findViewById(R.id.phoneField)
-        password = findViewById(R.id.passwordField)
+        surname = findViewById(R.id.surnameFieldReg)
+        name = findViewById(R.id.nameFieldReg)
+        phone = findViewById(R.id.phoneFieldReg)
+        password = findViewById(R.id.passwordFieldReg)
 
         viewModel.ApiPostIsPhoneUnique.observe(this) {
             if (it) {
@@ -42,13 +43,22 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Номер уже существует!", Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.ApiPostNewUser.observe(this) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = User(
+                    null, "${it.id_user}", "${it.password}", false
+                )
+                viewModel.getLocalDB(this@RegisterActivity).getDao().insertUser(user)
+            }
+            runOnUiThread{
+                var intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
     }
 
     private fun addUser() {
-        var intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-
         val user = com.mne4.fromandto.Data.Retrofit2.Models.User(
             "${surname.text}",
             "${name.text}",
@@ -63,18 +73,8 @@ class RegisterActivity : AppCompatActivity() {
             null,
             null
         )
-        var db = MainDB.getDB(this)
         viewModel.postNewUser(user)
-        viewModel.ApiPostNewUser.observe(this) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val user = User(
-                    null, "${it.id_user}", "${it.password}", false
-                )
-                db.getDao().insertUser(user)
-            }
-        }
     }
-
    @SuppressLint("MissingInflatedId")
    fun butReg(view: View){
         var phone_num = "7${phone.text}"

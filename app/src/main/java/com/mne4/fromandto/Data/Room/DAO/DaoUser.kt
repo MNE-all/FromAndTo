@@ -21,7 +21,7 @@ interface DaoUser {
     @Query("SELECT * FROM Users")
     fun getAllUser(): Flow<List<User>>
 
-    @Delete
-    fun deleteUser(user: User)
+    @Query("DELETE FROM Users WHERE id_user = :id_user")
+    fun deleteUser(id_user: String)
 
 }

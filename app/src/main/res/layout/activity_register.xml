@@ -61,7 +61,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
 
-                android:id="@+id/surnameField"
+                android:id="@+id/surnameFieldReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
@@ -88,7 +88,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameField"
+                android:id="@+id/nameFieldReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
@@ -115,7 +115,7 @@
             app:startIconDrawable="@drawable/ic_phone">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneField"
+                android:id="@+id/phoneFieldReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPhone"
@@ -141,7 +141,7 @@
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordField"
+                android:id="@+id/passwordFieldReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPassword"
