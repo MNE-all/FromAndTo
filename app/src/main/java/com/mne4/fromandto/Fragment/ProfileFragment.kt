@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
@@ -53,8 +54,8 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     val viewModel: DataModel by activityViewModels()
-    private var replay = false
-    private var gender: String = "Мужской"
+    private lateinit var gender: String
+    private var genderList = arrayOf<String>("","")
     private var phone: String = ""
     private var password: String = ""
     private lateinit var USER: User
@@ -85,6 +86,7 @@ class ProfileFragment : Fragment() {
 
         ObservePostPhoneUnque(bottomSheetDialog)
         ObservePutEditUserLocal(bottomSheetDialog)
+        ObserveDeleteAcc(bottomSheetDialog)
         binding.buttonAccSettings.setOnClickListener {
             bottomSheetDialog.setContentView(R.layout.profile_bottom_sheet_dialog)
             bottomSheetDialog.findViewById<Button>(R.id.buttonChangeUserImage)!!.setOnClickListener {
@@ -92,14 +94,23 @@ class ProfileFragment : Fragment() {
             }
             bottomSheetDialog.show()
 
-            butDeleteAcc()
-            butSave(bottomSheetDialog)
-
             InitUser(bottomSheetDialog)
+            butDeleteAcc(bottomSheetDialog)
+            butSave(bottomSheetDialog)
             Change(bottomSheetDialog)
             ChipActive(bottomSheetDialog)
             SpinnerGender(bottomSheetDialog)
             DateDialog(bottomSheetDialog)
+        }
+        binding.txtChangeAcc.setOnClickListener{
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.getLocalDB(bottomSheetDialog.context).getDao().updateUserisAcc(
+                    userLocalDB.id_user,
+                    false
+                )
+            }
+            val intent = Intent(bottomSheetDialog.context, IntroActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -138,14 +149,17 @@ class ProfileFragment : Fragment() {
     }
 
     fun InitUser(view: BottomSheetDialog){
-        viewModel.getLocalDB(view.context).getDao().getAllUser().asLiveData().observe(requireActivity()) {
-            for (user in it) {
-                if (user.isInAcc) {
-                    userLocalDB = user
-                    viewModel.getCurrentUser(user.id_user)
-                    return@observe
+        activity?.let { activ ->
+            viewModel.getLocalDB(view.context).getDao().getAllUser().asLiveData()
+                .observe(activ) {
+                    for (user in it) {
+                        if (user.isInAcc) {
+                            userLocalDB = user
+                            viewModel.getCurrentUser(user.id_user)
+                            return@observe
+                        }
+                    }
                 }
-            }
         }
     }
     fun ObserveGetCurrentUser(view: BottomSheetDialog){
@@ -155,11 +169,18 @@ class ProfileFragment : Fragment() {
             val fio = "${USER.surname} ${USER.name}"
             binding.textViewUserFIO.text = fio
 
+            if(USER.gender == "Женский"){
+                genderList[0] = "Женский"
+                genderList[1] = "Мужской"
+            }else{
+                genderList[0] = "Мужской"
+                genderList[1] = "Женский"
+            }
             Picasso.get().load(USER.image_url)
                 .placeholder(R.drawable.baseline_account_circle_24)
                 .error(R.drawable.search_result)
                 .into(binding.imageUser)
-
+            view.findViewById<Spinner>(R.id.spinnerGender)
             view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(USER.surname)
             view.findViewById<TextInputEditText>(R.id.nameField)?.setText(USER.name)
             val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
@@ -177,14 +198,42 @@ class ProfileFragment : Fragment() {
             view.findViewById<TextInputEditText>(R.id.licenseField)?.setText(USER.license)
         }
     }
+    fun ObserveDeleteAcc(view: BottomSheetDialog){
+        viewModel.ApiDeleteUser.observe(requireActivity()){
+            if(it){
+                var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
+                    null,
+                    userLocalDB.id_user,
+                    userLocalDB.password,
+                    false
+                )
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.getLocalDB(view.context).getDao().deleteUser(usersDB)
+                }
+                Toast.makeText(
+                    view.context,
+                    "Аккаунт успешно удален!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(view.context, IntroActivity::class.java))
+                activity?.finish()
+            }else{
+                Toast.makeText(
+                    view.context,
+                    "Неверный пароль!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
-    fun butDeleteAcc(){
-        binding.txtDeleteAcc.setOnClickListener {
-            var dialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+    fun butDeleteAcc(view: BottomSheetDialog){
+        view.findViewById<ImageView>(R.id.txtDeleteAcc)?.setOnClickListener {
+            var dialog: AlertDialog.Builder = AlertDialog.Builder(view.context)
             dialog.setTitle("Подтверждение на удаление!")
             dialog.setMessage("Вы подтверждаете удаление аккаунта!!!\nВведите пароль!")
             var entry_delete_user =
-                LayoutInflater.from(requireContext()).inflate(R.layout.entry_delete_user, null)
+                LayoutInflater.from(view.context).inflate(R.layout.entry_delete_user, null)
             var password =
                 entry_delete_user.findViewById<TextInputEditText>(R.id.passwordFieldDelete)
             dialog.setView(entry_delete_user)
@@ -195,23 +244,10 @@ class ProfileFragment : Fragment() {
             dialog.setPositiveButton(
                 "Подтверждаю",
                 DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
-                    viewModel.deleteUser(userLocalDB.id_user, password.text.toString())
-                    var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
-                        null,
-                        userLocalDB.id_user,
-                        userLocalDB.password,
-                        false
-                    )
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.getLocalDB(requireActivity()).getDao().deleteUser(usersDB)
+                    if(password.text.toString().isEmpty()){
+                        return@OnClickListener
                     }
-                    Toast.makeText(
-                        requireContext(),
-                        "Аккаунт успешно удален!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(Intent(requireContext(), IntroActivity::class.java))
-                    activity?.finish()
+                    viewModel.deleteUser(userLocalDB.id_user, password.text.toString())
                 })
             dialog.show()
         }
@@ -261,7 +297,7 @@ class ProfileFragment : Fragment() {
 
             if (phone != "" && password != "") {
                 var passwordFieldStill =
-                    view.findViewById<TextInputEditText>(R.id.passwordField)?.text.toString()
+                    view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.text.toString()
                 if (passwordField?.text.toString() != passwordFieldStill) {
                     Toast.makeText(
                         requireContext(),
@@ -275,7 +311,7 @@ class ProfileFragment : Fragment() {
                     return@setOnClickListener
                 }else{
                     if(passwordField?.text.toString() != password) {
-                        USER.password = password
+                        USER.password = passwordField?.text.toString()
                         viewModel.putEditUserSecure(
                             userLocalDB.id_user,
                             userLocalDB.password,
@@ -305,7 +341,7 @@ class ProfileFragment : Fragment() {
                 return@observe
             }
             USER.phone = phoneField?.text.toString()
-            USER.password = password
+            USER.password = passwordField?.text.toString()
             viewModel.putEditUserSecure(
                 userLocalDB.id_user,
                 userLocalDB.password,
@@ -373,12 +409,13 @@ class ProfileFragment : Fragment() {
     private fun isVisibleSecurity(truth: Boolean, view: BottomSheetDialog){
 
         val chipSecurity = view.findViewById<Chip>(R.id.chipSecurity)
-        val switchChange = view.findViewById<Switch>(R.id.switchChange)
         view.findViewById<TextInputLayout>(R.id.phoneFieldLayout)?.isVisible = truth
         view.findViewById<TextInputLayout>(R.id.passwordFieldLayout)?.isVisible = truth
         view.findViewById<TextInputLayout>(R.id.passwordFieldLayoutStill)?.isVisible = truth
 
-        switchChange?.isChecked = false
+        view.findViewById<Switch>(R.id.switchChange)?.isChecked = truth
+        Init(truth, view)
+
         chipSecurity?.isChecked = truth
         if(!truth) {
             chipSecurity?.text = "Пройти безопасность"
@@ -388,7 +425,6 @@ class ProfileFragment : Fragment() {
     }
     private fun SpinnerGender(view: BottomSheetDialog){
         val spinnerGender = view.findViewById<Spinner>(R.id.spinnerGender)
-        var genderList = arrayOf("Мужской","Женский")
         var arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, genderList)
         spinnerGender?.adapter = arrayAdapter
         spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -425,6 +461,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun Change(view: BottomSheetDialog){
+        isVisibleSecurity(true, view)
+        isVisibleSecurity(false, view)
         Init(false, view)
         view.findViewById<Switch>(R.id.switchChange)?.setOnCheckedChangeListener{buttonView, isChecked->
             Init(isChecked, view)
@@ -435,11 +473,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun Init(truth:Boolean, view: BottomSheetDialog){
+
         var chipSecurity =  view.findViewById<Chip>(R.id.chipSecurity)
         chipSecurity?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
-
-        isVisibleSecurity(true, view)
-        isVisibleSecurity(false, view)
 
         var butSave = view.findViewById<Button>(R.id.butSave)
         var buttonChangeUserImage = view.findViewById<Button>(R.id.buttonChangeUserImage)
