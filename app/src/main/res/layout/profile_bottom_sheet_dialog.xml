@@ -23,16 +23,32 @@
             android:background="@drawable/transperent"
             >
 
-            <Switch
-                android:id="@+id/switchChange"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/switchChange"
-                android:textSize="24sp" />
+                android:orientation="horizontal">
+
+                <Switch
+                    android:id="@+id/switchChange"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/switchChange"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/txtDeleteAcc"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="2"
+                    android:scaleType="fitEnd"
+                    app:srcCompat="@drawable/ic_delete" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtMainInfo"

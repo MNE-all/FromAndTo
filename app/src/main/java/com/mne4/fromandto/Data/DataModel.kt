@@ -102,6 +102,9 @@ class   DataModel: ViewModel() {
     val ApiPutEditUser: MutableLiveData<com.mne4.fromandto.Data.Room.Models.User> by lazy {
         MutableLiveData<com.mne4.fromandto.Data.Room.Models.User>()
     }
+    val ApiDeleteUser: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
     private lateinit var users: com.mne4.fromandto.Data.Room.Models.User
     private var usersFull: UserFull? = null
@@ -288,11 +291,12 @@ class   DataModel: ViewModel() {
 
     fun deleteUser(guid: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
-            usersApi.deleteUser(guid,password).enqueue(object : retrofit2.Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            usersApi.deleteUser(guid,password).enqueue(object : Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    ApiDeleteUser.value = response.body()
                     Log.d("Delete","Response")
                 }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("Delete","Failture")
                 }
             })

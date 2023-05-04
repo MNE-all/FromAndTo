@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private var userGlobal: List<User> = listOf()
     val viewModel: DataModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -37,24 +38,23 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Пользователь не найден!", Toast.LENGTH_SHORT).show()
                 return@observe
             }
-            if (userGlobal.size != 0) {
-                var isInLocalDb = false
-                for (user in userGlobal) {
-                    if (user.id_user == userFull.id_user) {
-                        isInLocalDb = true
-                        AuthUser(user)
-                    }
-                }
-                if (!isInLocalDb) {
-                    AddLocalDB(userFull, true)
+            if (userGlobal.size == 0) {
+                AddLocalDB(userFull, true)
+                return@observe
+            }
+            var isInLocalDb = false
+            for (user in userGlobal) {
+                if (user.id_user == userFull.id_user) {
+                    isInLocalDb = true
+                    AuthUser(user)
                 }
             }
-            else {
-                AddLocalDB(userFull, false)
+            if (!isInLocalDb) {
+                Toast.makeText(this, "Внутри создание локального пользователя", Toast.LENGTH_SHORT).show()
+                AddLocalDB(userFull, true)
             }
         }
     }
-
     fun butEnter(view: View) {
 
         // TODO Нормально оформить корутины, а то вылетает иногда

@@ -1,12 +1,14 @@
 package com.mne4.fromandto.Fragment
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
@@ -22,9 +24,12 @@ import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
 import com.mne4.fromandto.Data.Room.DAO.DaoUser
 import com.mne4.fromandto.Data.Room.MainDB
+import com.mne4.fromandto.MainActivity
+import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
 import okhttp3.internal.notify
 import okhttp3.internal.notifyAll
+import kotlin.reflect.typeOf
 
 class MyRequestFragment : Fragment() {
     lateinit var binding: FragmentMyRequestBinding
@@ -35,6 +40,7 @@ class MyRequestFragment : Fragment() {
     var count: Int = 0
     lateinit var userID: String
     lateinit var tripsArray: ArrayList<TripsFull>
+    lateinit var fragmentActivity: FragmentActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -45,22 +51,25 @@ class MyRequestFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.let {activ->
-            viewModel.UserStatus.observe(activ) {
-                userStatus = it
-                var layoutManager: RecyclerView.LayoutManager =
-                    LinearLayoutManager(
-                        binding.root.context.applicationContext,
-                        RecyclerView.VERTICAL,
-                        false
-                    )
-                binding.recyclearMyOrders.layoutManager = layoutManager
-                getCurrentUser(activ)
-                ObserveTripsAdapter(activ)
-                ObserveAddMyOrderAdapter(activ)
-            }
+        activity?.let { activ ->
+            fragmentActivity = activ as MainActivity
         }
+        viewModel.UserStatus.observe(fragmentActivity) {
+            userStatus = it
+            var layoutManager: RecyclerView.LayoutManager =
+                LinearLayoutManager(
+                    binding.root.context.applicationContext,
+                    RecyclerView.VERTICAL,
+                    false
+                )
+            binding.recyclearMyOrders.layoutManager = layoutManager
+        }
+        getCurrentUser(fragmentActivity)
+        ObserveTripsAdapter(fragmentActivity)
+        ObserveAddMyOrderAdapter(fragmentActivity)
+
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listMyOrders = mutableListOf()
@@ -68,7 +77,9 @@ class MyRequestFragment : Fragment() {
 
 
         binding.RequestTabItem.setOnClickListener {
-            binding.progressBar2.isVisible = true
+            AnimationBut(true)
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
                 viewModel.getMyOrdersTripsCurrentUser(userID, false)
             } else {
@@ -76,7 +87,9 @@ class MyRequestFragment : Fragment() {
             }
         }
         binding.TripsTabItem.setOnClickListener {
-            binding.progressBar2.isVisible = true
+            AnimationBut(true)
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
             if (userStatus == "User") {
                 viewModel.getMyOrdersTripsCurrentUser(userID, true)
             } else {
@@ -85,6 +98,10 @@ class MyRequestFragment : Fragment() {
         }
     }
 
+    fun AnimationBut(isLoad:Boolean){
+        binding.progressBar2.isVisible = isLoad
+        binding.recyclearMyOrders.isVisible = !isLoad
+    }
     fun getCurrentUser(activ: FragmentActivity) {
         viewModel.getLocalDB(activ).getDao().getAllUser().asLiveData().observe(activ) {
             for (user in it) {
@@ -101,11 +118,12 @@ class MyRequestFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun ObserveAddMyOrderAdapter(activ:FragmentActivity) {
+    fun ObserveAddMyOrderAdapter(activ: FragmentActivity) {
+        listMyOrders.clear()
         viewModel.ApiGetTwoUser.observe(activ) {
 
-            try {
-                var trip = tripsArray[tripsArray.size - count]
+            if (listMyOrders.size != tripsArray.size) {
+                var trip = tripsArray[count]
                 var tripsMyOrder = MyOrder(
                     "${it[0].surname}",
                     "${it[0].image_url}",
@@ -122,40 +140,42 @@ class MyRequestFragment : Fragment() {
                     "${trip.start_point}",
                     "${trip.end_point}"
                 )
-
                 listMyOrders.add(tripsMyOrder)
-            }catch (ex:java.lang.IndexOutOfBoundsException){
-                count=1
-                return@observe
-
+                if (count + 1 < tripsArray.size) {
+                    count += 1
+                }
+                else {
+                    UpdateAdapter()
+                    return@observe
+                }
             }
-            count -= 1
-            if (count == 0) {
-                adapter = MyOrdersAdapter(binding.root.context.applicationContext, listMyOrders)
-                binding.recyclearMyOrders.adapter = adapter
-                adapter.notifyDataSetChanged()
-                binding.progressBar2.isVisible = false
-                return@observe
-            }
-
         }
+    }
+    fun UpdateAdapter(){
+        adapter = MyOrdersAdapter(binding.root.context.applicationContext, listMyOrders)
+        binding.recyclearMyOrders.adapter = adapter
+        adapter.notifyDataSetChanged()
+        AnimationBut(false)
+        count = 0
     }
     fun ObserveTripsAdapter(activ:FragmentActivity) {
         viewModel.ApiGetMyOrdersTripsCurrentUser.observe(activ) {
-            count=0
+            listMyOrders.clear()
+            tripsArray = it
             for (trip in it) {
-                count += 1
                 var clientID: String
                 var driverID: String
                 clientID =
                     if (trip.client_id != null) trip.client_id.toString() else MyRequestFragment.GUID_NULL
                 driverID =
                     if (trip.driver_id != null) trip.driver_id.toString() else MyRequestFragment.GUID_NULL
+
                 viewModel.getTwoUser(clientID, driverID)
             }
-            listMyOrders.clear()
-            tripsArray = it
-            binding.txtInfoResultMyOrders.isVisible = (it.size == 0)
+            if(it.size == 0) {
+                binding.progressBar2.isVisible = false
+                binding.txtInfoResultMyOrders.isVisible = true
+            }
         }
 
     }
