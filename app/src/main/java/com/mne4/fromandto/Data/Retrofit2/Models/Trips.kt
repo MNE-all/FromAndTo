@@ -6,6 +6,7 @@ data class Trips (
     val start_time:String,
     val seats_amount: Int,
     val start_point: String,
+    val start_point_coord: String,
     val end_point: String,
-    val status: Boolean
+    val end_point_coord: String
 )

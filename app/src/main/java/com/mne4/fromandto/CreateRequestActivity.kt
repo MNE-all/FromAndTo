@@ -50,18 +50,22 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     lateinit var cameraListener: CameraListener
     lateinit var mapKit: MapKit
 
+    lateinit var userStatus: String
     lateinit var radioFrom: RadioButton
     lateinit var radioTo: RadioButton
     lateinit var txtFrom: TextView
     lateinit var txtTo: TextView
     lateinit var imgPin: ImageView
     lateinit var imgMyLocation: ImageView
+    lateinit var whenText: TextInputEditText
 
     lateinit var price: TextInputEditText
     var passengerCount: Int = 1
 
-    var START_POSITION: Point = Point(0.0, 0.0)
-    var END_POSITION: Point = Point(0.0, 0.0)
+    var START_POSITION: String = ""
+    var END_POSITION: String = ""
+    var START_POSITION_COORD: Point = Point(0.0, 0.0)
+    var END_POSITION_COORD: Point = Point(0.0, 0.0)
     var START_TIME: String = ""
 
 
@@ -130,7 +134,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
 
-        val whenText = findViewById<TextInputEditText>(R.id.TextInputEditTextWhen)
+        whenText = findViewById(R.id.TextInputEditTextWhen)
         val constraintsBuilder = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.now())
         val date = MaterialDatePicker.Builder.datePicker()
@@ -159,10 +163,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
         // Добавление поездки/запроса на поездку
-        var userStatus = ""
-        viewModel.UserStatus.observe(this) {
-            userStatus = it
-        }
+        userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS)!!
 
         val description = findViewById<TextInputEditText>(R.id.editTextDescription)
         val btnCreate = findViewById<Button>(R.id.btnCreate)
@@ -176,9 +177,10 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                     description.text.toString(),
                     START_TIME,
                     passengerCount,
-                    "${START_POSITION.latitude} ${START_POSITION.longitude}",
-                    "${END_POSITION.latitude} ${END_POSITION.longitude}",
-                    true
+                    START_POSITION,
+                    "${START_POSITION_COORD.latitude} ${START_POSITION_COORD.longitude}",
+                    END_POSITION,
+                    "${END_POSITION_COORD.latitude} ${END_POSITION_COORD.longitude}"
                 )
 
                 viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
@@ -225,7 +227,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         var imgId = resources.getIdentifier("baseline_location_on_24", "drawable", this.packageName)
         imgPin.setImageResource(imgId)
         if (txtTo.text != "Откуда") {
-            mapView.map.move(CameraPosition(START_POSITION, 17.0f, 0.0f, 0.0f),
+            mapView.map.move(CameraPosition(START_POSITION_COORD, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null
             )
         }
@@ -239,7 +241,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         var imgId = resources.getIdentifier("baseline_location_off_24", "drawable", this.packageName)
         imgPin.setImageResource(imgId)
         if (txtTo.text != "Куда") {
-            mapView.map.move(CameraPosition(END_POSITION, 17.0f, 0.0f, 0.0f),
+            mapView.map.move(CameraPosition(END_POSITION_COORD, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null
             )
         }
@@ -309,18 +311,17 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
                     var nameAdress = address?.get(0)?.getAddressLine(0)
 
-                    var city = address?.get(0)?.locality
+                    var city = address?.get(1)?.locality ?: address?.get(1)?.adminArea
 
                     if (radioFrom.isChecked) {
                         txtFrom.text = nameAdress
-                        START_POSITION = cameraPosition.target
+                        START_POSITION = city.toString()
+                        START_POSITION_COORD = cameraPosition.target
 
-                        txtTo.text = city
                     } else {
                         txtTo.text = nameAdress
-                        END_POSITION = cameraPosition.target
-
-                        txtFrom.text = city
+                        END_POSITION = city.toString()
+                        END_POSITION_COORD = cameraPosition.target
                     }
 
 
