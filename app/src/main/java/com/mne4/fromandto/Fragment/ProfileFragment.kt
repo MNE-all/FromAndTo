@@ -212,8 +212,10 @@ class ProfileFragment : Fragment() {
                     "Аккаунт успешно удален!",
                     Toast.LENGTH_SHORT
                 ).show()
+                view.dismiss()
                 startActivity(Intent(view.context, IntroActivity::class.java))
-                requireActivity().finish()
+                activity?.finish()
+
             }else{
                 Toast.makeText(
                     view.context,

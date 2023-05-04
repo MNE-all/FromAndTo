@@ -43,13 +43,22 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Номер уже существует!", Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.ApiPostNewUser.observe(this) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = User(
+                    null, "${it.id_user}", "${it.password}", false
+                )
+                viewModel.getLocalDB(this@RegisterActivity).getDao().insertUser(user)
+            }
+            runOnUiThread{
+                var intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
     }
 
     private fun addUser() {
-        var intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-
         val user = com.mne4.fromandto.Data.Retrofit2.Models.User(
             "${surname.text}",
             "${name.text}",
@@ -64,19 +73,8 @@ class RegisterActivity : AppCompatActivity() {
             null,
             null
         )
-        var db = MainDB.getDB(this)
         viewModel.postNewUser(user)
-        viewModel.ApiPostNewUser.observe(this) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val user = User(
-                    null, "${it.id_user}", "${it.password}", false
-                )
-                db.getDao().insertUser(user)
-                Log.d("Observe","Сработал ApiPostNewUser")
-            }
-        }
     }
-
    @SuppressLint("MissingInflatedId")
    fun butReg(view: View){
         var phone_num = "7${phone.text}"
