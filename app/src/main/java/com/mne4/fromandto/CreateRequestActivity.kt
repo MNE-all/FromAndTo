@@ -79,6 +79,14 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_request)
 
+        userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS)!!
+        if (userStatus == "Driver") {
+            findViewById<TextView>(R.id.textViewTitleCreate).text = "Создание поездки"
+        }
+        else if (userStatus == "User") {
+            findViewById<TextView>(R.id.textViewTitleCreate).text = "Создание запроса"
+        }
+
         // Инициализация элементов управления
         radioFrom = findViewById(R.id.radioFrom)
         radioTo = findViewById(R.id.radioTo)
@@ -163,7 +171,6 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
         // Добавление поездки/запроса на поездку
-        userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS)!!
 
         val description = findViewById<TextInputEditText>(R.id.editTextDescription)
         val btnCreate = findViewById<Button>(R.id.btnCreate)
