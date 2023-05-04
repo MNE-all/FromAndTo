@@ -58,8 +58,12 @@ class ProfileFragment : Fragment() {
     private var phone: String = ""
     private var password: String = ""
     private lateinit var USER: User
+    private lateinit var userLocalDB: com.mne4.fromandto.Data.Room.Entities.User
     private var GalleryPick: Int =1
     private var imgURL = ""
+    private lateinit var bottomSheetDialog: BottomSheetDialog
+    var phoneField: TextInputEditText? = null
+    var passwordField: TextInputEditText? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -70,41 +74,28 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLocalDB(view.context).getDao().getAllUser().asLiveData().observe(requireActivity()) {
-            for (user in it) {
-                if (user.isInAcc) {
-                    viewModel.getCurrentUser(user.id_user)
-                    return@observe
-                }
-            }
+        bottomSheetDialog = BottomSheetDialog(view.context)
+        InitUser(bottomSheetDialog)
+        ObserveGetCurrentUser(bottomSheetDialog)
+        SecurityСonfirmed(bottomSheetDialog)
+        viewModel.ApiImgUrl.observe(requireActivity()) {
+            Picasso.get().load(it).into(binding.imageUser)
+            imgURL = it
         }
 
-
-
-        // Получение данных о пользователе
-        viewModel.ApiGetCurrentUser.observe(requireActivity()){
-            Picasso.get().load(it.image_url)
-                .placeholder(R.drawable.baseline_account_circle_24)
-                .error(R.drawable.search_result)
-                .into(binding.imageUser)
-            val fio = "${it.surname} ${it.name}"
-            binding.textViewUserFIO.text = fio
-        }
-
+        ObservePostPhoneUnque(bottomSheetDialog)
+        ObservePutEditUserLocal(bottomSheetDialog)
         binding.buttonAccSettings.setOnClickListener {
-            var bottomSheetDialog = BottomSheetDialog(view.context)
             bottomSheetDialog.setContentView(R.layout.profile_bottom_sheet_dialog)
-
             bottomSheetDialog.findViewById<Button>(R.id.buttonChangeUserImage)!!.setOnClickListener {
                 imgClick()
             }
-
             bottomSheetDialog.show()
 
-            InitUser(bottomSheetDialog)
             butDeleteAcc()
             butSave(bottomSheetDialog)
 
+            InitUser(bottomSheetDialog)
             Change(bottomSheetDialog)
             ChipActive(bottomSheetDialog)
             SpinnerGender(bottomSheetDialog)
@@ -137,12 +128,6 @@ class ProfileFragment : Fragment() {
                 val requestFile= RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
                 val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-
-                viewModel.ApiImgUrl.observe(this) {
-                    Picasso.get().load(it).into(binding.imageUser)
-                    imgURL = it
-                }
-
                 viewModel.makeImgUrl(filePart)
 
             }
@@ -153,42 +138,43 @@ class ProfileFragment : Fragment() {
     }
 
     fun InitUser(view: BottomSheetDialog){
-
-        var db = MainDB.getDB(requireActivity())
-        db.getDao().getAllUser().asLiveData().observe(requireActivity()) {
+        viewModel.getLocalDB(view.context).getDao().getAllUser().asLiveData().observe(requireActivity()) {
             for (user in it) {
                 if (user.isInAcc) {
+                    userLocalDB = user
                     viewModel.getCurrentUser(user.id_user)
                     return@observe
                 }
             }
         }
-
+    }
+    fun ObserveGetCurrentUser(view: BottomSheetDialog){
         viewModel.ApiGetCurrentUser.observe(requireActivity()){
             USER = it
+
+            val fio = "${USER.surname} ${USER.name}"
+            binding.textViewUserFIO.text = fio
 
             Picasso.get().load(USER.image_url)
                 .placeholder(R.drawable.baseline_account_circle_24)
                 .error(R.drawable.search_result)
                 .into(binding.imageUser)
 
-            view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(it.surname)
-            view.findViewById<TextInputEditText>(R.id.nameField)?.setText(it.name)
+            view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(USER.surname)
+            view.findViewById<TextInputEditText>(R.id.nameField)?.setText(USER.name)
             val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
             val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
 
             val date: Date?
-            if (!it.birthday.isNullOrEmpty()) {
-                date = inputFormat.parse(it.birthday.toString()) as Date
+            if (!USER.birthday.isNullOrEmpty()) {
+                date = inputFormat.parse(USER.birthday.toString()) as Date
                 val outputText: String = outputFormat.format(date)
                 view.findViewById<TextView>(R.id.txtCalendar)?.text = outputText
             }
 
-
-
-            view.findViewById<TextInputEditText>(R.id.emailField)?.setText(it.email)
-            view.findViewById<TextInputEditText>(R.id.passportField)?.setText(it.passport)
-            view.findViewById<TextInputEditText>(R.id.licenseField)?.setText(it.license)
+            view.findViewById<TextInputEditText>(R.id.emailField)?.setText(USER.email)
+            view.findViewById<TextInputEditText>(R.id.passportField)?.setText(USER.passport)
+            view.findViewById<TextInputEditText>(R.id.licenseField)?.setText(USER.license)
         }
     }
 
@@ -209,138 +195,135 @@ class ProfileFragment : Fragment() {
             dialog.setPositiveButton(
                 "Подтверждаю",
                 DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
-                    var db = MainDB.getDB(requireActivity());
-                    db.getDao().getAllUser().asLiveData().observe(requireActivity()) {
-                        for (user in it) {
-                            if (user.isInAcc) {
-                                viewModel.deleteUser(user.id_user, password.text.toString())
-                                var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
-                                    null,
-                                    user.id_user,
-                                    user.password,
-                                    false
-                                )
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    db.getDao().deleteUser(usersDB)
-                                }
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Аккаунт успешно удален!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                startActivity(Intent(requireContext(), IntroActivity::class.java))
-                                activity?.finish()
-                            }
-                        }
+                    viewModel.deleteUser(userLocalDB.id_user, password.text.toString())
+                    var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
+                        null,
+                        userLocalDB.id_user,
+                        userLocalDB.password,
+                        false
+                    )
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.getLocalDB(requireActivity()).getDao().deleteUser(usersDB)
                     }
-
+                    Toast.makeText(
+                        requireContext(),
+                        "Аккаунт успешно удален!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(requireContext(), IntroActivity::class.java))
+                    activity?.finish()
                 })
             dialog.show()
         }
     }
-    fun butSave(view: BottomSheetDialog){
+    fun butSave(view: BottomSheetDialog) {
         view.findViewById<Button>(R.id.butSave)?.setOnClickListener {
-            replay = false
-            var db = MainDB.getDB(requireActivity())
-            db.getDao().getAllUser().asLiveData().observe(requireActivity()) {
-                for (user in it) {
-                    if (user.isInAcc && !replay) {
 
-                        val switchChange = view.findViewById<Switch>(R.id.switchChange)
+            var surname = view.findViewById<TextInputEditText>(R.id.surnameField)?.text.toString()
+            var name = view.findViewById<TextInputEditText>(R.id.nameField)?.text.toString()
+            var email = view.findViewById<TextInputEditText>(R.id.emailField)?.text.toString()
+            var txtCalendar = view.findViewById<TextView>(R.id.txtCalendar)
 
-
-                        var surname = view.findViewById<TextInputEditText>(R.id.surnameField)?.text.toString()
-                        var name = view.findViewById<TextInputEditText>(R.id.nameField)?.text.toString()
-                        var email = view.findViewById<TextInputEditText>(R.id.emailField)?.text.toString()
-                        var txtCalendar = view.findViewById<TextView>(R.id.txtCalendar)
-
-                        val outputFormat: DateFormat =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
-                        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-                        val date: Date?
-                        if (!view.findViewById<TextView>(R.id.txtCalendar)?.text.isNullOrEmpty()) {
-                            date = inputFormat.parse(txtCalendar?.text.toString()) as Date
-                            val outputText: String = outputFormat.format(date)
-                            txtCalendar?.text = outputText
-                            var birthday: String? = outputText
-                            USER.birthday = birthday
-                        }
-
-                        var passportField = view.findViewById<TextInputEditText>(R.id.passportField)
-
-                        view.findViewById<TextInputEditText>(R.id.passportField)?.text.toString()
-                        var passport = passportField?.text.toString()
-                        var license = view.findViewById<TextInputEditText>(R.id.licenseField)?.text.toString()
-                        if (surname.isNullOrEmpty() || name.isNullOrEmpty()) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Фамилия и имя не должны быть пустыми!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return@observe
-                        }
-                        USER.surname = surname
-                        USER.name = name
-                        USER.email = email
-                        USER.gender = gender
-                        USER.passport = passport
-                        USER.license = license
-                        if (!imgURL.isNullOrEmpty()){
-                            USER.image_url = imgURL
-                        }
-
-                        if (phone != "" && password != "") {
-                            var phoneField = view.findViewById<TextInputEditText>(R.id.phoneField)
-                            if (passportField?.text.toString() == view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.text.toString()) {
-                                viewModel.postIsPhoneUnique(phoneField?.text.toString())
-                                viewModel.ApiPostIsPhoneUnique.observe(requireActivity()) { it ->
-                                    if (it) {
-                                        USER.phone = phoneField?.text.toString()
-                                        USER.password = view.findViewById<TextInputEditText>(R.id.passwordField)?.text.toString()
-                                        viewModel.putEditUserSecure(
-                                            user.id_user,
-                                            user.password,
-                                            USER
-                                        )
-                                        viewModel.ApiPutEditUser.observe(requireActivity()) {
-                                            CoroutineScope(Dispatchers.IO).launch {
-                                                db.getDao()
-                                                    .updateUser(it.id_user, it.password, true)
-                                                return@launch
-                                            }
-                                            activity?.runOnUiThread {
-
-                                                switchChange?.isChecked = false
-                                                isVisibleSecurity(false, view)
-                                            }
-                                        }
-                                    } else {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Номер уже существует!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Пароли не совпадают!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } else {
-                            viewModel.putEditUser(user.id_user, user.password, USER)
-                            Toast.makeText(view.context.applicationContext, "Изменения успешно сохранены", Toast.LENGTH_SHORT).show()
-                            switchChange?.isChecked = false
-                            isVisibleSecurity(false, view)
-                        }
-                        replay = true
-                    }
-                }
-
+            val outputFormat: DateFormat =
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+            val date: Date?
+            if (!view.findViewById<TextView>(R.id.txtCalendar)?.text.isNullOrEmpty()) {
+                date = inputFormat.parse(txtCalendar?.text.toString()) as Date
+                val outputText: String = outputFormat.format(date)
+                txtCalendar?.text = outputText
+                var birthday: String? = outputText
+                USER.birthday = birthday
             }
 
+            var passportField = view.findViewById<TextInputEditText>(R.id.passportField)
+
+            view.findViewById<TextInputEditText>(R.id.passportField)?.text.toString()
+            var passport = passportField?.text.toString()
+            var license = view.findViewById<TextInputEditText>(R.id.licenseField)?.text.toString()
+            if (surname.isEmpty() || name.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Фамилия и имя не должны быть пустыми!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            USER.surname = surname
+            USER.name = name
+            USER.email = email
+            USER.gender = gender
+            USER.passport = passport
+            USER.license = license
+            if (!imgURL.isEmpty()) {
+                USER.image_url = imgURL
+            }
+
+            if (phone != "" && password != "") {
+                var passwordFieldStill =
+                    view.findViewById<TextInputEditText>(R.id.passwordField)?.text.toString()
+                if (passwordField?.text.toString() != passwordFieldStill) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Пароли не совпадают!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+                if(phone != phoneField?.text.toString()){
+                    viewModel.postIsPhoneUnique(phoneField?.text.toString())
+                    return@setOnClickListener
+                }else{
+                    if(passwordField?.text.toString() != password) {
+                        USER.password = password
+                        viewModel.putEditUserSecure(
+                            userLocalDB.id_user,
+                            userLocalDB.password,
+                            USER
+                        )
+                        return@setOnClickListener
+                    }
+                }
+            }
+            viewModel.putEditUser(userLocalDB.id_user, userLocalDB.password, USER)
+            Toast.makeText(
+                view.context.applicationContext,
+                "Изменения успешно сохранены",
+                Toast.LENGTH_SHORT
+            ).show()
+            isVisibleSecurity(false, view)
+        }
+    }
+    fun ObservePostPhoneUnque(view: BottomSheetDialog){
+        viewModel.ApiPostIsPhoneUnique.observe(requireActivity()) { it ->
+            if (!it) {
+                Toast.makeText(
+                    requireContext(),
+                    "Номер уже существует!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@observe
+            }
+            USER.phone = phoneField?.text.toString()
+            USER.password = password
+            viewModel.putEditUserSecure(
+                userLocalDB.id_user,
+                userLocalDB.password,
+                USER
+            )
+        }
+    }
+
+    fun ObservePutEditUserLocal(view: BottomSheetDialog){
+        viewModel.ApiPutEditUser.observe(requireActivity()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.getLocalDB(view.context).getDao()
+                    .updateUser(it.id_user, it.password, true)
+                return@launch
+            }
+            activity?.runOnUiThread {
+                isVisibleSecurity(false, view)
+            }
         }
     }
 
@@ -361,19 +344,6 @@ class ProfileFragment : Fragment() {
                     phone = phones.text.toString()
                     password = passwords.text.toString()
                     viewModel.postAuthentication(phone,password)
-                    viewModel.ApiPostAuthentication.observe(requireActivity()) {
-                        if (it != null) {
-                            if (USER.password == it.password && USER.phone == it.phone) {
-                                isVisibleSecurity(true, view)
-                                view.findViewById<TextInputEditText>(R.id.phoneField)?.setText(phone)
-                                view.findViewById<TextInputEditText>(R.id.passwordField)?.setText(password)
-                                view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.setText(password)
-                                return@observe
-                            }
-                        }
-                        Toast.makeText(requireContext(), "Неправильно введенные данные!",Toast.LENGTH_SHORT).show()
-                        isVisibleSecurity(false, view)
-                    }
                 })
                 dialog.show()
 
@@ -383,14 +353,32 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    fun SecurityСonfirmed(view: BottomSheetDialog){
+        viewModel.ApiPostAuthentication.observe(requireActivity()) {
+            if (it != null) {
+                if (USER.password == it.password && USER.phone == it.phone) {
+                    isVisibleSecurity(true, view)
+                    phoneField = view.findViewById<TextInputEditText>(R.id.phoneField)
+                    phoneField?.setText(phone)
+                    passwordField = view.findViewById<TextInputEditText>(R.id.passwordField)
+                    passwordField?.setText(password)
+                    view.findViewById<TextInputEditText>(R.id.passwordFieldStill)?.setText(password)
+                    return@observe
+                }
+            }
+            Toast.makeText(requireContext(), "Неправильно введенные данные!",Toast.LENGTH_SHORT).show()
+            isVisibleSecurity(false, view)
+        }
+    }
     private fun isVisibleSecurity(truth: Boolean, view: BottomSheetDialog){
 
         val chipSecurity = view.findViewById<Chip>(R.id.chipSecurity)
-
+        val switchChange = view.findViewById<Switch>(R.id.switchChange)
         view.findViewById<TextInputLayout>(R.id.phoneFieldLayout)?.isVisible = truth
         view.findViewById<TextInputLayout>(R.id.passwordFieldLayout)?.isVisible = truth
         view.findViewById<TextInputLayout>(R.id.passwordFieldLayoutStill)?.isVisible = truth
 
+        switchChange?.isChecked = false
         chipSecurity?.isChecked = truth
         if(!truth) {
             chipSecurity?.text = "Пройти безопасность"
@@ -439,8 +427,6 @@ class ProfileFragment : Fragment() {
     private fun Change(view: BottomSheetDialog){
         Init(false, view)
         view.findViewById<Switch>(R.id.switchChange)?.setOnCheckedChangeListener{buttonView, isChecked->
-
-
             Init(isChecked, view)
             InitUser(view)
         }
@@ -449,23 +435,28 @@ class ProfileFragment : Fragment() {
     }
 
     private fun Init(truth:Boolean, view: BottomSheetDialog){
-        view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
+        var chipSecurity =  view.findViewById<Chip>(R.id.chipSecurity)
+        chipSecurity?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
 
         isVisibleSecurity(true, view)
         isVisibleSecurity(false, view)
 
-        view.findViewById<Button>(R.id.buttonChangeUserImage)?.isEnabled = truth
-        view.findViewById<Button>(R.id.butSave)?.isEnabled = truth
+        var butSave = view.findViewById<Button>(R.id.butSave)
+        var buttonChangeUserImage = view.findViewById<Button>(R.id.buttonChangeUserImage)
+        var colorNetral = com.google.android.material.R.color.material_dynamic_neutral80
+        var colorTeal = R.color.teal_200
+        buttonChangeUserImage?.isEnabled = truth
+        butSave?.isEnabled = truth
 
         if (truth){
-            view.findViewById<Button>(R.id.buttonChangeUserImage)?.setBackgroundColor(view.context.getColor(R.color.teal_200))
-            view.findViewById<Button>(R.id.butSave)?.setBackgroundColor(view.context.getColor(R.color.teal_200))
-            view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(R.color.teal_200)
+            buttonChangeUserImage?.setBackgroundColor(view.context.getColor(colorTeal))
+            butSave?.setBackgroundColor(view.context.getColor(colorTeal))
+            chipSecurity?.setChipBackgroundColorResource(colorTeal)
         }
         else {
-            view.findViewById<Button>(R.id.buttonChangeUserImage)?.setBackgroundColor(view.context.getColor(com.google.android.material.R.color.material_dynamic_neutral80))
-            view.findViewById<Button>(R.id.butSave)?.setBackgroundColor(view.context.getColor(com.google.android.material.R.color.material_dynamic_neutral80))
-            view.findViewById<Chip>(R.id.chipSecurity)?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
+            buttonChangeUserImage?.setBackgroundColor(view.context.getColor(colorNetral))
+            butSave?.setBackgroundColor(view.context.getColor(colorNetral))
+            chipSecurity?.setChipBackgroundColorResource(colorNetral)
         }
 
 
@@ -485,7 +476,7 @@ class ProfileFragment : Fragment() {
 
         view.findViewById<Spinner>(R.id.spinnerGender)?.isEnabled = truth
         view.findViewById<TextView>(R.id.txtCalendar)?.isEnabled = truth
-        view.findViewById<Chip>(R.id.chipSecurity)?.isEnabled = truth
+        chipSecurity?.isEnabled = truth
 
 
 

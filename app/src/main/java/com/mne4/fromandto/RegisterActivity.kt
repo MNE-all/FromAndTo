@@ -30,10 +30,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        surname = findViewById(R.id.surnameField)
-        name = findViewById(R.id.nameField)
-        phone = findViewById(R.id.phoneField)
-        password = findViewById(R.id.passwordField)
+        surname = findViewById(R.id.surnameFieldReg)
+        name = findViewById(R.id.nameFieldReg)
+        phone = findViewById(R.id.phoneFieldReg)
+        password = findViewById(R.id.passwordFieldReg)
 
         viewModel.ApiPostIsPhoneUnique.observe(this) {
             if (it) {
