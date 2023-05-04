@@ -215,13 +215,13 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             var position = locationMapKit.cameraPosition()?.target
             if (position == null) {
                 Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
-                finish()
-                var intent = Intent(applicationContext, CreateRequestActivity::class.java)
             }
-            mapView.map.move(CameraPosition(position!!, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 1f), null
-            )
-
+            else {
+                mapView.map.move(
+                    CameraPosition(position, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+                )
+            }
         }
         catch (ex: Exception) {
             Log.d("moveToMyLocation","${ex.message}")
