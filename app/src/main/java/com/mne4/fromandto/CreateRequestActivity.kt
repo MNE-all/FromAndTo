@@ -124,7 +124,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         mapView.map.addCameraListener(this)
 
         searchEdit.setOnEditorActionListener { textView, i, keyEvent ->
-            submitQuery(searchEdit!!.text.toString())
+            submitQuery(searchEdit.text.toString())
             false
         }
 
@@ -303,14 +303,26 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
                 try {
                     val geoCoder = Geocoder(applicationContext, Locale.getDefault())
                     val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
+
+
+
+
                     var nameAdress = address?.get(0)?.getAddressLine(0)
+
+                    var city = address?.get(0)?.locality
+
                     if (radioFrom.isChecked) {
                         txtFrom.text = nameAdress
                         START_POSITION = cameraPosition.target
+
+                        txtTo.text = city
                     } else {
                         txtTo.text = nameAdress
                         END_POSITION = cameraPosition.target
+
+                        txtFrom.text = city
                     }
+
 
                     mapView.mapWindow.map.mapObjects.addTapListener { mapObject, point ->
                         mapView.map.move(CameraPosition(point, 17.0f, 0.0f, 0.0f),
