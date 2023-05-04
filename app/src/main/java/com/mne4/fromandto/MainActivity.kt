@@ -22,13 +22,12 @@ class MainActivity : AppCompatActivity() {
         binding  = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userStatus = intent.getStringExtra(WelcomeActivity.ARG_USER_STATUS).toString()
-        binding.bottomNavigationViewMenu.setBackground(null)
+        binding.bottomNavigationViewMenu.background = null
         binding.floatingActionButton.setOnClickListener{
             val intent = Intent(this, CreateRequestActivity::class.java)
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             startActivity(intent)
         }
-
 
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
                 when (it.itemId) {
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.butMyOrdersBottomNavigation -> {
                         fragmentInstance(
                             MyRequestFragment.newInstance()
-                        );
+                        )
                         viewModel.UserStatus.value = userStatus
                     }
                     R.id.butProfileBottomNavigation -> {
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 }
             true
         }
+        binding.bottomNavigationViewMenu.selectedItemId = R.id.butSearchBottomNavigation
     }
     private fun fragmentInstance(f: Fragment) {
         supportFragmentManager
