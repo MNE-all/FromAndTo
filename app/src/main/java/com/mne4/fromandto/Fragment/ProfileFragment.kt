@@ -73,10 +73,13 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        InitUser(bottomSheetDialog)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheetDialog = BottomSheetDialog(view.context)
-        InitUser(bottomSheetDialog)
         ObserveGetCurrentUser(bottomSheetDialog)
         SecurityСonfirmed(bottomSheetDialog)
         viewModel.ApiImgUrl.observe(requireActivity()) {
@@ -201,14 +204,8 @@ class ProfileFragment : Fragment() {
     fun ObserveDeleteAcc(view: BottomSheetDialog){
         viewModel.ApiDeleteUser.observe(requireActivity()){
             if(it){
-                var usersDB = com.mne4.fromandto.Data.Room.Entities.User(
-                    null,
-                    userLocalDB.id_user,
-                    userLocalDB.password,
-                    false
-                )
                 CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.getLocalDB(view.context).getDao().deleteUser(usersDB)
+                    viewModel.getLocalDB(view.context).getDao().deleteUser(userLocalDB.id_user)
                 }
                 Toast.makeText(
                     view.context,
@@ -216,7 +213,7 @@ class ProfileFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 startActivity(Intent(view.context, IntroActivity::class.java))
-                activity?.finish()
+                requireActivity().finish()
             }else{
                 Toast.makeText(
                     view.context,

@@ -172,7 +172,10 @@ class MyRequestFragment : Fragment() {
 
                 viewModel.getTwoUser(clientID, driverID)
             }
-            binding.txtInfoResultMyOrders.isVisible = (it.size == 0)
+            if(it.size == 0) {
+                binding.progressBar2.isVisible = false
+                binding.txtInfoResultMyOrders.isVisible = true
+            }
         }
 
     }

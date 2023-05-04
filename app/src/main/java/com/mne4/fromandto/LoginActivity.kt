@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private var userGlobal: List<User> = listOf()
     val viewModel: DataModel by viewModels()
+    var isInLocalDb = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -37,20 +38,18 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Пользователь не найден!", Toast.LENGTH_SHORT).show()
                 return@observe
             }
-            if (userGlobal.size != 0) {
-                var isInLocalDb = false
-                for (user in userGlobal) {
-                    if (user.id_user == userFull.id_user) {
-                        isInLocalDb = true
-                        AuthUser(user)
-                    }
-                }
-                if (!isInLocalDb) {
-                    AddLocalDB(userFull, true)
+            if (userGlobal.size == 0) {
+                AddLocalDB(userFull, true)
+                return@observe
+            }
+            for (user in userGlobal) {
+                if (user.id_user == userFull.id_user) {
+                    AuthUser(user)
+                    isInLocalDb = true
                 }
             }
-            else {
-                AddLocalDB(userFull, false)
+            if (!isInLocalDb) {
+                AddLocalDB(userFull, true)
             }
         }
     }

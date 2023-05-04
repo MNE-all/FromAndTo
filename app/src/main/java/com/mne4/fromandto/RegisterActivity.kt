@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -71,6 +72,7 @@ class RegisterActivity : AppCompatActivity() {
                     null, "${it.id_user}", "${it.password}", false
                 )
                 db.getDao().insertUser(user)
+                Log.d("Observe","Сработал ApiPostNewUser")
             }
         }
     }
