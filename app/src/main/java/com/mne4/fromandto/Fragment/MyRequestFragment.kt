@@ -31,6 +31,7 @@ import com.mne4.fromandto.MainActivity
 import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
 import com.mne4.fromandto.databinding.ViewholderMyRequeestItemBinding
+import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -40,7 +41,7 @@ import java.util.*
 class MyRequestFragment : Fragment() {
     lateinit var binding: FragmentMyRequestBinding
     private val viewModel: DataModel by activityViewModels()
-    lateinit var listMyOrders: MutableList<MyOrder>
+    lateinit var listMyOrder: MutableList<MyOrder>
     private lateinit var adapter: RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
     lateinit var userStatus: String
     var count: Int = 0
@@ -81,66 +82,63 @@ class MyRequestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listMyOrders = mutableListOf()
+        listMyOrder = mutableListOf()
         bottomSheetDialog = BottomSheetDialog(view.context)
         binding.recyclearMyOrders.addOnChildAttachStateChangeListener(object : OnChildAttachStateChangeListener {
             override fun onChildViewAttachedToWindow(view: View) {
-                var bindingDialogItem = ViewholderMyRequeestItemBinding.bind(view)
-                bindingDialogItem.butViewMore.setOnClickListener {
+                var position = binding.recyclearMyOrders.findContainingViewHolder(view)!!.position
+                view.findViewById<AppCompatButton>(R.id.butViewMore).setOnClickListener {
 
                     bottomSheetDialog.setContentView(R.layout.request_and_trips_bottom_sheet_dialog)
                     bottomSheetDialog.show()
-                    var status =  bindingDialogItem.txtStatusTrips
+                    var list = listMyOrder[position]
+                    var status =  list.TripsFull.status
                     var txtStatus =   bottomSheetDialog.findViewById<TextView>(R.id.txtStatus)
-                    if(status.text.toString()=="true"){
+                    if(status =="true"){
                         txtStatus?.text = "Активен"
                     }else{
                         txtStatus?.text = "Закрыт"
                     }
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = bindingDialogItem.txtNameUser.text.toString()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = bindingDialogItem.txtNameDriver.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = list.User.surname
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = list.Driver.surname
 
-                    var start_time =bindingDialogItem.txtTimeE.text.toString()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = start_time
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = list.TripsFull.start_time
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingUser)?.text = bindingDialogItem.txtRatingUser.text.toString()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingDriver)?.text = bindingDialogItem.txtRatingDriver.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingUser)?.text = list.User.raiting.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingDriver)?.text = list.Driver.raiting.toString()
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtPriceOne)?.text = bindingDialogItem.txtPriceOne.text.toString()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtSeats_amount)?.text = bindingDialogItem.txtSeatsAmount.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtPriceOne)?.text = list.TripsFull.price.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtSeats_amount)?.text = list.TripsFull.seats_amount.toString()
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.textComment)?.text = bindingDialogItem.txtDescriptionMyrequest.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.textComment)?.text = list.TripsFull.description
 
 
                     val geoCoder = Geocoder(requireContext(), Locale.getDefault())
-                    var masStart = bindingDialogItem.txtCoordStart.text.split(" ")
+                    var masStart = list.TripsFull.start_point_coord.split(" ")
                     val addressStart = geoCoder.getFromLocation(masStart[0].toDouble(), masStart[1].toDouble(), 2)
                     var nameAdressStart = addressStart?.get(0)?.getAddressLine(0)
                     bottomSheetDialog.findViewById<TextView>(R.id.txtAddressStart)?.text = nameAdressStart.toString()
 
-                    var masEnd = bindingDialogItem.txtCoordEnd.text.split(" ")
+                    var masEnd = list.TripsFull.end_point_coord.split(" ")
                     val addressEnd = geoCoder.getFromLocation(masEnd[0].toDouble(), masEnd[1].toDouble(), 2)
                     var nameAdressEnd= addressEnd?.get(0)?.getAddressLine(0)
                     bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = nameAdressEnd.toString()
 
                     bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneUser)?.text =
-                        if(bindingDialogItem.txtUserPhone.text.isNotEmpty()) bindingDialogItem.txtUserPhone.text.toString() else "Пусто"
+                        if(!list.User.phone.isNullOrEmpty()) list.User.phone else "Пусто"
                     bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
-                        if(bindingDialogItem.txtDriverPhone.text.isNotEmpty()) bindingDialogItem.txtDriverPhone.text.toString() else "Пусто"
+                        if(!list.Driver.phone.isNullOrEmpty())list.Driver.phone else "Пусто"
 
-                    val drawableUser = bindingDialogItem.imgUrlUser.getDrawable()
-                    val streamUser = ByteArrayOutputStream()
-                    drawableUser.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamUser)
-                    val byteArrayUser = streamUser.toByteArray()
-                    val bmpUser = BitmapFactory.decodeByteArray(byteArrayUser, 0, byteArrayUser.size)
-                    bottomSheetDialog.findViewById<ImageView>(R.id.imgUrlUser)?.setImageBitmap(bmpUser)
 
-                    val drawableDriver = bindingDialogItem.imgUrlUser.getDrawable()
-                    val streamDriver = ByteArrayOutputStream()
-                    drawableDriver.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamDriver)
-                    val byteArrayDriver = streamDriver.toByteArray()
-                    val bmpDriver = BitmapFactory.decodeByteArray(byteArrayDriver, 0, byteArrayDriver.size)
-                    bottomSheetDialog.findViewById<ImageView>(R.id.imgUrlUser)?.setImageBitmap(bmpDriver)
+                    Picasso.get().load(list.User.image_url)
+                        .placeholder(R.drawable.baseline_account_circle_24)
+                        .error(R.drawable.baseline_account_circle_24)
+                        .into(bottomSheetDialog.findViewById(R.id.imgUrlUser))
+
+                    Picasso.get().load(list.Driver.image_url)
+                        .placeholder(R.drawable.baseline_account_circle_24)
+                        .error(R.drawable.baseline_account_circle_24)
+                        .into(bottomSheetDialog.findViewById(R.id.imgUrlDriver))
 
                     bottomSheetDialog.findViewById<AppCompatButton>(R.id.txtDeleteTrips)?.setOnClickListener {
                         var dialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
@@ -149,8 +147,7 @@ class MyRequestFragment : Fragment() {
                         dialog.setPositiveButton(
                             "Подтвердить",
                             DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
-                                var id_trips = bindingDialogItem.idTrip.text.toString()
-                                viewModel.deleteTrips(id_trips)
+                                viewModel.deleteTrips(list.TripsFull.id_trip)
                             })
                         dialog.setNegativeButton("Отменить",
                             DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
@@ -224,17 +221,16 @@ class MyRequestFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun ObserveAddMyOrderAdapter(activ: FragmentActivity) {
-        listMyOrders.clear()
         viewModel.ApiGetTwoUser.observe(activ) {
 
-            if (listMyOrders.size != tripsArray.size) {
+            if (listMyOrder.size != tripsArray.size) {
                 var trip = tripsArray[count]
                 var tripsMyOrder = MyOrder(
                     it[0],
                     it[1],
                     trip
                 )
-                listMyOrders.add(tripsMyOrder)
+                listMyOrder.add(tripsMyOrder)
                 if (count + 1 < tripsArray.size) {
                     count += 1
                 }
@@ -246,7 +242,7 @@ class MyRequestFragment : Fragment() {
         }
     }
     fun UpdateAdapter(){
-        adapter = MyOrdersAdapter(binding.root.context.applicationContext, listMyOrders)
+        adapter = MyOrdersAdapter(binding.root.context.applicationContext, listMyOrder)
         binding.recyclearMyOrders.adapter = adapter
         adapter.notifyDataSetChanged()
         AnimationBut(false)
@@ -255,7 +251,7 @@ class MyRequestFragment : Fragment() {
     }
     fun ObserveTripsAdapter(activ:FragmentActivity) {
         viewModel.ApiGetMyOrdersTripsCurrentUser.observe(activ) {
-            listMyOrders.clear()
+            listMyOrder.clear()
             tripsArray = it
             for (trip in it) {
                 var clientID: String

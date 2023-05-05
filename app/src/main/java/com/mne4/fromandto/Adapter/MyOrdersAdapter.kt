@@ -65,7 +65,9 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         holder.price.text = findList.get(position).TripsFull.price.toString()
         holder.id_trip.text = findList.get(position).TripsFull.id_trip
         holder.start_point.text = findList.get(position).TripsFull.start_point
+        holder.start_point.isSelected = true
         holder.end_point.text = findList.get(position).TripsFull.end_point
+        holder.end_point.isSelected = true
         holder.seats_amount.text = findList.get(position).TripsFull.seats_amount.toString()
         holder.start_coord.text = findList.get(position).TripsFull.start_point_coord
         holder.end_coord.text = findList.get(position).TripsFull.end_point_coord
