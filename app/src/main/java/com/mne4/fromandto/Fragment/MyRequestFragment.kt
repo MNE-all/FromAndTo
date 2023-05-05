@@ -82,12 +82,12 @@ class MyRequestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listMyOrders = mutableListOf()
-
+        bottomSheetDialog = BottomSheetDialog(view.context)
         binding.recyclearMyOrders.addOnChildAttachStateChangeListener(object : OnChildAttachStateChangeListener {
             override fun onChildViewAttachedToWindow(view: View) {
                 var bindingDialogItem = ViewholderMyRequeestItemBinding.bind(view)
                 bindingDialogItem.butViewMore.setOnClickListener {
-                    bottomSheetDialog = BottomSheetDialog(requireContext())
+
                     bottomSheetDialog.setContentView(R.layout.request_and_trips_bottom_sheet_dialog)
                     bottomSheetDialog.show()
                     var status =  bindingDialogItem.txtStatusTrips
@@ -111,7 +111,7 @@ class MyRequestFragment : Fragment() {
 
                     bottomSheetDialog.findViewById<TextView>(R.id.textComment)?.text = bindingDialogItem.txtDescriptionMyrequest.text.toString()
 
-
+/*
                     val geoCoder = Geocoder(requireContext(), Locale.getDefault())
                     var masStart = bindingDialogItem.txtCoordStart.text.split(" ")
                     val addressStart = geoCoder.getFromLocation(masStart[0].toDouble(), masStart[1].toDouble(), 2)
@@ -127,7 +127,7 @@ class MyRequestFragment : Fragment() {
                         if(bindingDialogItem.txtUserPhone.text.isNotEmpty()) bindingDialogItem.txtUserPhone.text.toString() else "Пусто"
                     bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
                         if(bindingDialogItem.txtDriverPhone.text.isNotEmpty()) bindingDialogItem.txtDriverPhone.text.toString() else "Пусто"
-
+*/
                     val drawableUser = bindingDialogItem.imgUrlUser.getDrawable()
                     val streamUser = ByteArrayOutputStream()
                     drawableUser.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamUser)
