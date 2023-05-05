@@ -72,6 +72,9 @@ class   DataModel: ViewModel() {
     val ApiGetTripsCityTo: MutableLiveData<ArrayList<String>> by lazy {
         MutableLiveData<ArrayList<String>>()
     }
+    val ApiDeleteTrips: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
     val ApiGetUserAll: MutableLiveData<ArrayList<User>> by lazy {
         MutableLiveData<ArrayList<User>>()
@@ -407,11 +410,12 @@ class   DataModel: ViewModel() {
 
     fun deleteTrips(guid: String){
         CoroutineScope(Dispatchers.IO).launch {
-            tripsApi.deleteTrips(guid).enqueue(object : retrofit2.Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            tripsApi.deleteTrips(guid).enqueue(object : retrofit2.Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    ApiDeleteTrips.value = response.body()
                     Log.d("Delete","Response")
                 }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("Delete","Failture")
                 }
             })
