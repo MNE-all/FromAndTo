@@ -29,5 +29,4 @@
     <style name="BottomNavigationViewTextStyle">
         <item name="android:fontFamily">@font/ubuntu_medium</item>
     </style>
-
 </resources>
