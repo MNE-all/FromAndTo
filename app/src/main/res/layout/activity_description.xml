@@ -166,7 +166,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textComment"
+                android:id="@+id/textDescription"
                 android:layout_width="343dp"
                 android:layout_height="107dp"
                 android:layout_gravity="center"

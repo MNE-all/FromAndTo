@@ -62,18 +62,16 @@ class WelcomeActivity : AppCompatActivity() {
 
         val localDB = viewModel.getLocalDB(this)
         localDB.getDao().getAllUser().asLiveData().observe(this) {
-            if (it.isNotEmpty()) {
-                for (user in it){
-                    if (user.isInAcc) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            localDB.getDao().updateUserisAcc(
-                                user.id_user,
-                               false
-                            )
-                        }
-                        val intent = Intent(this, IntroActivity::class.java)
-                        startActivity(intent)
+            for (user in it){
+                if (user.isInAcc) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        localDB.getDao().updateUserisAcc(
+                            user.id_user,
+                           false
+                        )
                     }
+                    val intent = Intent(this, IntroActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }

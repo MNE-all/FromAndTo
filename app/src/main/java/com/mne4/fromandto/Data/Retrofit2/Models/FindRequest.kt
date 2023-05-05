@@ -1,6 +1,7 @@
 package com.mne4.fromandto.Data.Retrofit2.Models
 
 data class FindRequest(
+    val Id_trip:String,
     val Surname: String?,
     val Image_url: String?,
     val Rating: Double?,

@@ -117,8 +117,6 @@ lateinit var binding: FragmentSearchBinding
                 )
                 binding.textInputEditTextFrom.setAdapter(adapter)
             }
-        }
-        activity?.let {
             viewModel.ApiGetTripsCityTo.observe(it) {
                 val adapter: ArrayAdapter<String> = ArrayAdapter(
                     fragmentView.context,

@@ -302,8 +302,8 @@
                                         android:layout_weight="1"
                                         android:fontFamily="@font/ubuntu_medium"
                                         android:gravity="center"
-                                        android:text="Поездка\n(руб)"
                                         android:textColor="?attr/textLightC"
+                                        android:text="Цена\n(руб)"
                                         android:textSize="18sp" />
 
                                     <TextView
