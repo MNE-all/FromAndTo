@@ -6,6 +6,6 @@
          <attr name="textLightC" format="color"/>
          <attr name="imgC" format="color"/>
          <attr name="cardViewBgC" format="color"/>
-        <attr name="menubarC" format="color"/>
+         <attr name="menubarC" format="color"/>
     </declare-styleable>
 </resources>
