@@ -37,7 +37,6 @@
         android:fontFamily="@font/ubuntu_medium"
         android:text="Включить уведомление?"
         android:textColor="?attr/textC"
-        android:textColorHint="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
