@@ -18,4 +18,8 @@
         <item name="imgC">@color/dark_blue</item>
         <item name="textC">@color/white</item>
     </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="fontFamily">@font/ubuntu_medium</item>
+    </style>
 </resources>

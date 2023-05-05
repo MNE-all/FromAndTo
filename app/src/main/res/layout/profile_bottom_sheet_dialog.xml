@@ -36,8 +36,10 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:gravity="center"
                     android:text="@string/switchChange"
+                    android:textColor="?attr/textC"
                     android:textSize="24sp" />
 
                 <ImageView
@@ -56,30 +58,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/ubuntu_medium"
                 android:gravity="center"
                 android:text="@string/mainInfo"
-                android:textColor="@color/black"
+                android:textColor="?attr/textC"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonChangeUserImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/material_dynamic_neutral80"
+                android:background="@drawable/custom_button_style_all"
                 android:enabled="false"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textSize="16sp"
                 android:text="Сменить изображение профиля"
-                android:textColor="@color/black"
-                app:cornerRadius="14dp" />
+                android:textColor="@color/black"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameFieldLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="30"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -89,6 +96,7 @@
                     android:id="@+id/surnameField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/Surname"
                     android:inputType="text"
                     android:maxLength="30"
@@ -101,10 +109,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
 
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -113,6 +124,7 @@
                     android:id="@+id/nameField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/name"
                     android:inputType="text"
                     android:maxLength="20"
@@ -125,7 +137,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -135,6 +152,7 @@
                     android:id="@+id/emailField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/email"
                     android:inputType="text"
                     android:text=""
@@ -158,6 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:gravity="center"
                     android:hint="дд/мм/гггг"
                     android:textColor="@color/black"
@@ -170,33 +189,41 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/ubuntu_medium"
                 android:gravity="center"
                 android:text="@string/securityInfo"
-                android:textColor="@color/black"
+                android:textColor="?attr/textC"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:id="@+id/chipSecurity"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
+                android:textAppearance="@style/chipText"
+                android:fontFamily="@font/ubuntu_medium"
                 android:text="@string/securityValidate"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:chipBackgroundColor="@color/blue"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneFieldLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:visibility="invisible"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -207,6 +234,7 @@
                     android:id="@+id/phoneField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/txtPhone"
                     android:inputType="phone"
                     android:maxLength="10"
@@ -219,9 +247,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:visibility="invisible"
-                app:counterEnabled="true"
-                app:counterMaxLength="15"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -231,6 +262,7 @@
                     android:id="@+id/passwordField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/txtPassword"
                     android:inputType="textPassword"
                     android:maxLength="15"
@@ -243,9 +275,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:visibility="invisible"
-                app:counterEnabled="true"
-                app:counterMaxLength="15"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -255,6 +290,7 @@
                     android:id="@+id/passwordFieldStill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/txtPasswordTwo"
                     android:inputType="textPassword"
                     android:maxLength="15"
@@ -266,11 +302,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/ubuntu_medium"
                 android:gravity="center"
                 android:text="@string/driverInfo"
-                android:textColor="@color/black"
+                android:textColor="?attr/textC"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -279,10 +315,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="11"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
 
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -291,6 +330,7 @@
                     android:id="@+id/passportField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/passport"
                     android:inputType="text"
                     android:maxLength="11"
@@ -304,10 +344,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="30"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
 
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -316,6 +359,7 @@
                     android:id="@+id/licenseField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:hint="@string/license"
                     android:inputType="text"
                     android:maxLength="30"
@@ -323,18 +367,21 @@
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/butSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/material_dynamic_neutral80"
+                android:background="@drawable/custom_button_style_all"
+                android:fontFamily="@font/ubuntu_medium"
                 android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textSize="16sp"
                 android:text="@string/butSave"
-                android:textColor="@color/black"
-                app:cornerRadius="14dp" />
+                android:textColor="@color/black"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
