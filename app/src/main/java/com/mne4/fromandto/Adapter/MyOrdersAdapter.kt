@@ -66,6 +66,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         holder.end_point.text = findList.get(position).TripsFull.end_point
         holder.end_point.isSelected = true
         holder.seats_amount.text = findList.get(position).TripsFull.seats_amount.toString()
+        holder.imgStar_User.setBackgroundResource(R.drawable.baseline_star_24)
+        holder.imgStar_Driver.setBackgroundResource(R.drawable.baseline_star_24)
     }
 
     class MyOrderViewHolder: RecyclerView.ViewHolder{
@@ -80,6 +82,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var start_point: TextView
         lateinit var end_point: TextView
         lateinit var seats_amount: TextView
+        lateinit var imgStar_User: ImageView
+        lateinit var imgStar_Driver: ImageView
 
         constructor(itemView: View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
@@ -95,6 +99,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             start_point =binding.txtStartPoint
             end_point =binding.txtEndPoint
             seats_amount =binding.txtSeatsAmount
+            imgStar_User =binding.imageStarUser
+            imgStar_Driver =binding.imageStarDriver
         }
     }
 }
