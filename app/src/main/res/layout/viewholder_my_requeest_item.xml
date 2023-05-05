@@ -33,13 +33,22 @@
                 android:text="Пользователь"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/imgUrlUser"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/baseline_account_circle_24" />
+                android:layout_gravity="center"
+                app:cardCornerRadius="9999dp">
+
+                <ImageView
+                    android:id="@+id/imgUrlUser"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/baseline_account_circle_24" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/txtNameUser"
@@ -193,7 +202,12 @@
                 android:gravity="center"
                 android:text="  Водитель  "
                 android:textSize="18sp" />
-
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                app:cardCornerRadius="9999dp">
             <ImageView
                 android:id="@+id/imgUrlDriver"
                 android:layout_width="60dp"
@@ -201,7 +215,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/baseline_account_circle_24" />
-
+            </androidx.cardview.widget.CardView>
             <TextView
                 android:id="@+id/txtNameDriver"
                 android:layout_width="match_parent"
