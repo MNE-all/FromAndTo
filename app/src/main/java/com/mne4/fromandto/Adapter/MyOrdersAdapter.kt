@@ -41,13 +41,11 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
 
     override fun onBindViewHolder(holder: MyOrderViewHolder, position: Int) {
         holder.surnameUser.text = findList.get(position).User.surname
-        holder.phoneUser.text = findList.get(position).User.phone
         holder.ratingUser.text = findList.get(position).User.raiting.toString()
         Picasso.get().load(findList.get(position).User.image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)
             .error(R.drawable.baseline_account_circle_24).into(holder.image_urlUser)
         holder.surnameDriver.text = findList.get(position).Driver.surname
-        holder.phoneDriver.text = findList.get(position).Driver.phone
         holder.ratingDriver.text = findList.get(position).Driver.raiting.toString()
         Picasso.get().load(findList.get(position).Driver.image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)
@@ -63,35 +61,29 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         }
 
         holder.price.text = findList.get(position).TripsFull.price.toString()
-        holder.id_trip.text = findList.get(position).TripsFull.id_trip
         holder.start_point.text = findList.get(position).TripsFull.start_point
+        holder.start_point.isSelected = true
         holder.end_point.text = findList.get(position).TripsFull.end_point
+        holder.end_point.isSelected = true
         holder.seats_amount.text = findList.get(position).TripsFull.seats_amount.toString()
-        holder.start_coord.text = findList.get(position).TripsFull.start_point_coord
-        holder.end_coord.text = findList.get(position).TripsFull.end_point_coord
-        holder.description.text = findList.get(position).TripsFull.description
-        holder.status.text = findList.get(position).TripsFull.status
+        holder.imgStar_User.setBackgroundResource(R.drawable.baseline_star_24)
+        holder.imgStar_Driver.setBackgroundResource(R.drawable.baseline_star_24)
     }
 
     class MyOrderViewHolder: RecyclerView.ViewHolder{
         lateinit var surnameUser:TextView
         lateinit var ratingUser:TextView
         lateinit var image_urlUser: ImageView
-        lateinit var phoneUser: TextView
         lateinit var surnameDriver:TextView
         lateinit var ratingDriver:TextView
         lateinit var image_urlDriver: ImageView
-        lateinit var phoneDriver: TextView
-        lateinit var id_trip: TextView
         lateinit var start_time: TextView
         lateinit var price: TextView
         lateinit var start_point: TextView
         lateinit var end_point: TextView
         lateinit var seats_amount: TextView
-        lateinit var start_coord: TextView
-        lateinit var end_coord: TextView
-        lateinit var description: TextView
-        lateinit var status: TextView
+        lateinit var imgStar_User: ImageView
+        lateinit var imgStar_Driver: ImageView
 
         constructor(itemView: View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
@@ -99,21 +91,16 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             surnameUser = binding.txtNameUser
             ratingUser = binding.txtRatingUser
             image_urlUser = binding.imgUrlUser
-            phoneUser = binding.txtUserPhone
             surnameDriver =binding.txtNameDriver
             ratingDriver=binding.txtRatingDriver
             image_urlDriver =binding.imgUrlDriver
-            phoneDriver = binding.txtDriverPhone
-            id_trip = binding.idTrip
             start_time = binding.txtTimeE
             price = binding.txtPriceOne
             start_point =binding.txtStartPoint
             end_point =binding.txtEndPoint
             seats_amount =binding.txtSeatsAmount
-            start_coord =binding.txtCoordStart
-            end_coord =binding.txtCoordEnd
-            description =binding.txtDescriptionMyrequest
-            status =binding.txtStatusTrips
+            imgStar_User =binding.imageStarUser
+            imgStar_Driver =binding.imageStarDriver
         }
     }
 }
