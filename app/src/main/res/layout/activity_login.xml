@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     tools:context=".LoginActivity">
 
 
@@ -14,7 +15,7 @@
         android:layout_height="200dp"
         android:rotation="-26"
         android:scrollbarSize="5dp"
-        app:cardBackgroundColor="#314267"
+        app:cardBackgroundColor="?attr/cardViewBgC"
         app:cardCornerRadius="60dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutЗPhone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,17 +39,18 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        app:boxCornerRadiusBottomEnd="24dp"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxCornerRadiusTopStart="24dp"
         app:endIconMode="clear_text"
         app:helperText="Обязательно*"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewProrifle"
-        app:counterEnabled="true"
-        app:counterMaxLength="10"
         app:prefixText="+7">
 
 
@@ -56,9 +58,10 @@
             android:id="@+id/phoneField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_medium"
             android:hint="Телефон"
-            android:maxLength="10"
             android:inputType="text"
+            android:maxLength="10"
             android:text=""
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,11 +71,12 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="15"
+        app:boxCornerRadiusBottomEnd="24dp"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxCornerRadiusTopStart="24dp"
         app:endIconMode="password_toggle"
         app:helperText="Обязательно*"
         app:layout_constraintBottom_toTopOf="@+id/btnEntry"
@@ -84,6 +88,7 @@
             android:id="@+id/passField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_medium"
             android:hint="Пароль"
             android:inputType="textPassword"
             android:maxLength="15"
@@ -91,10 +96,15 @@
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEntry"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"
+        android:background="@drawable/custom_button_style_light_all"
+        android:fontFamily="@font/ubuntu_medium"
+        android:textColor="?attr/textLightC"
         android:onClick="butEnter"
         android:text="Войти"
         android:textSize="18sp"
@@ -120,6 +130,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:ems="1"
+            android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:text="Нет аккаунта?"
             android:textSize="18sp" />
@@ -129,12 +140,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:ems="1"
+            android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:onClick="register"
             android:text="Зарегистрируйтесь"
-            android:textColor="#2196F3"
+            android:textColor="?attr/cardViewBgC"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -145,12 +157,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Я забыл пароль"
-        android:textColor="#2196F3"
+        android:textColor="?attr/cardViewBgC"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:fontFamily="@font/ubuntu_medium" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,5 +14,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="backgroundC">@color/blackbg</item>
+        <item name="cardViewBgC">@color/blue</item>
+        <item name="imgC">@color/dark_blue</item>
+        <item name="textC">@color/white</item>
+        <item name="textLightC">@color/black</item>
+    </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="fontFamily">@font/ubuntu_medium</item>
     </style>
 </resources>
