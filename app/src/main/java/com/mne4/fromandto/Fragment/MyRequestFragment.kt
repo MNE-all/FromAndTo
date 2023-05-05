@@ -111,7 +111,7 @@ class MyRequestFragment : Fragment() {
 
                     bottomSheetDialog.findViewById<TextView>(R.id.textComment)?.text = bindingDialogItem.txtDescriptionMyrequest.text.toString()
 
-/*
+
                     val geoCoder = Geocoder(requireContext(), Locale.getDefault())
                     var masStart = bindingDialogItem.txtCoordStart.text.split(" ")
                     val addressStart = geoCoder.getFromLocation(masStart[0].toDouble(), masStart[1].toDouble(), 2)
@@ -127,7 +127,7 @@ class MyRequestFragment : Fragment() {
                         if(bindingDialogItem.txtUserPhone.text.isNotEmpty()) bindingDialogItem.txtUserPhone.text.toString() else "Пусто"
                     bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
                         if(bindingDialogItem.txtDriverPhone.text.isNotEmpty()) bindingDialogItem.txtDriverPhone.text.toString() else "Пусто"
-*/
+
                     val drawableUser = bindingDialogItem.imgUrlUser.getDrawable()
                     val streamUser = ByteArrayOutputStream()
                     drawableUser.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamUser)
