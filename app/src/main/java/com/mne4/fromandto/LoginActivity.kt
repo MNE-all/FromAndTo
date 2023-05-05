@@ -50,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             if (!isInLocalDb) {
-                Toast.makeText(this, "Внутри создание локального пользователя", Toast.LENGTH_SHORT).show()
                 AddLocalDB(userFull, true)
             }
         }

@@ -186,9 +186,9 @@ class ProfileFragment : Fragment() {
             view.findViewById<Spinner>(R.id.spinnerGender)
             view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(USER.surname)
             view.findViewById<TextInputEditText>(R.id.nameField)?.setText(USER.name)
-            val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
 
+            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+            val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
             val date: Date?
             if (!USER.birthday.isNullOrEmpty()) {
                 date = inputFormat.parse(USER.birthday.toString()) as Date

@@ -69,7 +69,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         holder.seats_amount.text = findList.get(position).TripsFull.seats_amount.toString()
         holder.start_coord.text = findList.get(position).TripsFull.start_point_coord
         holder.end_coord.text = findList.get(position).TripsFull.end_point_coord
-        holder.start_time.text = findList.get(position).TripsFull.status
+        holder.description.text = findList.get(position).TripsFull.description
+        holder.status.text = findList.get(position).TripsFull.status
     }
 
     class MyOrderViewHolder: RecyclerView.ViewHolder{
@@ -89,6 +90,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var seats_amount: TextView
         lateinit var start_coord: TextView
         lateinit var end_coord: TextView
+        lateinit var description: TextView
         lateinit var status: TextView
 
         constructor(itemView: View):super(itemView){
@@ -110,6 +112,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             seats_amount =binding.txtSeatsAmount
             start_coord =binding.txtCoordStart
             end_coord =binding.txtCoordEnd
+            description =binding.txtDescriptionMyrequest
             status =binding.txtStatusTrips
         }
     }

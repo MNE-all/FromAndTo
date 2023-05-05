@@ -33,7 +33,6 @@ class WelcomeActivity : AppCompatActivity() {
             onExit()
         }
         viewModel.ApiGetCurrentUser.observe(this) { userAPI ->
-            Toast.makeText(this, "User  = ${userAPI}",Toast.LENGTH_SHORT).show()
             val img = findViewById<ImageView>(R.id.imageViewAvatar)
             Picasso.get().load(userAPI.image_url)
                 .placeholder(R.drawable.baseline_account_circle_24)

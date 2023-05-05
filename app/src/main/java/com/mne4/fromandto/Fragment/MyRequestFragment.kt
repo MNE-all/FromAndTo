@@ -1,11 +1,18 @@
 package com.mne4.fromandto.Fragment
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,14 +30,11 @@ import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
 import com.mne4.fromandto.MainActivity
 import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
-import com.mne4.fromandto.databinding.RequestAndTripsBottomSheetDialogBinding
 import com.mne4.fromandto.databinding.ViewholderMyRequeestItemBinding
-import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MyRequestFragment : Fragment() {
@@ -43,6 +47,7 @@ class MyRequestFragment : Fragment() {
     lateinit var userID: String
     lateinit var tripsArray: ArrayList<TripsFull>
     lateinit var fragmentActivity: FragmentActivity
+    lateinit var bottomSheetDialog: BottomSheetDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -58,6 +63,7 @@ class MyRequestFragment : Fragment() {
         }
         viewModel.UserStatus.observe(fragmentActivity) {
             userStatus = it
+
             var layoutManager: RecyclerView.LayoutManager =
                 LinearLayoutManager(
                     binding.root.context.applicationContext,
@@ -66,10 +72,11 @@ class MyRequestFragment : Fragment() {
                 )
             binding.recyclearMyOrders.layoutManager = layoutManager
         }
+
         getCurrentUser(fragmentActivity)
         ObserveTripsAdapter(fragmentActivity)
         ObserveAddMyOrderAdapter(fragmentActivity)
-
+        ObserveDeleteTrips()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,24 +87,78 @@ class MyRequestFragment : Fragment() {
             override fun onChildViewAttachedToWindow(view: View) {
                 var bindingDialogItem = ViewholderMyRequeestItemBinding.bind(view)
                 bindingDialogItem.butViewMore.setOnClickListener {
-                    var bottomSheetDialog = BottomSheetDialog(requireContext())
+                    bottomSheetDialog = BottomSheetDialog(requireContext())
                     bottomSheetDialog.setContentView(R.layout.request_and_trips_bottom_sheet_dialog)
                     bottomSheetDialog.show()
                     var status =  bindingDialogItem.txtStatusTrips
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtStatus)?.text = status.text.toString()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = "Слава"
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = "Петя"
+                    var txtStatus =   bottomSheetDialog.findViewById<TextView>(R.id.txtStatus)
+                    if(status.text.toString()=="true"){
+                        txtStatus?.text = "Активен"
+                    }else{
+                        txtStatus?.text = "Закрыт"
+                    }
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = bindingDialogItem.txtNameUser.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = bindingDialogItem.txtNameDriver.text.toString()
 
                     var start_time =bindingDialogItem.txtTimeE.text.toString()
-                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-                    val outputFormat: DateFormat = SimpleDateFormat("d MMM yyyy", Locale.ROOT)
-                    val date: Date?
-                    date = inputFormat.parse(start_time) as Date
-                    val outputText: String = outputFormat.format(date)
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = start_time
+
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingUser)?.text = bindingDialogItem.txtRatingUser.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtRatingDriver)?.text = bindingDialogItem.txtRatingDriver.text.toString()
+
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtPriceOne)?.text = bindingDialogItem.txtPriceOne.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtSeats_amount)?.text = bindingDialogItem.txtSeatsAmount.text.toString()
+
+                    bottomSheetDialog.findViewById<TextView>(R.id.textComment)?.text = bindingDialogItem.txtDescriptionMyrequest.text.toString()
 
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = outputText
+                    val geoCoder = Geocoder(requireContext(), Locale.getDefault())
+                    var masStart = bindingDialogItem.txtCoordStart.text.split(" ")
+                    val addressStart = geoCoder.getFromLocation(masStart[0].toDouble(), masStart[1].toDouble(), 2)
+                    var nameAdressStart = addressStart?.get(0)?.getAddressLine(0)
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtAddressStart)?.text = nameAdressStart.toString()
 
+                    var masEnd = bindingDialogItem.txtCoordEnd.text.split(" ")
+                    val addressEnd = geoCoder.getFromLocation(masEnd[0].toDouble(), masEnd[1].toDouble(), 2)
+                    var nameAdressEnd= addressEnd?.get(0)?.getAddressLine(0)
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = nameAdressEnd.toString()
+
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneUser)?.text =
+                        if(bindingDialogItem.txtUserPhone.text.isNotEmpty()) bindingDialogItem.txtUserPhone.text.toString() else "Пусто"
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
+                        if(bindingDialogItem.txtDriverPhone.text.isNotEmpty()) bindingDialogItem.txtDriverPhone.text.toString() else "Пусто"
+
+                    val drawableUser = bindingDialogItem.imgUrlUser.getDrawable()
+                    val streamUser = ByteArrayOutputStream()
+                    drawableUser.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamUser)
+                    val byteArrayUser = streamUser.toByteArray()
+                    val bmpUser = BitmapFactory.decodeByteArray(byteArrayUser, 0, byteArrayUser.size)
+                    bottomSheetDialog.findViewById<ImageView>(R.id.imgUrlUser)?.setImageBitmap(bmpUser)
+
+                    val drawableDriver = bindingDialogItem.imgUrlUser.getDrawable()
+                    val streamDriver = ByteArrayOutputStream()
+                    drawableDriver.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, streamDriver)
+                    val byteArrayDriver = streamDriver.toByteArray()
+                    val bmpDriver = BitmapFactory.decodeByteArray(byteArrayDriver, 0, byteArrayDriver.size)
+                    bottomSheetDialog.findViewById<ImageView>(R.id.imgUrlUser)?.setImageBitmap(bmpDriver)
+
+                    bottomSheetDialog.findViewById<AppCompatButton>(R.id.txtDeleteTrips)?.setOnClickListener {
+                        var dialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+                        dialog.setTitle("Подтверждение удаления!")
+                        dialog.setMessage("Подтвердите что вы хотите удалить эту поездку!")
+                        dialog.setPositiveButton(
+                            "Подтвердить",
+                            DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
+                                var id_trips = bindingDialogItem.idTrip.text.toString()
+                                viewModel.deleteTrips(id_trips)
+                            })
+                        dialog.setNegativeButton("Отменить",
+                            DialogInterface.OnClickListener { dialog: DialogInterface?, i ->
+                            dialog?.dismiss()
+                        })
+
+                        dialog.show()
+                    }
                 }
             }
 
@@ -123,6 +184,29 @@ class MyRequestFragment : Fragment() {
         }
     }
 
+    fun ObserveDeleteTrips(){
+        viewModel.ApiDeleteTrips.observe(requireActivity()){
+            if(it){
+                Toast.makeText(requireContext(),"Успешно поездка удалена!",Toast.LENGTH_SHORT).show()
+                bottomSheetDialog.dismiss()
+                AnimationBut(true)
+                InitMyRequest()
+
+
+            }
+        }
+    }
+    fun InitMyRequest(){
+        if (userStatus == "User") {
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
+            viewModel.getMyOrdersTripsCurrentUser(userID, false)
+        } else {
+            binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+            binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
+            viewModel.getMyOrdersTripsCurrentUser(userID, true)
+        }
+    }
     fun AnimationBut(isLoad:Boolean){
         binding.progressBar2.isVisible = isLoad
         binding.recyclearMyOrders.isVisible = !isLoad
@@ -132,15 +216,7 @@ class MyRequestFragment : Fragment() {
             for (user in it) {
                 if (user.isInAcc) {
                     userID = user.id_user
-                    if (userStatus == "User") {
-                        binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
-                        binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
-                        viewModel.getMyOrdersTripsCurrentUser(userID, false)
-                    } else {
-                        binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
-                        binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
-                        viewModel.getMyOrdersTripsCurrentUser(userID, true)
-                    }
+                    InitMyRequest()
                 }
             }
         }
