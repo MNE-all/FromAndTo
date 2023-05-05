@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
+import android.media.VolumeShaper.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -63,6 +64,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.coroutines.Continuation
 
 
 class CreateRequestActivity : AppCompatActivity(),
@@ -162,6 +164,7 @@ class CreateRequestActivity : AppCompatActivity(),
             false
         }
 
+
         //Распознавание темы пользователя для карты
         when (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) {
             android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
@@ -205,8 +208,8 @@ class CreateRequestActivity : AppCompatActivity(),
         val btnCreate = findViewById<Button>(R.id.btnCreate)
         btnCreate.setOnClickListener {
             if (!whenText.text.isNullOrEmpty() &&
-                !txtFrom.text.isNullOrEmpty() &&
-                !txtTo.text.isNullOrEmpty() &&
+                !txtFrom.text.isNullOrEmpty() && txtFrom.text == "Откуда" &&
+                !txtTo.text.isNullOrEmpty() && txtFrom.text == "Куда" &&
                 !price.text.isNullOrEmpty()) {
                 val trip = Trips(
                     price.text.toString().toFloat(),

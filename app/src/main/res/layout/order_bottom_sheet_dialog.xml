@@ -29,15 +29,19 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="14dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/linearTrip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/view_order_backgroung"
                         android:orientation="vertical">
 
                         <TextView
@@ -119,65 +123,73 @@
                                 app:layout_constraintTop_toTopOf="@+id/txtEnd" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.cardview.widget.CardView
-                            app:cardCornerRadius="14dp"
+                        <TextView
+                            android:id="@+id/tripPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="16dp">
+                            android:text="Цена:"
+                            android:layout_margin="20dp"
+                            android:textSize="18sp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            app:cardCornerRadius="14dp">
+
                             <TextView
-                                android:id="@+id/textComment"
-                                android:layout_width="343dp"
-                                android:layout_height="107dp"
+                                android:id="@+id/textDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="15dp"
-                                android:background="@color/white" />
+                                android:background="@color/white"
+                                android:padding="14dp" />
                         </androidx.cardview.widget.CardView>
 
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/constDrive"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/view_order_backgroung">
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:id="@+id/linearMark"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/imgDrive"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:layout_margin="14dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imgUrl"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    app:srcCompat="@drawable/baseline_account_circle_24" />
 
                                 <TextView
-                                    android:id="@+id/txtNames"
+                                    android:id="@+id/txtName"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="5dp"
                                     android:text="Александр"
-                                    android:textSize="18sp" />
+                                    android:textSize="18sp"
+                                    app:layout_constraintEnd_toEndOf="@+id/imgUrl"
+                                    app:layout_constraintStart_toStartOf="@+id/imgUrl"
+                                    app:layout_constraintTop_toBottomOf="@+id/imgUrl" />
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/constraintLayoutRaitng"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    app:layout_constraintEnd_toEndOf="@+id/txtName"
-                                    app:layout_constraintStart_toStartOf="@+id/txtName"
-                                    app:layout_constraintTop_toBottomOf="@+id/txtName">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
 
                                     <ImageView
                                         android:id="@+id/imageView2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginEnd="5dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toStartOf="@+id/txtRating"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
                                         app:srcCompat="@drawable/baseline_star_24" />
@@ -192,46 +204,32 @@
                                         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                                         app:layout_constraintStart_toEndOf="@+id/imageView2"
                                         app:layout_constraintTop_toTopOf="@+id/imageView2" />
-                                </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
+
                             </LinearLayout>
 
                             <ImageView
-                                android:id="@+id/imgDrive"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-
-                                android:layout_marginStart="83dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/linearMark"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/baseline_account_circle_24" />
-
-                            <TextView
-                                android:id="@+id/textView8"
-                                android:layout_width="302dp"
-                                android:layout_height="23dp"
-                                android:layout_marginTop="10dp"
+                                android:id="@+id/imgPhone"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="Телефон: "
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/imgDrive" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                android:padding="32dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/baseline_phone_24" />
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-
             <Button
-                android:layout_margin="14dp"
+                android:id="@+id/btnResponse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="14dp"
                 android:text="Откликнуться"
                 app:cornerRadius="16dp" />
         </LinearLayout>
