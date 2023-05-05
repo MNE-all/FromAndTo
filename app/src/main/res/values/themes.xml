@@ -20,6 +20,7 @@
         <item name="textC">@color/black</item>
         <item name="textLightC">@color/white</item>
         <item name="menubarC">@color/white</item>
+        <item name="statucC">@color/gray</item>
     </style>
 
     <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
