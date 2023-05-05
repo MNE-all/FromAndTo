@@ -14,5 +14,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="cardViewBgC">@color/dark_blue</item>
+        <item name="imgC">@color/blue</item>
+        <item name="textC">#000000</item>
     </style>
 </resources>
