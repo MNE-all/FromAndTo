@@ -102,7 +102,12 @@ class MyRequestFragment : Fragment() {
                     bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = list.User.surname
                     bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = list.Driver.surname
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = list.TripsFull.start_time
+                    val inputFormat: DateFormat =SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+                    val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+                    val date: Date?
+                    date = inputFormat.parse(list.TripsFull.start_time) as Date
+                    val outputText: String = outputFormat.format(date)
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = outputText
 
                     bottomSheetDialog.findViewById<TextView>(R.id.txtRatingUser)?.text = list.User.raiting.toString()
                     bottomSheetDialog.findViewById<TextView>(R.id.txtRatingDriver)?.text = list.Driver.raiting.toString()
@@ -124,11 +129,13 @@ class MyRequestFragment : Fragment() {
                     var nameAdressEnd= addressEnd?.get(0)?.getAddressLine(0)
                     bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = nameAdressEnd.toString()
 
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneUser)?.text =
-                        if(!list.User.phone.isNullOrEmpty()) list.User.phone else "Пусто"
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
-                        if(!list.Driver.phone.isNullOrEmpty())list.Driver.phone else "Пусто"
+                    if(userStatus == "User") {
+                        bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneUser)?.text =
+                            if (!list.User.phone.isNullOrEmpty()) list.User.phone else "Пусто"
 
+                        bottomSheetDialog.findViewById<TextView>(R.id.txtPhoneDriver)?.text =
+                            if (!list.Driver.phone.isNullOrEmpty()) list.Driver.phone else "Пусто"
+                    }
 
                     Picasso.get().load(list.User.image_url)
                         .placeholder(R.drawable.baseline_account_circle_24)
