@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="dt">
-         <attr name="bgC" format="color"/>
+         <attr name="backgroundC" format="color"/>
          <attr name="textC" format="color"/>
+         <attr name="textLightC" format="color"/>
          <attr name="imgC" format="color"/>
          <attr name="cardViewBgC" format="color"/>
     </declare-styleable>

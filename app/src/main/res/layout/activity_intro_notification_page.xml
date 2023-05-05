@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     tools:context=".IntroActivity">
 
     <androidx.cardview.widget.CardView
@@ -59,13 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:background="@drawable/custom_button_style_all"
+            android:background="@drawable/custom_button_style_light_all"
             android:ems="1"
             android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Да"
-            android:textColor="@color/black"
+            android:textColor="?attr/textLightC"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -74,13 +75,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:background="@drawable/custom_button_style_all"
+            android:background="@drawable/custom_button_style_light_all"
             android:ems="1"
             android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:maxWidth="320dp"
             android:text="Нет"
-            android:textColor="@color/black"
+            android:textColor="?attr/textLightC"
             android:textSize="18sp" />
     </LinearLayout>
 

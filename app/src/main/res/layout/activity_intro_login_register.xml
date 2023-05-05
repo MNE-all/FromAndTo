@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     tools:context=".IntroActivity">
 
     <androidx.cardview.widget.CardView
@@ -47,10 +48,10 @@
         android:id="@+id/buttonRegisterLoginRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_button_style_all"
         android:fontFamily="@font/ubuntu_medium"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:background="@drawable/custom_button_style_light_all"
+        android:textColor="?attr/textLightC"
         android:layout_margin="20sp"
         android:text="Зарегистрироваться"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,10 +63,10 @@
         android:id="@+id/buttonLoginLoginRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_button_style_all"
         android:fontFamily="@font/ubuntu_medium"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:background="@drawable/custom_button_style_light_all"
+        android:textColor="?attr/textLightC"
         android:layout_margin="20sp"
         android:text="Войти"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegisterLoginRegister"

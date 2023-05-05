@@ -33,8 +33,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/dark_blue"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:background="?attr/cardViewBgC"
                 android:onClick="radioFrom"
                 android:orientation="horizontal">
 
@@ -54,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:gravity="center|left"
                     android:paddingLeft="10dp"
                     android:text="Откуда"
@@ -65,9 +67,10 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/red"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
 
+                android:background="@color/red"
                 android:onClick="radioTo"
                 android:orientation="horizontal">
 
@@ -86,6 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:gravity="center|left"
                     android:paddingLeft="10dp"
                     android:text="Куда"
@@ -119,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Когда"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:inputType="text"
                     android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +136,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Количество пассажиров"
-                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="?attr/textC"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -167,7 +173,8 @@
                     android:layout_marginRight="24dp"
                     android:gravity="center"
                     android:text="1"
-                    android:textColor="@color/white"
+                    android:fontFamily="@font/ubuntu_medium"
+                    android:textColor="?attr/textC"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -207,6 +214,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:hint="Введите стоимость поездки за пассажира"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:textColorHint="@color/white"
@@ -232,19 +240,22 @@
                     android:layout_height="match_parent"
                     android:gravity="top|left"
                     android:hint="Введите описание"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:inputType="textMultiLine"
                     android:singleLine="false"
                     android:textColorHint="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCreate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-
+                android:background="@drawable/custom_button_style_light_all"
+                android:fontFamily="@font/ubuntu_medium"
                 android:text="Создать"
+                android:textColor="?attr/textLightC"
                 app:cornerRadius="14dp" />
         </LinearLayout>
     </ScrollView>

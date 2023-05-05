@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     tools:context=".LoginActivity">
 
 
@@ -101,12 +102,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
         android:layout_marginEnd="120dp"
-        android:background="@drawable/custom_button_style_all"
+        android:background="@drawable/custom_button_style_light_all"
         android:fontFamily="@font/ubuntu_medium"
+        android:textColor="?attr/textLightC"
         android:onClick="butEnter"
         android:text="Войти"
         android:textSize="18sp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +146,7 @@
             android:gravity="center"
             android:onClick="register"
             android:text="Зарегистрируйтесь"
-            android:textColor="@color/blue"
+            android:textColor="?attr/cardViewBgC"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -156,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Я забыл пароль"
-        android:textColor="@color/blue"
+        android:textColor="?attr/cardViewBgC"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

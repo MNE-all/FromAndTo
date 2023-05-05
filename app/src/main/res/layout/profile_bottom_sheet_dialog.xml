@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/transperent">
+    android:background="?attr/backgroundC">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
@@ -70,12 +70,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/custom_button_style_all"
+                android:background="@drawable/custom_button_style_light_all"
                 android:enabled="false"
                 android:fontFamily="@font/ubuntu_medium"
                 android:textSize="16sp"
                 android:text="Сменить изображение профиля"
-                android:textColor="@color/black"/>
+                android:textColor="?attr/textLightC"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameFieldLayout"
@@ -209,9 +209,9 @@
                 android:fontFamily="@font/ubuntu_medium"
                 android:text="@string/securityValidate"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?attr/textLightC"
                 android:textSize="18sp"
-                app:chipBackgroundColor="@color/blue"/>
+                app:chipBackgroundColor="?attr/cardViewBgC"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneFieldLayout"
@@ -374,14 +374,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/custom_button_style_all"
+                android:background="@drawable/custom_button_style_light_all"
                 android:fontFamily="@font/ubuntu_medium"
                 android:gravity="center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:textSize="16sp"
                 android:text="@string/butSave"
-                android:textColor="@color/black"/>
+                android:textColor="?attr/textLightC"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
