@@ -31,15 +31,17 @@
                 app:srcCompat="@drawable/baseline_horizontal_rule_24" />
 
             <LinearLayout
+                android:tag="radioFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginEnd="1dp"
-                android:background="?attr/cardViewBgC"
-                android:onClick="radioFrom"
+                android:background="?attr/cardViewBgC"==
+                android:onClick="radioClick"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:tag="radioFrom"
                     android:id="@+id/radioFrom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,7 +50,7 @@
                     android:buttonTint="@color/lime"
                     android:checked="true"
                     android:gravity="center"
-                    android:onClick="radioFrom" />
+                    android:onClick="radioClick" />
 
                 <TextView
                     android:id="@+id/txtFrom"
@@ -65,24 +67,25 @@
 
             <LinearLayout
 
+                android:tag="radioTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginEnd="1dp"
-
                 android:background="@color/red"
-                android:onClick="radioTo"
+                android:onClick="radioClick"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radioTo"
+                    android:tag="radioTo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="0"
                     android:buttonTint="@color/lime"
                     android:gravity="center"
-                    android:onClick="radioTo" />
+                    android:onClick="radioClick" />
 
                 <TextView
                     android:id="@+id/txtTo"

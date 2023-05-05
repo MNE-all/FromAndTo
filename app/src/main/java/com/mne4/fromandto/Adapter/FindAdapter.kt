@@ -12,6 +12,10 @@ import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.ActivityFindBinding
 import com.mne4.fromandto.databinding.ViewholderOrderBinding
 import com.squareup.picasso.Picasso
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
 
@@ -32,12 +36,20 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: FindViewHolder, position: Int) {
+
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
+        val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+        val date: Date?
+        if (!findList.get(position).Start_Time.isEmpty()) {
+            date = inputFormat.parse(findList.get(position).Start_Time) as Date
+            val outputText: String = outputFormat.format(date)
+            holder.start_time.text = outputText
+        }
         holder.surname.text = findList.get(position).Surname
         holder.rating.text = findList.get(position).Rating.toString()
         Picasso.get().load(findList.get(position).Image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)
             .error(R.drawable.baseline_account_circle_24).into(holder.image_url)
-        holder.start_time.text = findList.get(position).Start_Time
         holder.price.text = findList.get(position).Price.toString()
         holder.start_point.text = findList.get(position).Start_Point
         holder.end_point.text = findList.get(position).End_Point

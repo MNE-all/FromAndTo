@@ -7,7 +7,12 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -22,12 +27,30 @@ import com.mne4.fromandto.Data.Retrofit2.Models.Trips
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.RequestPoint
+import com.yandex.mapkit.RequestPointType
+import com.yandex.mapkit.directions.DirectionsFactory
+import com.yandex.mapkit.directions.driving.DrivingOptions
+import com.yandex.mapkit.directions.driving.DrivingRoute
+import com.yandex.mapkit.directions.driving.DrivingRouter
+import com.yandex.mapkit.directions.driving.DrivingSession
+import com.yandex.mapkit.directions.driving.DrivingSession.DrivingRouteListener
+import com.yandex.mapkit.directions.driving.VehicleOptions
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.layers.ObjectEvent
-import com.yandex.mapkit.map.*
+import com.yandex.mapkit.map.CameraListener
+import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.CameraUpdateReason
 import com.yandex.mapkit.map.Map
+import com.yandex.mapkit.map.MapObjectCollection
+import com.yandex.mapkit.map.VisibleRegionUtils
 import com.yandex.mapkit.mapview.MapView
-import com.yandex.mapkit.search.*
+import com.yandex.mapkit.search.Response
+import com.yandex.mapkit.search.SearchFactory
+import com.yandex.mapkit.search.SearchManager
+import com.yandex.mapkit.search.SearchManagerType
+import com.yandex.mapkit.search.SearchOptions
+import com.yandex.mapkit.search.Session
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.mapkit.user_location.UserLocationObjectListener
 import com.yandex.mapkit.user_location.UserLocationView
@@ -39,14 +62,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 
-class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
-    Session.SearchListener, CameraListener {
+class CreateRequestActivity : AppCompatActivity(),
+    Session.SearchListener, CameraListener, DrivingRouteListener, UserLocationObjectListener {
     val viewModel: DataModel by viewModels()
     lateinit var mapView: MapView
     lateinit var mapKit: MapKit
+    lateinit var drivingRouter: DrivingRouter
+    lateinit var mapObjects: MapObjectCollection
 
     lateinit var userStatus: String
     lateinit var radioFrom: RadioButton
@@ -104,6 +129,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             textPassengerCount.text = passengerCount.toString()
         }
         btnDeletePass.setOnClickListener {
+            submitRequest()
             if (passengerCount - 1 > 0) {
                 passengerCount--
                 textPassengerCount.text = passengerCount.toString()
@@ -112,16 +138,12 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
 
-        // Перемещение карты на колледж
-        mapView.map.move(CameraPosition(Point(60.023686, 30.228692), 17.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 1f), null
-        )
+
 
         mapKit = MapKitFactory.getInstance()
 
+
         locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
-
-
         locationMapKit.isVisible = true
         locationMapKit.setObjectListener(this)
 
@@ -179,7 +201,6 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
 
         // Добавление поездки/запроса на поездку
-
         val description = findViewById<TextInputEditText>(R.id.editTextDescription)
         val btnCreate = findViewById<Button>(R.id.btnCreate)
         btnCreate.setOnClickListener {
@@ -251,35 +272,33 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         return !mIsGPSEnabled && !mIsNetworkEnabled
     }
 
-    fun radioFrom(view: View) {
-        radioTo.isChecked = false
-        radioFrom.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_on_24", "drawable", this.packageName)
-        imgPin.setImageResource(imgId)
-        if (txtTo.text != "Откуда") {
-            mapView.map.move(CameraPosition(START_POSITION_COORD, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 1f), null
-            )
+    fun radioClick(view: View) {
+        if (view.tag == "radioTo") {
+            radioFrom.isChecked = false
+            radioTo.isChecked = true
+            imgPin.setImageResource(R.drawable.baseline_location_off_24)
+            if (txtTo.text != "Куда") {
+                mapView.map.move(
+                    CameraPosition(END_POSITION_COORD, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+                )
+            }
         }
-
-
-    }
-
-    fun radioTo(view: View) {
-        radioFrom.isChecked = false
-        radioTo.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_off_24", "drawable", this.packageName)
-        imgPin.setImageResource(imgId)
-        if (txtTo.text != "Куда") {
-            mapView.map.move(CameraPosition(END_POSITION_COORD, 17.0f, 0.0f, 0.0f),
-                Animation(Animation.Type.SMOOTH, 1f), null
-            )
+        else if (view.tag == "radioFrom") {
+            radioFrom.isChecked = true
+            radioTo.isChecked = false
+            imgPin.setImageResource(R.drawable.baseline_location_on_24)
+            if (txtFrom.text != "Откуда") {
+                mapView.map.move(CameraPosition(START_POSITION_COORD, 17.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f), null
+                )
+            }
         }
     }
 
 
     override fun onStop() {
-        mapView!!.onStop()
+        mapView.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
     }
@@ -287,11 +306,11 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        mapView!!.onStart()
+        mapView.onStart()
     }
 
     override fun onSearchResponse(response: Response) {
-        val mapObjects = mapView!!.map.mapObjects
+        val mapObjects = mapView.map.mapObjects
         mapObjects.clear()
         for (searchResult in response.collection.children) {
             val resultLocation = searchResult.obj!!.geometry[0].point
@@ -334,9 +353,8 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val geoCoder = Geocoder(applicationContext, Locale.getDefault())
+
                     val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
-
-
 
 
                     var nameAdress = address?.get(0)?.getAddressLine(0)
@@ -384,6 +402,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         }
     }
 
+    // Поиск на карте
     private fun submitQuery(query: String) {
         searchSession = searchManager.submit(
             query,
@@ -392,31 +411,60 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
             this
         )
     }
-    override fun onObjectAdded(userLocation: UserLocationView) {
-//        locationMapKit.setAnchor(
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
-//        )
-//        userLocation.arrow.setIcon(ImageProvider.fromResource(this,R.drawable.baseline_directions_car_24))
-//        var picIcon = userLocation.pin.useCompositeIcon()
-//        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
-//            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
-//
-//        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
-//        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
-//        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
-//
-//        mapView.map.move(CameraPosition(Point(0.5,0.5), 17.0f, 0.0f, 0.0f),
-//            Animation(Animation.Type.SMOOTH, 1f), null
-//        )
+
+    // Построение маршрута
+    lateinit var drivingSession: DrivingSession
+    private fun submitRequest() {
+        val drivingOptions = DrivingOptions()
+        val vehicleOptions = VehicleOptions()
+        val requestPoints = ArrayList<RequestPoint>()
+        mapObjects = mapView.map.mapObjects.addCollection()
+        Log.d("MapKitDebug", "${mapObjects}")
+
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
+        requestPoints.add(
+            RequestPoint(
+                START_POSITION_COORD,
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
+        requestPoints.add(
+            RequestPoint(
+                END_POSITION_COORD,
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
+        drivingSession =
+            drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this)
+
+    }
+
+    override fun onDrivingRoutes(routes: MutableList<DrivingRoute>) {
+        for (route in routes) {
+            mapObjects.addPolyline(route.geometry)
+        }
+    }
+
+    override fun onDrivingRoutesError(error: Error) {
+        var errorMessage = getString(R.string.unknown_error_message)
+        if (error is RemoteError) {
+            errorMessage = getString(R.string.remote_error_message)
+        } else if (error is NetworkError) {
+            errorMessage = getString(R.string.network_error_message)
+        }
+
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onObjectAdded(p0: UserLocationView) {
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
-
     }
 
     override fun onObjectUpdated(p0: UserLocationView, p1: ObjectEvent) {
-
     }
 
 

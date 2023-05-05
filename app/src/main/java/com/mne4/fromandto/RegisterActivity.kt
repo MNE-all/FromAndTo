@@ -19,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class RegisterActivity : AppCompatActivity() {
+class  RegisterActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
     lateinit var surname: TextInputEditText
     lateinit var name :TextInputEditText
