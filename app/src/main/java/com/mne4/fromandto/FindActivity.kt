@@ -2,11 +2,13 @@ package com.mne4.fromandto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
 import com.mne4.fromandto.Adapter.FindAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
@@ -132,8 +134,9 @@ class FindActivity : AppCompatActivity() {
             binding.txtInfoResult.text = "Ничего не найдено!"
         }
     }
-    fun getRequestSearch(user: User, trips:TripsFull){
+    fun getRequestSearch(user: User, trips: TripsFull){
         var tripsFind = FindRequest(
+            trips.id_trip,
             "${user.surname}",
             "${user.image_url}",
             user.raiting,
@@ -151,6 +154,18 @@ class FindActivity : AppCompatActivity() {
         if (count == 0) {
             adapter = FindAdapter(this, listFind)
             binding.recyclerFind.adapter = adapter
+            binding.recyclerFind.addOnChildAttachStateChangeListener(object : OnChildAttachStateChangeListener {
+                override fun onChildViewAttachedToWindow(view: View) {
+                    view.findViewById<Button>(R.id.butViewMore)?.setOnClickListener {
+                        
+                    }
+                }
+
+                override fun onChildViewDetachedFromWindow(view: View) {
+
+                }
+
+            })
             binding.progressBar.isVisible = false
         }
     }

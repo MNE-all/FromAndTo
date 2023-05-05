@@ -10,5 +10,7 @@ data class TripsFull (
     val seats_amount: Int,
     val start_point: String,
     val end_point: String,
-    val status: String
+    val status: String,
+    val start_point_coord: String,
+    val end_point_coord: String
 )

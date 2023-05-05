@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
+import android.media.VolumeShaper.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -63,6 +64,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.coroutines.Continuation
 
 
 class CreateRequestActivity : AppCompatActivity(),
@@ -163,6 +165,14 @@ class CreateRequestActivity : AppCompatActivity(),
         }
 
 
+        when (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) {
+            android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
+                mapView.map.isNightModeEnabled = false
+            }
+            android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
+                mapView.map.isNightModeEnabled = true
+            }
+        }
 
         whenText = findViewById(R.id.TextInputEditTextWhen)
         val constraintsBuilder = CalendarConstraints.Builder()
