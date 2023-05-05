@@ -15,6 +15,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0000"
+        android:fontFamily="@font/ubuntu_medium"
         android:inputType="number"
         android:textColor="@color/black"
         android:textSize="40sp"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     tools:context=".IntroActivity">
 
     <androidx.cardview.widget.CardView
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:rotation="-26"
         android:scrollbarSize="5dp"
-        app:cardBackgroundColor="#314267"
+        app:cardBackgroundColor="?attr/cardViewBgC"
         app:cardCornerRadius="120dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +35,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/ubuntu_medium"
         android:text="Включить уведомление?"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
+        android:textColor="?attr/textC"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,29 +54,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonNotificationOn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="1"
+            android:background="@drawable/custom_button_style_light_all"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:maxWidth="320dp"
-            android:text="Да" />
+            android:text="Да"
+            android:textColor="?attr/textLightC"
+            android:textSize="18sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonNotificationOff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="1"
+            android:background="@drawable/custom_button_style_light_all"
             android:ems="1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/ubuntu_medium"
             android:gravity="center"
             android:maxWidth="320dp"
-            android:text="Нет" />
+            android:text="Нет"
+            android:textColor="?attr/textLightC"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     android:id="@+id/rootElement"
     tools:context=".RegisterActivity">
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView10"
-        android:layout_width="310dp"
-        android:layout_height="92dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:rotation="0"
         android:scrollbarSize="5dp"
-        app:cardBackgroundColor="#243E77"
-        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="?attr/cardViewBgC"
+        app:cardCornerRadius="9999dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,9 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textColor="?attr/textLightC"
             android:rotation="0"
+            android:padding="20dp"
             android:text="@string/register"
-            android:textColor="#C0C1C5"
             android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
@@ -50,8 +55,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusTopStart="24dp"
             app:helperText="Обязательно*"
             app:helperTextTextColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
+                android:textSize="18sp"
+                android:fontFamily="@font/ubuntu_medium"
                 android:inputType="textEmailAddress"
                 android:maxLength="20"
                 android:text="" />
@@ -77,10 +86,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusTopStart="24dp"
             app:endIconMode="clear_text"
-
             app:helperText="Обязательно*"
             app:helperTextTextColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
+                android:textSize="18sp"
+                android:fontFamily="@font/ubuntu_medium"
                 android:inputType="text"
                 android:maxLength="20"
                 android:text="" />
@@ -102,9 +114,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="10"
-
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusTopStart="24dp"
             app:endIconMode="custom"
             app:helperText="Обязательно*"
             app:helperTextTextColor="@color/red"
@@ -119,6 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPhone"
+                android:textSize="18sp"
+                android:fontFamily="@font/ubuntu_medium"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:text="" />
@@ -129,10 +144,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="15"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusTopStart="24dp"
             app:endIconMode="password_toggle"
-
             app:helperText="Обязательно*"
             app:helperTextTextColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -145,20 +161,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txtPassword"
+                android:textSize="18sp"
+                android:fontFamily="@font/ubuntu_medium"
                 android:inputType="textPassword"
                 android:maxLength="15"
                 android:text="" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/butReg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:onClick="butReg"
         android:text="@string/txtReg"
+        android:textSize="18sp"
+        android:background="@drawable/custom_button_style_light_all"
+        android:fontFamily="@font/ubuntu_medium"
+        android:textColor="?attr/textLightC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
