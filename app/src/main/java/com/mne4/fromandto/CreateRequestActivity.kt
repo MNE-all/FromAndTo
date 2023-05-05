@@ -165,6 +165,7 @@ class CreateRequestActivity : AppCompatActivity(),
         }
 
 
+        //Распознавание темы пользователя для карты
         when (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) {
             android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
                 mapView.map.isNightModeEnabled = false

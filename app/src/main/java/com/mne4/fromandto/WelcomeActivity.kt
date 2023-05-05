@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
@@ -20,6 +21,14 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+        viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
+            for (user in it) {
+                if (user.isInAcc) {
+                    viewModel.getCurrentUser(user.id_user)
+                    Toast.makeText(this, "idUser  = ${user.id_user}",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
         findViewById<TextView>(R.id.textViewExitAccount).setOnClickListener {
             onExit()
         }
@@ -32,13 +41,7 @@ class WelcomeActivity : AppCompatActivity() {
             val welcomeText = "Добро пожаловать, ${userAPI.name}!"
             findViewById<TextView>(R.id.textViewWelcome).text = welcomeText
         }
-        viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this) {
-            for (user in it) {
-                if (user.isInAcc) {
-                    viewModel.getCurrentUser(user.id_user)
-                }
-            }
-        }
+
 
 
     }

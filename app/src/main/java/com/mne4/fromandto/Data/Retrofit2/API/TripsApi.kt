@@ -56,6 +56,6 @@ interface TripsApi {
         fun putEditTrips(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>
 
     @DELETE("Trips/Delete")
-    fun deleteTrips(@Query("guid") guid: String): Call<ResponseBody>
+    fun deleteTrips(@Query("guid") guid: String): Call<Boolean>
 
 }

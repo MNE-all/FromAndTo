@@ -95,11 +95,8 @@ class FindActivity : AppCompatActivity() {
         }else if(txtFrom !=""){
             ReadByStart()
         }
-
-
-
-
     }
+
     fun ReadDateStartToDateEndToFrom(){
         viewModel.getReadDateStartToDateEndToFrom(
             outputDate1,

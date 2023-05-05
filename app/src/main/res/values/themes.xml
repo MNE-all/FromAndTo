@@ -14,5 +14,20 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="backgroundC">@color/white</item>
+        <item name="cardViewBgC">@color/dark_blue</item>
+        <item name="imgC">@color/blue</item>
+        <item name="textC">@color/black</item>
+        <item name="textLightC">@color/white</item>
+        <item name="menubarC">@color/white</item>
     </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="fontFamily">@font/ubuntu_medium</item>
+    </style>
+    
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
+    </style>
+
 </resources>

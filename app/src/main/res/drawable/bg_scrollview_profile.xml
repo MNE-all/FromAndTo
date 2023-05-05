@@ -7,7 +7,7 @@
                 android:color="#F2000000" >
             </stroke>
             <solid
-                android:color="#FDF4E3">
+                android:color="?attr/imgC">
             </solid>
             <corners
                 android:topRightRadius="25dp"

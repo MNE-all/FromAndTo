@@ -8,11 +8,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.Data.Retrofit2.Models.MyOrder
 import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
+import com.mne4.fromandto.databinding.RequestAndTripsBottomSheetDialogBinding
 import com.mne4.fromandto.databinding.ViewholderMyRequeestItemBinding
 import com.squareup.picasso.Picasso
 import java.text.DateFormat
@@ -38,30 +40,34 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
     }
 
     override fun onBindViewHolder(holder: MyOrderViewHolder, position: Int) {
-        holder.surnameUser.text = findList.get(position).SurnameUser
-        holder.ratingUser.text = findList.get(position).RatingUser.toString()
-        Picasso.get().load(findList.get(position).Image_urlUser.toString())
+        holder.surnameUser.text = findList.get(position).User.surname
+        holder.ratingUser.text = findList.get(position).User.raiting.toString()
+        Picasso.get().load(findList.get(position).User.image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)
             .error(R.drawable.baseline_account_circle_24).into(holder.image_urlUser)
-        holder.surnameDriver.text = findList.get(position).SurnameDriver
-        holder.ratingDriver.text = findList.get(position).RatingDriver.toString()
-        Picasso.get().load(findList.get(position).Image_urlDriver.toString())
+        holder.surnameDriver.text = findList.get(position).Driver.surname
+        holder.ratingDriver.text = findList.get(position).Driver.raiting.toString()
+        Picasso.get().load(findList.get(position).Driver.image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)
             .error(R.drawable.baseline_account_circle_24).into(holder.image_urlDriver)
 
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
         val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
         val date: Date?
-        if (!findList.get(position).Start_Time.isEmpty()) {
-            date = inputFormat.parse(findList.get(position).Start_Time) as Date
+        if (!findList.get(position).TripsFull.start_time.isEmpty()) {
+            date = inputFormat.parse(findList.get(position).TripsFull.start_time) as Date
             val outputText: String = outputFormat.format(date)
             holder.start_time.text = outputText
         }
 
-        holder.price.text = findList.get(position).Price.toString()
-        holder.start_point.text = findList.get(position).Start_Point
-        holder.end_point.text = findList.get(position).End_Point
-        holder.seats_amount.text = findList.get(position).Seats_amount.toString()
+        holder.price.text = findList.get(position).TripsFull.price.toString()
+        holder.start_point.text = findList.get(position).TripsFull.start_point
+        holder.start_point.isSelected = true
+        holder.end_point.text = findList.get(position).TripsFull.end_point
+        holder.end_point.isSelected = true
+        holder.seats_amount.text = findList.get(position).TripsFull.seats_amount.toString()
+        holder.imgStar_User.setBackgroundResource(R.drawable.baseline_star_24)
+        holder.imgStar_Driver.setBackgroundResource(R.drawable.baseline_star_24)
     }
 
     class MyOrderViewHolder: RecyclerView.ViewHolder{
@@ -76,6 +82,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var start_point: TextView
         lateinit var end_point: TextView
         lateinit var seats_amount: TextView
+        lateinit var imgStar_User: ImageView
+        lateinit var imgStar_Driver: ImageView
 
         constructor(itemView: View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
@@ -91,11 +99,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             start_point =binding.txtStartPoint
             end_point =binding.txtEndPoint
             seats_amount =binding.txtSeatsAmount
-            binding.butViewMore.setOnClickListener{
-                var button = it as Button
-                Snackbar.make(itemView, "Вы нажали на кнопку! ${start_time.text}",Snackbar.LENGTH_SHORT).show()
-
-            }
+            imgStar_User =binding.imageStarUser
+            imgStar_Driver =binding.imageStarDriver
         }
     }
 }
