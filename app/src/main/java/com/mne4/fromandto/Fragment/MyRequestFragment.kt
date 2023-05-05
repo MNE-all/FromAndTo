@@ -153,6 +153,7 @@ class MyRequestFragment : Fragment() {
         binding.recyclearMyOrders.adapter = adapter
         adapter.notifyDataSetChanged()
         AnimationBut(false)
+        binding.txtInfoResultMyOrders.isVisible = false
         count = 0
     }
     fun ObserveTripsAdapter(activ:FragmentActivity) {
