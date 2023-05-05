@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -126,7 +127,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         locationMapKit.setObjectListener(this)
 
 
-        var traffic = mapKit.createTrafficLayer(mapView.mapWindow)
+        val traffic = mapKit.createTrafficLayer(mapView.mapWindow)
         traffic.isTrafficVisible = false
 
         requestLocationPermission()
@@ -212,11 +213,11 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
     fun moveToMyLocation(view: View) {
         try {
-            var position = locationMapKit.cameraPosition()?.target
+            val position = locationMapKit.cameraPosition()?.target
             if (position == null) {
                 // Включение местоположения
                 if (isGeoDisabled()) {
-                    startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
                 else {
                     Toast.makeText(applicationContext, "Ваше местоположение не обнаружено", Toast.LENGTH_SHORT).show()
@@ -243,35 +244,30 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         return !mIsGPSEnabled && !mIsNetworkEnabled
     }
 
-    fun radioFrom(view: View) {
-        radioTo.isChecked = false
-        radioFrom.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_on_24", "drawable", this.packageName)
-        imgPin.setImageResource(imgId)
-        if (txtTo.text != "Откуда") {
+    fun radioClick(view: View) {
+        if (view.tag == "radioFrom") {
+            radioFrom.isChecked = true
+            radioTo.isChecked = false
+            imgPin.setImageResource(R.drawable.baseline_location_on_24)
             mapView.map.move(CameraPosition(START_POSITION_COORD, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null
             )
         }
-
-
-    }
-
-    fun radioTo(view: View) {
-        radioFrom.isChecked = false
-        radioTo.isChecked = true
-        var imgId = resources.getIdentifier("baseline_location_off_24", "drawable", this.packageName)
-        imgPin.setImageResource(imgId)
-        if (txtTo.text != "Куда") {
-            mapView.map.move(CameraPosition(END_POSITION_COORD, 17.0f, 0.0f, 0.0f),
+        else if (view.tag == "radioTo") {
+            radioFrom.isChecked = false
+            radioTo.isChecked = true
+            imgPin.setImageResource(R.drawable.baseline_location_off_24)
+            mapView.map.move(
+                CameraPosition(END_POSITION_COORD, 17.0f, 0.0f, 0.0f),
                 Animation(Animation.Type.SMOOTH, 1f), null
             )
+
         }
     }
 
 
     override fun onStop() {
-        mapView!!.onStop()
+        mapView.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
     }
@@ -279,11 +275,11 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        mapView!!.onStart()
+        mapView.onStart()
     }
 
     override fun onSearchResponse(response: Response) {
-        val mapObjects = mapView!!.map.mapObjects
+        val mapObjects = mapView.map.mapObjects
         mapObjects.clear()
         for (searchResult in response.collection.children) {
             val resultLocation = searchResult.obj!!.geometry[0].point
@@ -323,17 +319,26 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         finished: Boolean
     ) {
         if(finished) {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
                     val geoCoder = Geocoder(applicationContext, Locale.getDefault())
-                    val address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 2)
+
+                    @Suppress("DEPRECATION") var address = geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 1)!!.first()
+                    // Если возможно, то выполняется на более поздней версии
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        geoCoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 1)
+                        { p0 ->
+                            address = p0.first()
+
+                        }
+                    }
+
+                    Log.d("MapPosition", address.getAddressLine(0))
 
 
+                    val nameAdress = address.getAddressLine(0)
 
-
-                    var nameAdress = address?.get(0)?.getAddressLine(0)
-
-                    var city = address?.get(1)?.locality ?: address?.get(1)?.adminArea
+                    val city = address.locality ?: address.adminArea
 
                     if (radioFrom.isChecked) {
                         txtFrom.text = nameAdress
@@ -385,22 +390,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
         )
     }
     override fun onObjectAdded(userLocation: UserLocationView) {
-//        locationMapKit.setAnchor(
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
-//        )
-//        userLocation.arrow.setIcon(ImageProvider.fromResource(this,R.drawable.baseline_directions_car_24))
-//        var picIcon = userLocation.pin.useCompositeIcon()
-//        picIcon.setIcon("icon", ImageProvider.fromResource(this, R.drawable.ic_search),IconStyle()
-//            .setAnchor(PointF(  0f,0f)).setRotationType(RotationType.NO_ROTATION).setZIndex(0f).setScale(1f))
-//
-//        picIcon.setIcon("pin", ImageProvider.fromResource(this, R.drawable.baseline_notifications_active_24),
-//        IconStyle().setAnchor(PointF(0.5f,0.5f)).setRotationType(RotationType.ROTATE).setZIndex(0f).setScale(0.5f))
-//        userLocation.accuracyCircle.fillColor = Color.BLUE and -0x66000001
-//
-//        mapView.map.move(CameraPosition(Point(0.5,0.5), 17.0f, 0.0f, 0.0f),
-//            Animation(Animation.Type.SMOOTH, 1f), null
-//        )
+
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
@@ -409,6 +399,7 @@ class CreateRequestActivity : AppCompatActivity(), UserLocationObjectListener,
 
     override fun onObjectUpdated(p0: UserLocationView, p1: ObjectEvent) {
 
+        Log.d("TestTag", "$p0")
     }
 
 

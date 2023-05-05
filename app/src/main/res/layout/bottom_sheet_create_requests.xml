@@ -31,14 +31,16 @@
                 app:srcCompat="@drawable/baseline_horizontal_rule_24" />
 
             <LinearLayout
+                android:tag="radioFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/dark_blue"
-                android:onClick="radioFrom"
+                android:onClick="radioClick"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:tag="radioFrom"
                     android:id="@+id/radioFrom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,7 +49,7 @@
                     android:buttonTint="@color/lime"
                     android:checked="true"
                     android:gravity="center"
-                    android:onClick="radioFrom" />
+                    android:onClick="radioClick" />
 
                 <TextView
                     android:id="@+id/txtFrom"
@@ -68,18 +70,20 @@
                 android:layout_weight="1"
                 android:background="@color/red"
 
-                android:onClick="radioTo"
+                android:tag="radioTo"
+                android:onClick="radioClick"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radioTo"
+                    android:tag="radioTo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="0"
                     android:buttonTint="@color/lime"
                     android:gravity="center"
-                    android:onClick="radioTo" />
+                    android:onClick="radioClick" />
 
                 <TextView
                     android:id="@+id/txtTo"
