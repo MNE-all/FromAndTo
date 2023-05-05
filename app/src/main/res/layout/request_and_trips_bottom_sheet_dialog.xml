@@ -270,7 +270,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="Поездка\n(руб)"
+                                        android:text="Цена\n(руб)"
                                         android:textSize="18sp" />
 
                                     <TextView
