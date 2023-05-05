@@ -13,6 +13,8 @@
 
     <color name="orange">#FF5A00</color>
 
+    <color name="gray">#FAFAFA</color>
+    <color name="dark_gray">#5A5A5A</color>
     <color name="blackbg">#202124</color>
     <color name="red">#EB5160</color>
     <color name="yellow">#FCDFA6</color>
