@@ -294,7 +294,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="Нижненовокутлумбетьево"
+            android:text="Санкт-Петербург"
             android:textSize="19sp" />
 
     </LinearLayout>

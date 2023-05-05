@@ -36,7 +36,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/txtSetDate"
+                    android:id="@+id/txtDateStart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -61,7 +61,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/txtAddressBegin"
+                        android:id="@+id/txtAddressStart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -8,11 +8,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.Data.Retrofit2.Models.MyOrder
 import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
+import com.mne4.fromandto.databinding.RequestAndTripsBottomSheetDialogBinding
 import com.mne4.fromandto.databinding.ViewholderMyRequeestItemBinding
 import com.squareup.picasso.Picasso
 import java.text.DateFormat
@@ -30,7 +32,8 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyOrderViewHolder {
         var orderItems:View = LayoutInflater.from(context).inflate(R.layout.viewholder_my_requeest_item,parent,false)
-        return MyOrderViewHolder(orderItems)
+        var myRequestItems:View = LayoutInflater.from(context).inflate(R.layout.request_and_trips_bottom_sheet_dialog,parent,false)
+        return MyOrderViewHolder(orderItems,myRequestItems)
     }
 
     override fun getItemCount():Int{
@@ -77,7 +80,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var end_point: TextView
         lateinit var seats_amount: TextView
 
-        constructor(itemView: View):super(itemView){
+        constructor(itemView: View,myRequestItems:View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
 
             surnameUser = binding.txtNameUser
@@ -91,11 +94,6 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
             start_point =binding.txtStartPoint
             end_point =binding.txtEndPoint
             seats_amount =binding.txtSeatsAmount
-            binding.butViewMore.setOnClickListener{
-                var button = it as Button
-                Snackbar.make(itemView, "Вы нажали на кнопку! ${start_time.text}",Snackbar.LENGTH_SHORT).show()
-
-            }
         }
     }
 }
