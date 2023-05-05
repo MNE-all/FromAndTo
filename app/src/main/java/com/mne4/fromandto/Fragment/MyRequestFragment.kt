@@ -80,21 +80,14 @@ class MyRequestFragment : Fragment() {
             AnimationBut(true)
             binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
             binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
-            if (userStatus == "User") {
-                viewModel.getMyOrdersTripsCurrentUser(userID, false)
-            } else {
-                viewModel.getMyOrdersTripsCurrentUser(userID, true)
-            }
+            viewModel.getMyOrdersTripsCurrentUser(userID, false)
         }
         binding.TripsTabItem.setOnClickListener {
             AnimationBut(true)
             binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
             binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
-            if (userStatus == "User") {
-                viewModel.getMyOrdersTripsCurrentUser(userID, true)
-            } else {
-                viewModel.getMyOrdersTripsCurrentUser(userID, false)
-            }
+            viewModel.getMyOrdersTripsCurrentUser(userID, true)
+
         }
     }
 
@@ -108,8 +101,12 @@ class MyRequestFragment : Fragment() {
                 if (user.isInAcc) {
                     userID = user.id_user
                     if (userStatus == "User") {
+                        binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+                        binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
                         viewModel.getMyOrdersTripsCurrentUser(userID, false)
                     } else {
+                        binding.TripsTabItem.setBackgroundResource(R.drawable.custom_button_style2)
+                        binding.RequestTabItem.setBackgroundResource(R.drawable.custom_button_style_noactive)
                         viewModel.getMyOrdersTripsCurrentUser(userID, true)
                     }
                 }
