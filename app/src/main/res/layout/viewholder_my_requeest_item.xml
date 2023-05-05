@@ -322,7 +322,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <TextView
-        android:id="@+id/txtUserDriver"
+        android:id="@+id/txtDriverPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="телефон"
@@ -333,4 +333,39 @@
         app:layout_constraintStart_toEndOf="@+id/butViewMore"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
+    <TextView
+        android:id="@+id/txtStatusTrips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Статус"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/txtCoordStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="СтартКоорд"
+        app:layout_constraintBottom_toBottomOf="@+id/butViewMore"
+        app:layout_constraintEnd_toStartOf="@+id/butViewMore" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/txtCoordEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="КоордКонца"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/butViewMore" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/idTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IdTrip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

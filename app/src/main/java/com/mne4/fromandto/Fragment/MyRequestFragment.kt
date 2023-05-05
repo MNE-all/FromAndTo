@@ -83,7 +83,9 @@ class MyRequestFragment : Fragment() {
                     var bottomSheetDialog = BottomSheetDialog(requireContext())
                     bottomSheetDialog.setContentView(R.layout.request_and_trips_bottom_sheet_dialog)
                     bottomSheetDialog.show()
-                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = "Слава"
+                    var status =  bindingDialogItem.txtStatusTrips
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtStatus)?.text = status.text.toString()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = "Слава"
                     bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = "Петя"
 
                     var start_time =bindingDialogItem.txtTimeE.text.toString()
@@ -92,6 +94,8 @@ class MyRequestFragment : Fragment() {
                     val date: Date?
                     date = inputFormat.parse(start_time) as Date
                     val outputText: String = outputFormat.format(date)
+
+
                     bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = outputText
 
                 }
@@ -150,20 +154,9 @@ class MyRequestFragment : Fragment() {
             if (listMyOrders.size != tripsArray.size) {
                 var trip = tripsArray[count]
                 var tripsMyOrder = MyOrder(
-                    "${it[0].surname}",
-                    "${it[0].image_url}",
-                    it[0].raiting,
-                    "${it[0].phone}",
-                    "${it[1].surname}",
-                    "${it[1].image_url}",
-                    it[1].raiting,
-                    "${it[1].phone}",
-                    "${trip.start_time}",
-                    trip.price,
-                    "${trip.description}",
-                    trip.seats_amount,
-                    "${trip.start_point}",
-                    "${trip.end_point}"
+                    it[0],
+                    it[1],
+                    trip
                 )
                 listMyOrders.add(tripsMyOrder)
                 if (count + 1 < tripsArray.size) {

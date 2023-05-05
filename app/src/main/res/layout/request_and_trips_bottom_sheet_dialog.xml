@@ -21,23 +21,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="16dp"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:text="Запрос/Поездка"
+                android:text="Статус"
                 android:textSize="24sp" />
 
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/txtStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="Статус"
                 android:textSize="18sp" />
 
