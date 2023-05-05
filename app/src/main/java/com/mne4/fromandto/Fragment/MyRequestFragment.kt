@@ -1,40 +1,37 @@
 package com.mne4.fromandto.Fragment
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AbsListView.RecyclerListener
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.*
+import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mne4.fromandto.Adapter.MyOrdersAdapter
 import com.mne4.fromandto.Data.DataModel
 import com.mne4.fromandto.Data.Retrofit2.Models.MyOrder
 import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
-import com.mne4.fromandto.Data.Retrofit2.Models.User
-import com.mne4.fromandto.Data.Retrofit2.Models.UserFull
-import com.mne4.fromandto.Data.Room.DAO.DaoUser
-import com.mne4.fromandto.Data.Room.MainDB
 import com.mne4.fromandto.MainActivity
 import com.mne4.fromandto.R
 import com.mne4.fromandto.databinding.FragmentMyRequestBinding
 import com.mne4.fromandto.databinding.RequestAndTripsBottomSheetDialogBinding
 import com.mne4.fromandto.databinding.ViewholderMyRequeestItemBinding
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
-import kotlin.reflect.typeOf
+import com.squareup.picasso.Picasso
+import java.io.ByteArrayOutputStream
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class MyRequestFragment : Fragment() {
     lateinit var binding: FragmentMyRequestBinding
@@ -79,12 +76,31 @@ class MyRequestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         listMyOrders = mutableListOf()
 
-        binding.recyclearMyOrders.setOnClickListener {
-            var bindingDialog = ViewholderMyRequeestItemBinding.bind(it)
-            bindingDialog.butViewMore.setOnClickListener{
-                Toast.makeText(it.context,"Клик",Toast.LENGTH_SHORT).show()
+        binding.recyclearMyOrders.addOnChildAttachStateChangeListener(object : OnChildAttachStateChangeListener {
+            override fun onChildViewAttachedToWindow(view: View) {
+                var bindingDialogItem = ViewholderMyRequeestItemBinding.bind(view)
+                bindingDialogItem.butViewMore.setOnClickListener {
+                    var bottomSheetDialog = BottomSheetDialog(requireContext())
+                    bottomSheetDialog.setContentView(R.layout.request_and_trips_bottom_sheet_dialog)
+                    bottomSheetDialog.show()
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameDriver)?.text = "Слава"
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtNameUser)?.text = "Петя"
+
+                    var start_time =bindingDialogItem.txtTimeE.text.toString()
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+                    val outputFormat: DateFormat = SimpleDateFormat("d MMM yyyy", Locale.ROOT)
+                    val date: Date?
+                    date = inputFormat.parse(start_time) as Date
+                    val outputText: String = outputFormat.format(date)
+                    bottomSheetDialog.findViewById<TextView>(R.id.txtDateStart)?.text = outputText
+
+                }
             }
-        }
+
+            override fun onChildViewDetachedFromWindow(view: View) {
+            }
+
+        })
 
 
 

@@ -32,8 +32,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyOrderViewHolder {
         var orderItems:View = LayoutInflater.from(context).inflate(R.layout.viewholder_my_requeest_item,parent,false)
-        var myRequestItems:View = LayoutInflater.from(context).inflate(R.layout.request_and_trips_bottom_sheet_dialog,parent,false)
-        return MyOrderViewHolder(orderItems,myRequestItems)
+        return MyOrderViewHolder(orderItems)
     }
 
     override fun getItemCount():Int{
@@ -80,7 +79,7 @@ class MyOrdersAdapter(): RecyclerView.Adapter<MyOrdersAdapter.MyOrderViewHolder>
         lateinit var end_point: TextView
         lateinit var seats_amount: TextView
 
-        constructor(itemView: View,myRequestItems:View):super(itemView){
+        constructor(itemView: View):super(itemView){
             val binding = ViewholderMyRequeestItemBinding.bind(itemView)
 
             surnameUser = binding.txtNameUser
