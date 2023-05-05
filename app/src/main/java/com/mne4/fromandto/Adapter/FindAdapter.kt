@@ -39,7 +39,7 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT)
         val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
         val date: Date?
-        if (!findList[position].Start_Time.isEmpty()) {
+        if (findList[position].Start_Time.isNotEmpty()) {
             date = inputFormat.parse(findList[position].Start_Time) as Date
             val outputText: String = outputFormat.format(date)
             holder.start_time.text = outputText
@@ -51,6 +51,7 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
             .error(R.drawable.baseline_account_circle_24).into(holder.image_url)
         holder.price.text = findList[position].Price.toString()
         holder.start_point.text = findList[position].Start_Point
+        holder.start_point.isSelected = true
         holder.end_point.text = findList[position].End_Point
     }
 
