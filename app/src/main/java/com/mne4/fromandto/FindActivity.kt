@@ -147,12 +147,12 @@ class FindActivity : AppCompatActivity() {
         var notNull = false
         for (trip in it) {
 
-            if (trip.driver_id != null && userStatus == "User") {
+            if (trip.driver_id != null && userStatus == "User" && trip.driver_id != idUser) {
                 notNull = true
                 trips.add(trip)
                 viewModel.getCurrentUser(trip.driver_id.toString())
             }
-            else if (trip.client_id != null && userStatus == "Driver") {
+            else if (trip.client_id != null && userStatus == "Driver" && trip.client_id != idUser) {
                 notNull = true
                 trips.add(trip)
                 viewModel.getCurrentUser(trip.client_id.toString())
@@ -203,9 +203,9 @@ class FindActivity : AppCompatActivity() {
                             bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = currentTrip.End_Point
                             bottomSheetDialog.findViewById<TextView>(R.id.textDescription)?.text = currentTrip.Descreption
                             val price = "Цена: ${currentTrip.Price} руб."
-                            bottomSheetDialog.findViewById<TextView>(R.id.tripPrice)?.text = price
+                            bottomSheetDialog.findViewById<TextView>(R.id.tripTripPrice)?.text = price
 
-                            bottomSheetDialog.findViewById<ImageView>(R.id.imgPhone)?.setOnClickListener {
+                            bottomSheetDialog.findViewById<ImageView>(R.id.imgUserPhone)?.setOnClickListener {
                                 val tel = currentTrip.Phone
                                 val dial = "tel: $tel"
                                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(dial)))
@@ -220,7 +220,7 @@ class FindActivity : AppCompatActivity() {
                                 val outputText: String = outputFormat.format(date)
                                 bottomSheetDialog.findViewById<TextView>(R.id.txtSetDate)?.text = outputText
                             }
-                            val btnResponse = bottomSheetDialog.findViewById<Button>(R.id.btnResponse)
+                            val btnResponse = bottomSheetDialog.findViewById<Button>(R.id.btnMakeResponse)
 
                             btnResponse?.setOnClickListener {
                                 if(userStatus == "User") {

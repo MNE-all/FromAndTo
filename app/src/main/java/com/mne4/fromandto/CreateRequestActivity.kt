@@ -208,8 +208,8 @@ class CreateRequestActivity : AppCompatActivity(),
         val btnCreate = findViewById<Button>(R.id.btnCreate)
         btnCreate.setOnClickListener {
             if (!whenText.text.isNullOrEmpty() &&
-                !txtFrom.text.isNullOrEmpty() && txtFrom.text == "Откуда" &&
-                !txtTo.text.isNullOrEmpty() && txtFrom.text == "Куда" &&
+                !txtFrom.text.isNullOrEmpty() && txtFrom.text != "Откуда" &&
+                !txtTo.text.isNullOrEmpty() && txtFrom.text != "Куда" &&
                 !price.text.isNullOrEmpty()) {
                 val trip = Trips(
                     price.text.toString().toFloat(),

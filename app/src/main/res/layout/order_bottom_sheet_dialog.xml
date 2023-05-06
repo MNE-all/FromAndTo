@@ -143,7 +143,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <TextView
-                        android:id="@+id/tripPrice"
+                        android:id="@+id/tripTripPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_medium"
@@ -234,7 +234,7 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:id="@+id/imgPhone"
+                            android:id="@+id/imgUserPhone"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
@@ -251,7 +251,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnResponse"
+            android:id="@+id/btnMakeResponse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
