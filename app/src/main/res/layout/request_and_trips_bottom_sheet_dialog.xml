@@ -273,7 +273,7 @@
                                 android:textColor="?attr/textC"
                                 android:gravity="left"
                                 android:text="+7"
-                                android:textSize="16sp" />                       
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -427,9 +427,8 @@
                                 android:textColor="?attr/textC"
                                 android:gravity="left"
                                 android:fontFamily="@font/ubuntu_medium"
-                                android:gravity="left"
                                 android:text="Телефон"
-                                android:textSize="16sp" />
+                                android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/txtPhoneDriver"
@@ -441,7 +440,7 @@
                                 android:gravity="left"
                                 android:text="+7"
                                 android:textColor="?attr/textC"
-                                android:textSize="16sp" />
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                     </LinearLayout>
