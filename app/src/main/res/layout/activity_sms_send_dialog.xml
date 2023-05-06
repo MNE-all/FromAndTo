@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundC">
 
     <EditText
         android:id="@+id/editTextNumber"
@@ -17,7 +18,7 @@
         android:hint="0000"
         android:fontFamily="@font/ubuntu_medium"
         android:inputType="number"
-        android:textColor="@color/black"
+        android:textColor="?attr/textC"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

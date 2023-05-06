@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundC"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Search.SearchFragment">
 
@@ -18,13 +19,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:visibility="visible"
-            app:cardBackgroundColor="@color/material_dynamic_primary60"
+            app:cardBackgroundColor="?attr/imgC"
             app:cardCornerRadius="55dp"
             app:layout_constraintBottom_toTopOf="@+id/butFind"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95">
+            app:layout_constraintVertical_bias="0.6">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,17 +43,19 @@
                     app:boxCornerRadiusTopEnd="14dp"
                     app:boxCornerRadiusTopStart="14dp"
                     app:endIconMode="clear_text"
-
                     app:helperTextTextColor="@color/red"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/baseline_location_on_24">
+                    app:startIconDrawable="@drawable/baseline_location_on_24"
+                    app:startIconTint="?attr/textC"
+                    android:textColorHint="?attr/textC">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/textInputEditTextFrom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:hint="@string/from"
                         android:completionThreshold="0"
                         android:inputType="text"
@@ -70,12 +73,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/baseline_flag_24">
+                    app:startIconDrawable="@drawable/baseline_flag_24"
+                    app:startIconTint="?attr/textC"
+                    android:textColorHint="?attr/textC">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/textInputEditTextTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:hint="@string/to"
                         android:completionThreshold="0"
                         android:inputType="text"
@@ -95,13 +101,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/baseline_event_24">
+                    app:startIconDrawable="@drawable/baseline_event_24"
+                    app:startIconTint="?attr/textC"
+                    android:textColorHint="?attr/textC">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
 
                         android:id="@+id/textInputEditTextWhere"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:hint="@string/where"
                         android:inputType="text"
                         android:text="" />
@@ -127,7 +136,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/background" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/butFind"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -135,9 +144,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="100dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/custom_button_style_all"
             android:enabled="false"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/ubuntu_medium"
             android:text="@string/find"
+            android:textColor="?attr/textC"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
