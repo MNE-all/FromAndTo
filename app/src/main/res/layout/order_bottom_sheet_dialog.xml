@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundC">
         <LinearLayout
             android:id="@+id/LinearDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="vertical"
+            android:background="?attr/cardViewBgC"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="40dp">
@@ -24,6 +27,8 @@
                 android:gravity="center"
                 android:layout_margin="16dp"
                 android:text="Просмотр заказа"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="?attr/textC"
                 android:textSize="18sp"/>
 
 
@@ -31,12 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                app:cardBackgroundColor="?attr/cardViewBgC"
                 app:cardCornerRadius="14dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/custom_button_style_all">
 
                     <LinearLayout
                         android:id="@+id/linearTrip"
@@ -51,6 +58,8 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="20dp"
+                            android:fontFamily="@font/ubuntu_medium"
+                            android:textColor="?attr/textC"
                             android:text="Дата отправления:"
                             android:textSize="18sp" />
 
@@ -61,6 +70,8 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="15dp"
                             android:layout_marginRight="20dp"
+                            android:fontFamily="@font/ubuntu_medium"
+                            android:textColor="?attr/textC"
                             android:text="10 апреля 2023 г."
                             android:textSize="18sp" />
 
@@ -75,6 +86,8 @@
                                 android:id="@+id/txtBegin"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="?attr/textC"
                                 android:text="От "
                                 android:textSize="18sp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +98,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="?attr/textC"
                                 android:text="ул. Комендансткий, СПб"
                                 android:textSize="18sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +120,8 @@
                                 android:id="@+id/txtEnd"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="?attr/textC"
                                 android:text="До"
                                 android:textSize="18sp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -116,6 +133,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:maxLines="5"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="?attr/textC"
                                 android:text="ул. Комендансткий, Москва"
                                 android:textSize="18sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,6 +146,8 @@
                             android:id="@+id/tripPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/ubuntu_medium"
+                            android:textColor="?attr/textC"
                             android:text="Цена:"
                             android:layout_margin="20dp"
                             android:textSize="18sp"/>
@@ -165,7 +186,7 @@
                                     android:layout_height="60dp"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    app:srcCompat="@drawable/baseline_account_circle_24" />
+                                    app:srcCompat="@drawable/baseline_account_circle_light_24" />
 
                                 <TextView
                                     android:id="@+id/txtName"
@@ -173,6 +194,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/ubuntu_medium"
+                                    android:textColor="?attr/textC"
                                     android:text="Александр"
                                     android:textSize="18sp"
                                     app:layout_constraintEnd_toEndOf="@+id/imgUrl"
@@ -199,6 +222,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
+                                        android:fontFamily="@font/ubuntu_medium"
+                                        android:textColor="?attr/textC"
                                         android:text="4,0"
                                         android:textSize="18sp"
                                         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
@@ -225,12 +250,14 @@
             </androidx.cardview.widget.CardView>
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnResponse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="14dp"
-                android:text="Откликнуться"
-                app:cornerRadius="16dp" />
+                android:background="@drawable/custom_button_style_all"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="?attr/textC"
+                android:text="Откликнуться"/>
         </LinearLayout>
 </LinearLayout>
