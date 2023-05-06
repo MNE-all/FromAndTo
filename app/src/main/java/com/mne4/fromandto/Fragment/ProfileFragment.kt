@@ -61,7 +61,6 @@ class ProfileFragment : Fragment() {
     private lateinit var USER: User
     private lateinit var userLocalDB: com.mne4.fromandto.Data.Room.Entities.User
     private var GalleryPick: Int =1
-    private var imgURL = ""
     private lateinit var bottomSheetDialog: BottomSheetDialog
     var phoneField: TextInputEditText? = null
     var passwordField: TextInputEditText? = null
@@ -83,8 +82,7 @@ class ProfileFragment : Fragment() {
         ObserveGetCurrentUser(bottomSheetDialog)
         SecurityСonfirmed(bottomSheetDialog)
         viewModel.ApiImgUrl.observe(requireActivity()) {
-            Picasso.get().load(it).into(binding.imageUser)
-            imgURL = it
+            USER.image_url = it
         }
 
         ObservePostPhoneUnque(bottomSheetDialog)
@@ -181,7 +179,7 @@ class ProfileFragment : Fragment() {
             }
             Picasso.get().load(USER.image_url)
                 .placeholder(R.drawable.baseline_account_circle_24)
-                .error(R.drawable.search_result)
+                .error(R.drawable.baseline_account_circle_24)
                 .into(binding.imageUser)
             view.findViewById<Spinner>(R.id.spinnerGender)
             view.findViewById<TextInputEditText>(R.id.surnameField)?.setText(USER.surname)
@@ -290,9 +288,6 @@ class ProfileFragment : Fragment() {
             USER.gender = gender
             USER.passport = passport
             USER.license = license
-            if (!imgURL.isEmpty()) {
-                USER.image_url = imgURL
-            }
 
             if (phone != "" && password != "") {
                 var passwordFieldStill =
@@ -326,9 +321,6 @@ class ProfileFragment : Fragment() {
                 "Изменения успешно сохранены",
                 Toast.LENGTH_SHORT
             ).show()
-            Picasso.get().load(imgURL).placeholder(R.drawable.baseline_account_circle_24)
-                .error(R.drawable.baseline_account_circle_24)
-                .into(binding.imageUser)
             isVisibleSecurity(false, view)
         }
     }

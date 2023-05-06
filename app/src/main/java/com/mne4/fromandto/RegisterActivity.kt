@@ -1,12 +1,16 @@
 package com.mne4.fromandto
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -38,7 +42,33 @@ class  RegisterActivity : AppCompatActivity() {
 
         viewModel.ApiPostIsPhoneUnique.observe(this) {
             if (it) {
-                addUser()
+                var dialog: AlertDialog.Builder = AlertDialog.Builder(this)
+                dialog.setTitle("Подтверждение номера")
+                dialog.setMessage("Подтвердите номер телефона. Введите пароль по смс!")
+                var passwordGenereted = viewModel.postSMS(phone.text.toString())
+                var inflater: LayoutInflater = LayoutInflater.from(this)
+                var reg_window = inflater.inflate(R.layout.activity_sms_send_dialog,null)
+                var number: EditText = reg_window.findViewById(R.id.editTextNumber)
+                dialog.setView(reg_window)
+
+
+
+                dialog.setPositiveButton("Подтвердить",
+                    DialogInterface.OnClickListener{ dialog: DialogInterface?, i->
+
+                        var text = number.text.toString()
+
+                        if(text == passwordGenereted.toString()) {
+                            Toast.makeText(this, "Номер подтвержден!", Toast.LENGTH_SHORT).show()
+                            addUser()
+                        }
+                        else
+                        {
+                            Toast.makeText(this, "Неправильно введенный пароль!", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+                dialog.show()
             } else {
                 Toast.makeText(this, "Номер уже существует!", Toast.LENGTH_SHORT).show()
             }
@@ -96,33 +126,8 @@ class  RegisterActivity : AppCompatActivity() {
            return
        }
        viewModel.postIsPhoneUnique(phone.text.toString())
-       
-//       var dialog:AlertDialog.Builder = AlertDialog.Builder(this)
-//       dialog.setTitle("Подтверждение номера")
-//       dialog.setMessage("Подтвердите номер телефона. Введите пароль по смс!")
-//       var passwordGenereted = viewModel.postSMS(phone_num)
-//       var inflater: LayoutInflater = LayoutInflater.from(this)
-//       var reg_window = inflater.inflate(R.layout.activity_sms_send_dialog,null)
-//       var number:EditText = reg_window.findViewById(R.id.editTextNumber)
-//       dialog.setView(reg_window)
-//
-//
-//
-//       dialog.setPositiveButton("Подтвердить",DialogInterface.OnClickListener{dialog: DialogInterface?, i->
-//
-//           var text = number.text.toString()
-//
-//           if(text == passwordGenereted.toString()) {
-//               Toast.makeText(this, "Номер подтвержден!", Toast.LENGTH_SHORT).show()
-//               addUser()
-//           }
-//           else
-//           {
-//               Toast.makeText(this, "Неправильно введенный пароль!", Toast.LENGTH_SHORT).show()
-//           }
-//       })
-//
-//       dialog.show()
+
+
 
     }
 }

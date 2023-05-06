@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: DataModel by viewModels()
     private lateinit var userStatus:String
+    var page = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding  = ActivityMainBinding.inflate(layoutInflater)
@@ -28,30 +29,43 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             startActivity(intent)
         }
+        page = R.id.butSearchBottomNavigation
 
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
-                        fragmentInstance(
-                            SearchFragment.newInstance()
-                        )
-                        viewModel.UserStatus.value = userStatus
+                        if (R.id.butSearchBottomNavigation != page) {
+                            fragmentInstance(
+                                SearchFragment.newInstance()
+                            )
+                            viewModel.UserStatus.value = userStatus
+                            page = R.id.butSearchBottomNavigation
+                        }
                     }
                     R.id.butHelpBottomNavigation -> {
-                        fragmentInstance(
-                            HelpFragment.newInstance()
-                        )
+                        if (R.id.butHelpBottomNavigation != page) {
+                            fragmentInstance(
+                                HelpFragment.newInstance()
+                            )
+                            page = R.id.butHelpBottomNavigation
+                        }
                     }
                     R.id.butMyOrdersBottomNavigation -> {
-                        fragmentInstance(
-                            MyRequestFragment.newInstance()
-                        )
-                        viewModel.UserStatus.value = userStatus
+                        if (R.id.butMyOrdersBottomNavigation != page) {
+                            fragmentInstance(
+                                MyRequestFragment.newInstance()
+                            )
+                            viewModel.UserStatus.value = userStatus
+                            page = R.id.butMyOrdersBottomNavigation
+                        }
                     }
                     R.id.butProfileBottomNavigation -> {
-                        fragmentInstance(
-                            ProfileFragment.newInstance()
-                        )
+                        if (R.id.butProfileBottomNavigation != page) {
+                            fragmentInstance(
+                                ProfileFragment.newInstance()
+                            )
+                            page = R.id.butProfileBottomNavigation
+                        }
                     }
                 }
             true
