@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="?attr/imgC"
+        app:cardBackgroundColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                         android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="Пассажир"
-                        android:textColor="?attr/textC"
+                        android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <androidx.cardview.widget.CardView
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="?attr/cardViewBgC"
+                        app:cardBackgroundColor="@color/dark_blue"
                         app:cardCornerRadius="9999dp">
 
                         <ImageView
@@ -80,7 +80,7 @@
                         android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="Александр"
-                        android:textColor="?attr/textC"
+                        android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <LinearLayout
@@ -107,7 +107,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/ubuntu_medium"
                             android:text="4,0"
-                            android:textColor="?attr/textC"
+                            android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -141,7 +141,7 @@
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:gravity="center"
                                 android:text="Цена\n(руб)"
-                                android:textColor="?attr/textC"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -152,7 +152,7 @@
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:gravity="center"
                                 android:text="1000"
-                                android:textColor="?attr/textC"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
@@ -171,7 +171,7 @@
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:gravity="center"
                                 android:text="Кол-во\nмест"
-                                android:textColor="?attr/textC"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -182,7 +182,7 @@
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:gravity="center"
                                 android:text="1000"
-                                android:textColor="?attr/textC"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -203,7 +203,7 @@
                             android:fontFamily="@font/ubuntu_medium"
                             android:gravity="center"
                             android:text="Время\nпоездки"
-                            android:textColor="?attr/textC"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -214,7 +214,7 @@
                             android:fontFamily="@font/ubuntu_medium"
                             android:gravity="center"
                             android:text="04-10-2003"
-                            android:textColor="?attr/textC"
+                            android:textColor="@color/black"
                             android:textSize="20sp" />
 
                     </LinearLayout>
@@ -238,7 +238,7 @@
                         android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="  Водитель  "
-                        android:textColor="?attr/textC"
+                        android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <androidx.cardview.widget.CardView
@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="?attr/cardViewBgC"
+                        app:cardBackgroundColor="@color/dark_blue"
                         app:cardCornerRadius="9999dp">
 
                         <ImageView
@@ -267,7 +267,7 @@
                         android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="Александр"
-                        android:textColor="?attr/textC"
+                        android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <LinearLayout
@@ -294,7 +294,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/ubuntu_medium"
                             android:text="4,0"
-                            android:textColor="?attr/textC"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -326,7 +326,7 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="Москва"
-                    android:textColor="?attr/textC"
+                    android:textColor="@color/black"
                     android:textSize="19sp" />
 
                 <ImageButton
@@ -335,7 +335,7 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="?attr/imgC"
+                    android:background="@color/blue"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/app_name"
                     android:foregroundGravity="center"
@@ -358,7 +358,7 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="Санкт-Петербург"
-                    android:textColor="?attr/textC"
+                    android:textColor="@color/black"
                     android:textSize="19sp" />
 
             </LinearLayout>
@@ -374,7 +374,7 @@
                 android:background="@drawable/custom_button_style_light_all"
                 android:fontFamily="@font/ubuntu_medium"
                 android:text="Подробнее"
-                android:textColor="?attr/textLightC"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </LinearLayout>
