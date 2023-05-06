@@ -18,8 +18,6 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,6 +69,9 @@ class   DataModel: ViewModel() {
     }
     val ApiGetTripsCityTo: MutableLiveData<ArrayList<String>> by lazy {
         MutableLiveData<ArrayList<String>>()
+    }
+    val ApiPutTripsResponse: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
     }
     val ApiDeleteTrips: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
@@ -402,6 +403,20 @@ class   DataModel: ViewModel() {
                     Log.d("Put","Response")
                 }
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("Put","Failture")
+                }
+            })
+        }
+    }
+    fun putTripsRespond(guidTrips:String,  guidUser:String, isDriver:Boolean)
+    {
+        CoroutineScope(Dispatchers.IO).launch {
+            tripsApi.putTripsRespond(guidTrips,guidUser, isDriver).enqueue(object : retrofit2.Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    ApiPutTripsResponse.value = response.body()
+                    Log.d("Put","Response")
+                }
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("Put","Failture")
                 }
             })

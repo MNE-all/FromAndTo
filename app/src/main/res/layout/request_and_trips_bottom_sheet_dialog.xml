@@ -229,18 +229,20 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="center"
+                                android:gravity="left"
                                 android:text="Телефон"
+                                android:layout_marginStart="7dp"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/txtPhoneUser"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
+                                android:gravity="left"
                                 android:text="+7"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -378,7 +380,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="center"
+                                android:gravity="left"
                                 android:text="Телефон"
                                 android:textSize="18sp" />
 
@@ -386,10 +388,11 @@
                                 android:id="@+id/txtPhoneDriver"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
+                                android:gravity="left"
                                 android:text="+7"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>

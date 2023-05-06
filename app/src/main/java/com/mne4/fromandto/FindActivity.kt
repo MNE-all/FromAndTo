@@ -8,8 +8,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
@@ -35,6 +37,7 @@ class FindActivity : AppCompatActivity() {
     var outputDate2: String = "null"
     var txtFrom: String = "null"
     var txtTo: String = "null"
+    lateinit var idUser:String
     private lateinit var adapter: RecyclerView.Adapter<FindAdapter.FindViewHolder>
     private val viewModel: DataModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,14 @@ class FindActivity : AppCompatActivity() {
 
         binding = ActivityFindBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.getLocalDB(this).getDao().getAllUser().asLiveData().observe(this){
+            for(user in it){
+                if(user.isInAcc){
+                    idUser = user.id_user
+                }
+            }
+        }
+
         listFind = mutableListOf()
         count = 0
         var layoutManager: RecyclerView.LayoutManager =
@@ -64,6 +75,12 @@ class FindActivity : AppCompatActivity() {
         }
         viewModel.ApiGetTripsReadDateStartToDateEndFrom.observe(this) {
             RequestSeacrh(it)
+        }
+        viewModel.ApiPutTripsResponse.observe(this){
+            if(it){
+                Toast.makeText(applicationContext,"Вы успешно откликнулись",Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
         viewModel.ApiGetCurrentUser.observe(this) {
             getRequestSearch(it)
@@ -206,7 +223,11 @@ class FindActivity : AppCompatActivity() {
                             val btnResponse = bottomSheetDialog.findViewById<Button>(R.id.btnResponse)
 
                             btnResponse?.setOnClickListener {
-                                //TODO Отклик на заказ
+                                if(userStatus == "User") {
+                                    viewModel.putTripsRespond(currentTrip.Id_trip.toString(), idUser.toString(), false)
+                                }else{
+                                    viewModel.putTripsRespond(currentTrip.Id_trip.toString(), idUser.toString(), true)
+                                }
                             }
                             bottomSheetDialog.show()
                         }

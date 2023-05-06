@@ -11,8 +11,6 @@ interface TripsApi {
     @GET("Trips/Read")
     suspend fun getAll(): ArrayList<TripsFull>
 
-
-
     @GET("Trips/Read/{guid}")
     suspend fun getCurrentTrips(@Path("guid") guid:String): TripsFull
 
@@ -51,9 +49,13 @@ interface TripsApi {
         @POST("Trips/CreateRequest")
         fun postCreateRequest(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>
 
+    @PUT("Trips/Update/TripsRespond")
+    fun putTripsRespond(@Query("guidTrips") guidTrips:String, @Query("guidUser") guidUser:String,@Query("isDriver") isDriver:Boolean): Call<Boolean>
     @ExperimentalMultiplatform
         @PUT("Trips/Update")
         fun putEditTrips(@Query("guid") guid: String, @Body trips: Trips): Call<ResponseBody>
+
+
 
     @DELETE("Trips/Delete")
     fun deleteTrips(@Query("guid") guid: String): Call<Boolean>
