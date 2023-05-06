@@ -326,6 +326,9 @@ class ProfileFragment : Fragment() {
                 "Изменения успешно сохранены",
                 Toast.LENGTH_SHORT
             ).show()
+            Picasso.get().load(imgURL).placeholder(R.drawable.baseline_account_circle_24)
+                .error(R.drawable.baseline_account_circle_24)
+                .into(binding.imageUser)
             isVisibleSecurity(false, view)
         }
     }
@@ -474,11 +477,11 @@ class ProfileFragment : Fragment() {
     private fun Init(truth:Boolean, view: BottomSheetDialog){
 
         var chipSecurity =  view.findViewById<Chip>(R.id.chipSecurity)
-        chipSecurity?.setChipBackgroundColorResource(com.google.android.material.R.color.material_dynamic_neutral80)
+        chipSecurity?.setChipBackgroundColorResource(R.color.gray_netrual)
 
         var butSave = view.findViewById<Button>(R.id.butSave)
         var buttonChangeUserImage = view.findViewById<Button>(R.id.buttonChangeUserImage)
-        var colorNetral = com.google.android.material.R.color.material_dynamic_neutral80
+        var colorNetral = R.color.gray_netrual
         var colorTeal = R.color.teal_200
         buttonChangeUserImage?.isEnabled = truth
         butSave?.isEnabled = truth

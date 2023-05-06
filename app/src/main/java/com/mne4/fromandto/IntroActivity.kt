@@ -3,6 +3,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +25,7 @@ class IntroActivity : AppCompatActivity() {
     val viewModel: DataModel by viewModels()
     private var userLocalDB:User? = null
     private var localSize:Int = 0
+    private var canIn = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class IntroActivity : AppCompatActivity() {
                     "Быстрый вход!",
                     Toast.LENGTH_SHORT
                 ).show()
+                canIn = true
                 finish()
             } else {
                 loginOrRegister()
@@ -55,10 +58,24 @@ class IntroActivity : AppCompatActivity() {
                     "Аккаунт не найден!",
                     Toast.LENGTH_SHORT
                 ).show()
+                canIn = true
             }
         }
+        var timer = object : CountDownTimer(10000,1000) {
+            override fun onTick(p0: Long) {
 
+            }
 
+            override fun onFinish() {
+                if (!canIn) {
+                    Toast.makeText(this@IntroActivity,
+                        "Плохое соединение с интернетом\nПовторите попытку!",
+                        Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
+        }
+        timer.start()
     }
 
     override fun onStart() {
@@ -139,6 +156,7 @@ class IntroActivity : AppCompatActivity() {
 
     private fun checkLocalDb() {
         if (localSize == 0) {
+            canIn = true
             onboard()
         } else {
             if (userLocalDB != null) {

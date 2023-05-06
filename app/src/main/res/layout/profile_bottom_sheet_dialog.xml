@@ -75,6 +75,7 @@
                 android:fontFamily="@font/ubuntu_medium"
                 android:textSize="16sp"
                 android:text="Сменить изображение профиля"
+                android:textAppearance="@style/chipText"
                 android:textColor="?attr/textLightC"/>
 
             <com.google.android.material.textfield.TextInputLayout

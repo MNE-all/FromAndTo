@@ -25,7 +25,6 @@ class WelcomeActivity : AppCompatActivity() {
             for (user in it) {
                 if (user.isInAcc) {
                     viewModel.getCurrentUser(user.id_user)
-                    Toast.makeText(this, "idUser  = ${user.id_user}",Toast.LENGTH_SHORT).show()
                 }
             }
         }

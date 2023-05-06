@@ -156,7 +156,7 @@
                     android:id="@+id/CardViewRemovePassenger"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="?attr/textC"
                     app:cardCornerRadius="99999dp">
 
                     <ImageView
@@ -185,7 +185,7 @@
                     android:id="@+id/CardViewAddPassenger"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="?attr/textC"
                     app:cardCornerRadius="99999dp">
 
                     <ImageView
