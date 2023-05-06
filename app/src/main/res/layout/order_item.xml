@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/backgroundC">
 
     <androidx.cardview.widget.CardView
         android:layout_margin="14dp"
@@ -16,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?attr/imgC">
 
             <LinearLayout
                 android:id="@+id/linearLayout7"
@@ -40,7 +42,7 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/baseline_account_circle_24" />
+                        app:srcCompat="@drawable/baseline_account_circle_light_24" />
 
                     <TextView
                         android:id="@+id/txtName"
@@ -48,6 +50,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
+                        android:fontFamily="@font/ubuntu_medium"
+                        android:textColor="?attr/textC"
                         android:text="Александр"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/imgUrl"
@@ -74,7 +78,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/ubuntu_medium"
                             android:text="4,0"
+                            android:textColor="?attr/textC"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -93,8 +99,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="Время\nпоездки"
+                        android:textColor="?attr/textC"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +113,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="01:00"
+                        android:textColor="?attr/textC"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toStartOf="@+id/txtPriceOne"
                         app:layout_constraintTop_toBottomOf="@+id/txtTime" />
@@ -123,8 +133,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:gravity="center"
                         android:text="Стоимость\nпоездки"
+                        android:textColor="?attr/textC"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/txtTime"
@@ -142,8 +154,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/ubuntu_medium"
                             android:text="1000"
                             android:textAlignment="textEnd"
+                            android:textColor="?attr/textC"
                             android:textSize="18sp"
                             app:layout_constraintEnd_toStartOf="@+id/txtPriceRub"
                             app:layout_constraintStart_toStartOf="@+id/txtPrice"
@@ -155,7 +169,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
                             android:layout_weight="1"
+                            android:fontFamily="@font/ubuntu_medium"
                             android:text="руб."
+                            android:textColor="?attr/textC"
                             android:textSize="18sp"
                             app:layout_constraintEnd_toEndOf="@+id/txtPrice"
                             app:layout_constraintStart_toEndOf="@+id/txtPriceOne"
@@ -185,13 +201,14 @@
                         android:layout_gravity="center"
                         android:ems="1"
                         android:fadingEdge="horizontal"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:foregroundGravity="center"
                         android:gravity="center"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="От"
-                        android:textColor="@color/dark_blue"
+                        android:textColor="?attr/cardViewBgC"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -202,13 +219,14 @@
                         android:layout_gravity="center"
                         android:ems="1"
                         android:fadingEdge="horizontal"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:foregroundGravity="center"
                         android:gravity="center"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="Москва"
-                        android:textColor="@color/dark_blue"
+                        android:textColor="?attr/cardViewBgC"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -234,6 +252,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:text="До"
                         android:textColor="@color/red"
                         android:textSize="14sp"
@@ -253,6 +272,7 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
+                        android:fontFamily="@font/ubuntu_medium"
                         android:text="Санкт-Петербург"
                         android:textColor="@color/red"
                         android:textSize="18sp" />
@@ -263,13 +283,16 @@
 
             </LinearLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFindMore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:background="@drawable/custom_button_style_light_all"
                 android:text="Подробнее"
                 app:cornerRadius="24dp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="?attr/textLightC"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
