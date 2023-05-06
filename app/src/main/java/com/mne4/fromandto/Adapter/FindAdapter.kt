@@ -44,7 +44,7 @@ class FindAdapter(): RecyclerView.Adapter<FindAdapter.FindViewHolder>() {
             val outputText: String = outputFormat.format(date)
             holder.start_time.text = outputText
         }
-        holder.surname.text = findList[position].Surname
+        holder.surname.text = findList[position].Name
         holder.rating.text = findList[position].Rating.toString()
         Picasso.get().load(findList[position].Image_url.toString())
             .placeholder(R.drawable.baseline_account_circle_24)

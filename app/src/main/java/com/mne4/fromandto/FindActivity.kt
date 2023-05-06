@@ -1,6 +1,7 @@
 package com.mne4.fromandto
 
 import android.content.Intent
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.mne4.fromandto.Data.Retrofit2.Models.FindRequest
 import com.mne4.fromandto.Data.Retrofit2.Models.TripsFull
 import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.databinding.ActivityFindBinding
+import com.squareup.picasso.Picasso
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -169,7 +171,7 @@ class FindActivity : AppCompatActivity() {
             val trip = trips[count]
             var tripsFind = FindRequest(
                 trip.id_trip,
-                "${user.surname}",
+                "${user.name}",
                 "${user.image_url}",
                 user.raiting,
                 "${user.phone}",
@@ -178,9 +180,14 @@ class FindActivity : AppCompatActivity() {
                 "${trip.description}",
                 "${trip.start_point}",
                 "${trip.end_point}",
+                "${trip.start_point_coord}",
+                "${trip.end_point_coord}",
                 trip.seats_amount,
                 true
             )
+
+
+
             listFind.add(tripsFind)
             if (count + 1 < trips.size) {
                 count += 1
@@ -195,12 +202,33 @@ class FindActivity : AppCompatActivity() {
                             var position =
                                 binding.recyclerFind.findContainingViewHolder(view)!!.position
                             var currentTrip = listFind[position]
-
                             var bottomSheetDialog = BottomSheetDialog(view.context)
                             bottomSheetDialog.setContentView(R.layout.order_bottom_sheet_dialog)
 
-                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressBegin)?.text = currentTrip.Start_Point
-                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = currentTrip.End_Point
+
+                            val geoCoder = Geocoder(this@FindActivity, Locale.getDefault())
+                            var masStart = currentTrip.Start_Point_Coord.split(" ")
+                            val addressStart = geoCoder.getFromLocation(masStart[0].toDouble(), masStart[1].toDouble(), 2)
+                            var nameAdressStart = addressStart?.get(0)?.getAddressLine(0)
+                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressBegin)?.text = nameAdressStart.toString()
+
+                            var masEnd = currentTrip.End_Point_Coord.split(" ")
+                            val addressEnd = geoCoder.getFromLocation(masEnd[0].toDouble(), masEnd[1].toDouble(), 2)
+                            var nameAdressEnd = addressEnd?.get(0)?.getAddressLine(0)
+                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = nameAdressEnd.toString()
+
+
+
+                            bottomSheetDialog.findViewById<TextView>(R.id.txtName)?.text = currentTrip.Name
+                            bottomSheetDialog.findViewById<TextView>(R.id.txtRating)?.text = currentTrip.Rating.toString()
+                            val img = bottomSheetDialog.findViewById<ImageView>(R.id.imgUrl)
+                            Picasso.get().load(currentTrip.Image_url)
+                                .placeholder(R.drawable.baseline_account_circle_24)
+                                .error(R.drawable.search_result)
+                                .into(img)
+
+//                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressBegin)?.text = currentTrip.Start_Point
+//                            bottomSheetDialog.findViewById<TextView>(R.id.txtAddressEnd)?.text = currentTrip.End_Point
                             bottomSheetDialog.findViewById<TextView>(R.id.textDescription)?.text = currentTrip.Descreption
                             val price = "Цена: ${currentTrip.Price} руб."
                             bottomSheetDialog.findViewById<TextView>(R.id.tripTripPrice)?.text = price
