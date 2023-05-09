@@ -29,17 +29,14 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(WelcomeActivity.ARG_USER_STATUS, userStatus)
             startActivity(intent)
         }
-        page = R.id.butSearchBottomNavigation
+        binding.bottomNavigationViewMenu.selectedItemId = R.id.butSearchBottomNavigation
+        Search()
 
         binding.bottomNavigationViewMenu.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.butSearchBottomNavigation -> {
                         if (R.id.butSearchBottomNavigation != page) {
-                            fragmentInstance(
-                                SearchFragment.newInstance()
-                            )
-                            viewModel.UserStatus.value = userStatus
-                            page = R.id.butSearchBottomNavigation
+                            Search();
                         }
                     }
                     R.id.butHelpBottomNavigation -> {
@@ -70,7 +67,14 @@ class MainActivity : AppCompatActivity() {
                 }
             true
         }
-        binding.bottomNavigationViewMenu.selectedItemId = R.id.butSearchBottomNavigation
+
+    }
+    private fun Search(){
+        fragmentInstance(
+            SearchFragment.newInstance()
+        )
+        viewModel.UserStatus.value = userStatus
+        page = R.id.butSearchBottomNavigation
     }
     private fun fragmentInstance(f: Fragment) {
         supportFragmentManager
