@@ -115,7 +115,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent(bottomSheetDialog.context, IntroActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
-            WelcomeActivity().returnActivityWelcome().finish()
+
         }
     }
 

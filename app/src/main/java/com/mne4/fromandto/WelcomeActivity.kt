@@ -76,7 +76,6 @@ class WelcomeActivity : AppCompatActivity() {
             }
         }
     }
-    fun  returnActivityWelcome():WelcomeActivity = this
 
     companion object {
         const val ARG_USER_STATUS = "UserStatus"
