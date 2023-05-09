@@ -35,6 +35,7 @@ import com.mne4.fromandto.Data.Retrofit2.Models.User
 import com.mne4.fromandto.Data.Room.MainDB
 import com.mne4.fromandto.IntroActivity
 import com.mne4.fromandto.R
+import com.mne4.fromandto.WelcomeActivity
 import com.mne4.fromandto.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -109,9 +110,12 @@ class ProfileFragment : Fragment() {
                     userLocalDB.id_user,
                     false
                 )
+
             }
             val intent = Intent(bottomSheetDialog.context, IntroActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
+            WelcomeActivity().returnActivityWelcome().finish()
         }
     }
 

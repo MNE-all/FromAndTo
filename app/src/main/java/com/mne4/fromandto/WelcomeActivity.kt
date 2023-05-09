@@ -71,10 +71,12 @@ class WelcomeActivity : AppCompatActivity() {
                     }
                     val intent = Intent(this, IntroActivity::class.java)
                     startActivity(intent)
+                    this.finish()
                 }
             }
         }
     }
+    fun  returnActivityWelcome():WelcomeActivity = this
 
     companion object {
         const val ARG_USER_STATUS = "UserStatus"
