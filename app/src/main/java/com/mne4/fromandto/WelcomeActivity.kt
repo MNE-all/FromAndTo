@@ -71,6 +71,7 @@ class WelcomeActivity : AppCompatActivity() {
                     }
                     val intent = Intent(this, IntroActivity::class.java)
                     startActivity(intent)
+                    this.finish()
                 }
             }
         }
